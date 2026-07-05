@@ -7,10 +7,10 @@ module, zip via an in-package reader.
 ## Packages
 | Target | Role |
 |--------|------|
-| `ZhuwenPacks` | pack I/O: `ZipArchive` (STORED zip), `Minisign` verify, `PackVerifier` (sig + hashes + lexicon_version + content-level I6), `PackStore` typed SQLite queries + story audio extraction + `alignment(storyID:)`. Owns pack I/O (I2). |
-| `ZhuwenCore` | domain models + `ReaderModel` (tap-to-gloss); the learner engine: `EventLog` (append-only, I5; incl. `.listen` blind/karaoke events), `KnownWordModel` (replayable projection, now with per-word `FSRSCard` memory), `FrontierQueue` (FR-2.4), `CoverageGate`+`StoryCandidate` (I1), `Selector` (bitmap AND + popcount scoring, NFR-2), `WordBitmap`, `LexiconStore`; **placement** (FR-1): `PseudowordGenerator` foils, `PlacementItemBuilder`/`PlacementSession`, `PlacementEstimator` (logistic fit + guessing correction → CEFR/HSK + seed), `PlacementSeed` (re-placement merge); **loop completion** (CP-07): `FSRSScheduler` (open FSRS-4.5, on-device), `ComprehensionSession` (M8 → seal + P(known) boost), `ReviewScheduler`/`ReviewCard` (M9 sentence-context, 20/day cap), `ProgressEstimator`/`ProgressReport` (M10 both-skill CEFR + HSK gap + growth). |
+| `ZhuwenPacks` | pack I/O: `ZipArchive` (STORED zip), `Minisign` verify, `PackVerifier` (sig + hashes + lexicon_version + content-level I6), `PackStore` typed SQLite queries + story audio extraction + `alignment(storyID:)`; **`PackClient`** (CP-08): the app's sole network chokepoint — anonymous ephemeral CDN GET via `PackFetcher`/`URLSessionPackFetcher`, verify-before-install, `PackCatalog`/`RemotePack`/`InstalledPack` pack manager (list/size/delete/redownload). Owns pack I/O + network (I2). |
+| `ZhuwenCore` | domain models + `ReaderModel` (tap-to-gloss); the learner engine: `EventLog` (append-only, I5; incl. `.listen` blind/karaoke events), `KnownWordModel` (replayable projection, now with per-word `FSRSCard` memory), `FrontierQueue` (FR-2.4), `CoverageGate`+`StoryCandidate` (I1), `Selector` (bitmap AND + popcount scoring, NFR-2), `WordBitmap`, `LexiconStore`; **placement** (FR-1): `PseudowordGenerator` foils, `PlacementItemBuilder`/`PlacementSession`, `PlacementEstimator` (logistic fit + guessing correction → CEFR/HSK + seed), `PlacementSeed` (re-placement merge); **loop completion** (CP-07): `FSRSScheduler` (open FSRS-4.5, on-device), `ComprehensionSession` (M8 → seal + P(known) boost), `ReviewScheduler`/`ReviewCard` (M9 sentence-context, 20/day cap), `ProgressEstimator`/`ProgressReport` (M10 both-skill CEFR + HSK gap + growth); **commerce & data** (CP-08): `Entitlement`/`StoreProduct`/`ProductCatalog` (FR-9.3 SKUs) + `FeatureGate` (free/Pro), `LearnerArchive` (export/erase/import round-trip, FR-10.3), `LearnerSettings` (FR-10.1, sync off by default). |
 | `ZhuwenAudio` | listening (FR-5): `AlignmentTrack` (pure position→token resolver, the drift-critical core), `Karaoke` engine (speed 0.6×–1.2×, blind reveal), `CharTokenMap` (TTS range→token), `AudioNarrator` protocol + `PackAudioNarrator` (AVAudioPlayer, pitch-preserved rate) / `SystemTTSNarrator` (labeled `AVSpeechSynthesizer` fallback, §7) / `SystemVoice` (enhanced-voice detection). |
-| `ZhuwenUI` | SwiftUI shell: `RootView` tabs (Today · Library · Review · Progress), `ReaderView` (tap-to-gloss sheet, cinnabar frontier underline, Listen + Finish→comprehension entries), `ListeningView` (M7 karaoke) + `ListeningModel`, `PlacementView` (M1–M3) + `PlacementFlowModel`, `ComprehensionView` (M8 seal stamp, Reduce-Motion fade), `ReviewView` (M9), `LearnerProgressView` (M10), `LearnerModel` (owns the event log → projection → M8/M9/M10), `AppModel`. |
+| `ZhuwenUI` | SwiftUI shell: `RootView` tabs (Today · Library · Review · Progress) + Settings entry, `ReaderView` (tap-to-gloss sheet, cinnabar frontier underline, Listen + Finish→comprehension entries), `ListeningView` (M7 karaoke) + `ListeningModel`, `PlacementView` (M1–M3) + `PlacementFlowModel`, `ComprehensionView` (M8 seal stamp, Reduce-Motion fade), `ReviewView` (M9), `LearnerProgressView` (M10), `LearnerModel` (owns the event log → projection → M8/M9/M10 + export/erase/import); **commerce & data** (CP-08): `StoreModel`+`EntitlementProvider` (StoreKit 2 wrapper, `#if canImport(StoreKit)`), `PaywallView` (M12), `SettingsView`+`PackManagerModel`+privacy page (M13), `SyncModel`+`LearnerSyncEngine` (`CloudKitSyncEngine` guarded, off by default), `AppModel`. |
 
 The `@main` app target + on-simulator XCUITests are assembled in Xcode (thin shell over
 the tested packages); all logic is covered by `swift test` on the host.
@@ -20,6 +20,7 @@ the tested packages); all logic is covered by `swift test` on the host.
 cd ios
 make test        # swift test — unit + integration (shared gate vectors) + e2e (host, no simulator)
 make bench       # NFR-2 selector benchmark under -c release (asserts the 50 ms gate)
+make audit       # network-surface CI gate (I2): URLSession only in PackClient, no SDKs/http:///secrets
 make build       # swift build (host)
 make build-ios   # xcodebuild ZhuwenUI for the iOS 17 simulator
 ```
@@ -57,4 +58,12 @@ regression guard and prints the measurement.
   CEFR estimates. `KnownWordModel` folds review grades into per-word FSRS memory; state stays
   a replayable projection of the log (I5). P(known) updates verified for exposure/lookup/grade
   paths (`KnownWordModelTests`). M8/M9/M10 views compile for iOS 17. ✅
-- CP-08+: commerce, images/Foundations, scale-up, polish — pending.
+- CP-08: commerce & data — `PackClient` downloads additional packs over an anonymous, ephemeral
+  CDN GET and **verifies them before install** (tampered/unsigned/imageless rejected, nothing
+  lands on disk), backing a size/delete/re-download pack manager; StoreKit 2 SKUs (FR-9.3) behind
+  a pure `FeatureGate` (free = full method at one story/day, Pro removes the throttle); paywall
+  (M12) + settings (M13, FR-10.1) + privacy page; **export→erase→import round-trips** the exact
+  `KnownWordModel` (`LearnerArchiveTests`, the acceptance); opt-in private-CloudKit sync off by
+  default. `URLSession` confined to `PackClient`, enforced by `make audit` (`grep-audit.sh`, §8).
+  All commerce/data views compile for iOS 17. ✅
+- CP-08a+: images/Foundations, scale-up, polish — pending.

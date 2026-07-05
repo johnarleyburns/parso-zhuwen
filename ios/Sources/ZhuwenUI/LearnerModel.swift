@@ -17,7 +17,7 @@ public final class LearnerModel: ObservableObject {
 
     private let stories: [StoryRecord]
     private let lexicon: [WordRecord]
-    private let seed: [Int: Double]
+    private var seed: [Int: Double]
     private let reviewScheduler = ReviewScheduler()
     private let progressEstimator = ProgressEstimator()
     private let questionsProvider: (String) -> [QuestionRecord]
@@ -96,5 +96,41 @@ public final class LearnerModel: ObservableObject {
     public func progress(now: Date = Date()) -> ProgressReport {
         progressEstimator.report(model: model, events: events, lexicon: lexicon,
                                  seed: seed, now: now)
+    }
+
+    // MARK: - Data export / erase / import (FR-10.3)
+
+    /// Snapshot the entire on-device learner history as a portable archive (the export payload).
+    public func exportArchive(at now: Date = Date()) -> LearnerArchive {
+        LearnerArchive(events: events, seed: seed, exportedAt: now)
+    }
+
+    /// Serialize the archive to pretty JSON bytes for a share sheet / Files export.
+    public func exportJSON(at now: Date = Date()) throws -> Data {
+        try exportArchive(at: now).encoded()
+    }
+
+    /// Erase everything: clear the append-only log and re-project an empty model (FR-10.3).
+    /// The placement seed is retained (it is a prior, not history); use `importArchive` to replace it.
+    public func eraseAll() {
+        events = []
+        readStoryIDs = []
+        sealedStoryIDs = []
+        model = KnownWordModel.project([], seed: seed)
+    }
+
+    /// Replace the current state with an imported archive and re-project (I5). Round-trips with
+    /// `exportArchive` — the reprojected model equals the exported one.
+    public func importArchive(_ archive: LearnerArchive) {
+        seed = archive.seed
+        events = archive.events
+        readStoryIDs = Set(archive.events.compactMap { $0.storyID })
+        sealedStoryIDs = []
+        model = KnownWordModel.project(archive.events, seed: archive.seed)
+    }
+
+    /// Import from exported JSON bytes (FR-10.3).
+    public func importJSON(_ data: Data) throws {
+        importArchive(try LearnerArchive.decoded(from: data))
     }
 }
