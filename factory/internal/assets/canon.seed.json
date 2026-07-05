@@ -1,0 +1,178 @@
+[
+  {
+    "canon_id": "C1-shouzhudaitu",
+    "tier": "C1",
+    "title_zh": "守株待兔",
+    "title_en": "Waiting by a Tree for a Rabbit",
+    "source_urls": ["https://zh.wikipedia.org/wiki/守株待兔"],
+    "pd_rationale": "Originates in the Han Feizi (3rd c. BCE); classical Chinese text long in the public domain worldwide.",
+    "beats": [
+      "A farmer sees a rabbit run into a tree stump and die.",
+      "He takes the rabbit home and eats well.",
+      "He abandons his farming to wait by the stump for more rabbits.",
+      "No more rabbits come and his field goes to ruin."
+    ],
+    "characters": [{ "name_zh": "农夫", "gloss": "farmer" }],
+    "cultural_notes": ["Idiom warns against expecting windfalls without effort."],
+    "chengyu": "守株待兔",
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C1-bamiaozhuzhang",
+    "tier": "C1",
+    "title_zh": "拔苗助长",
+    "title_en": "Pulling Up Sprouts to Help Them Grow",
+    "source_urls": ["https://zh.wikipedia.org/wiki/揠苗助长"],
+    "pd_rationale": "From Mencius (4th c. BCE); classical text in the public domain worldwide.",
+    "beats": [
+      "A farmer is impatient that his rice sprouts grow slowly.",
+      "He pulls each sprout upward to lengthen it.",
+      "He returns home exhausted and boasts of his help.",
+      "The next day every sprout has withered and died."
+    ],
+    "characters": [{ "name_zh": "农夫", "gloss": "farmer" }],
+    "cultural_notes": ["Idiom warns against forcing progress against natural pace."],
+    "chengyu": "拔苗助长",
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C1-huashetianzu",
+    "tier": "C1",
+    "title_zh": "画蛇添足",
+    "title_en": "Drawing a Snake and Adding Feet",
+    "source_urls": ["https://zh.wikipedia.org/wiki/画蛇添足"],
+    "pd_rationale": "From the Zhan Guo Ce (Warring States, compiled Han); classical text, public domain.",
+    "beats": [
+      "Several men compete to draw a snake fastest to win a jug of wine.",
+      "The quickest finishes first but adds feet to show off.",
+      "Another finishes and points out snakes have no feet.",
+      "The show-off loses the wine."
+    ],
+    "characters": [],
+    "cultural_notes": ["Idiom warns against ruining a good thing with needless additions."],
+    "chengyu": "画蛇添足",
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-change",
+    "tier": "C2",
+    "title_zh": "嫦娥奔月",
+    "title_en": "Chang'e Flies to the Moon",
+    "source_urls": ["https://zh.wikipedia.org/wiki/嫦娥"],
+    "pd_rationale": "Ancient Chinese mythology attested in Han-era texts; traditional plot in the public domain.",
+    "beats": [
+      "Hou Yi obtains an elixir of immortality.",
+      "Chang'e swallows the elixir to keep it from a thief.",
+      "She rises to the moon and lives there.",
+      "Hou Yi lays out her favorite foods to honor her."
+    ],
+    "characters": [
+      { "name_zh": "嫦娥", "gloss": "Chang'e, the moon goddess" },
+      { "name_zh": "后羿", "gloss": "Hou Yi, the archer" }
+    ],
+    "cultural_notes": ["Associated with the Mid-Autumn Festival."],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-houyishri",
+    "tier": "C2",
+    "title_zh": "后羿射日",
+    "title_en": "Hou Yi Shoots the Suns",
+    "source_urls": ["https://zh.wikipedia.org/wiki/后羿"],
+    "pd_rationale": "Ancient Chinese mythology (Huainanzi and earlier); traditional plot in the public domain.",
+    "beats": [
+      "Ten suns rise together and scorch the earth.",
+      "Crops die and people suffer from the heat.",
+      "The archer Hou Yi shoots down nine of the suns.",
+      "One sun remains and the world is saved."
+    ],
+    "characters": [{ "name_zh": "后羿", "gloss": "Hou Yi, the archer" }],
+    "cultural_notes": ["Explains why there is a single sun."],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C4-simaguang",
+    "tier": "C4",
+    "title_zh": "司马光砸缸",
+    "title_en": "Sima Guang Breaks the Vat",
+    "source_urls": ["https://zh.wikipedia.org/wiki/司马光"],
+    "pd_rationale": "Historical anecdote from the History of Song; classical record in the public domain.",
+    "beats": [
+      "Children play beside a large water vat.",
+      "One child falls in and is drowning.",
+      "Young Sima Guang smashes the vat with a rock.",
+      "The water flows out and the child is saved."
+    ],
+    "characters": [{ "name_zh": "司马光", "gloss": "Sima Guang, a clever boy" }],
+    "cultural_notes": ["Celebrates quick, unconventional thinking."],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C4-caochong",
+    "tier": "C4",
+    "title_zh": "曹冲称象",
+    "title_en": "Cao Chong Weighs the Elephant",
+    "source_urls": ["https://zh.wikipedia.org/wiki/曹冲"],
+    "pd_rationale": "Historical anecdote from the Records of the Three Kingdoms; classical record, public domain.",
+    "beats": [
+      "A huge elephant arrives and everyone wonders its weight.",
+      "No scale is large enough to weigh it.",
+      "Young Cao Chong loads the elephant onto a boat and marks the waterline.",
+      "He then loads stones to the same line and weighs the stones instead."
+    ],
+    "characters": [{ "name_zh": "曹冲", "gloss": "Cao Chong, a clever boy" }],
+    "cultural_notes": ["Celebrates displacement reasoning."],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-guitusaipao",
+    "tier": "C5",
+    "title_zh": "龟兔赛跑",
+    "title_en": "The Tortoise and the Hare",
+    "source_urls": ["https://zh.wikipedia.org/wiki/龟兔赛跑"],
+    "pd_rationale": "Aesop's fable (Perry Index 226), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A hare mocks a slow tortoise.",
+      "They agree to a race.",
+      "The hare races ahead then naps, sure of winning.",
+      "The tortoise keeps going steadily and wins while the hare sleeps."
+    ],
+    "characters": [],
+    "cultural_notes": ["Moral: steady persistence beats careless speed."],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-langlaile",
+    "tier": "C5",
+    "title_zh": "狼来了",
+    "title_en": "The Boy Who Cried Wolf",
+    "source_urls": ["https://zh.wikipedia.org/wiki/狼来了"],
+    "pd_rationale": "Aesop's fable (Perry Index 210), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A shepherd boy lies that a wolf is coming to draw the villagers.",
+      "The villagers rush up and find no wolf; he laughs.",
+      "He repeats the lie and is trusted less.",
+      "When a real wolf comes no one believes him."
+    ],
+    "characters": [],
+    "cultural_notes": ["Moral: liars are not believed even when truthful."],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-beifengyutaiyang",
+    "tier": "C5",
+    "title_zh": "北风与太阳",
+    "title_en": "The North Wind and the Sun",
+    "source_urls": ["https://zh.wikipedia.org/wiki/北风与太阳"],
+    "pd_rationale": "Aesop's fable (Perry Index 46), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "The North Wind and the Sun argue who is stronger.",
+      "They test their strength on a traveler's coat.",
+      "The Wind blows hard but the traveler clutches the coat tighter.",
+      "The Sun shines warmly and the traveler removes the coat; the Sun wins."
+    ],
+    "characters": [],
+    "cultural_notes": ["Moral: gentleness succeeds where force fails."],
+    "origin": "canon"
+  }
+]

@@ -1,0 +1,32 @@
+# Fixture lexicon (CP-01). Columns: id  simp  pinyin  hsk3_level  freq_rank  [char_ids]
+# Word IDs are stable/forever (handoff §4.1). Tab-separated.
+1	山	shān	1	300
+2	水	shuǐ	1	250
+3	人	rén	1	40
+4	猫	māo	1	1200
+5	狗	gǒu	1	1100
+6	树	shù	2	900
+7	花	huā	2	800
+8	鸟	niǎo	2	1500
+9	云	yún	2	1800
+10	星	xīng	2	1700
+11	坚持	jiānchí	4	1600
+12	骄傲	jiāo'ào	4	2100
+13	我	wǒ	1	5
+14	你	nǐ	1	20
+15	他	tā	1	15
+16	是	shì	1	7
+17	的	de	1	1
+18	不	bù	1	8
+19	好	hǎo	1	60
+20	大	dà	1	80
+21	小	xiǎo	1	120
+22	快	kuài	2	400
+23	慢	màn	2	1300
+24	跑	pǎo	2	1400
+25	走	zǒu	1	350
+26	龟	guī	3	3200
+27	兔	tù	3	3300
+28	说	shuō	1	30
+29	看	kàn	1	90
+30	了	le	1	3

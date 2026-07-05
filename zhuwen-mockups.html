@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zhuwen — iOS Mockups (M1–M15)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Zilla+Slab:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1613; --ink2:#4a443d; --ink3:#8a8378;
+  --paper:#faf8f3; --paper2:#f1eee6; --hairline:#e3dfd5;
+  --cinnabar:#c3272b; --cinnabar-soft:#f7e3e2; --jade:#2e7d5b; --jade-soft:#e2efe8;
+  --t1:#c3272b; --t2:#2e7d5b; --t3:#2b5fa3; --t4:#7a4bab; --t0:#8a8378;
+  --gold:#b98a2f;
+  --page:#161310; --page2:#211d18; --pagetxt:#e9e4da;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--page);color:var(--pagetxt);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;padding:48px 40px 80px}
+.zh{font-family:"Songti SC","Noto Serif SC",serif}
+.slab{font-family:"Zilla Slab","Songti SC",serif}
+
+/* ---------- page header ---------- */
+header.doc{max-width:1400px;margin:0 auto 14px;display:flex;align-items:center;gap:22px;border-bottom:1px solid #2e2922;padding-bottom:28px}
+.sealmark{width:74px;height:74px;background:var(--cinnabar);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 #7e1518, inset 0 0 0 3px rgba(255,255,255,.85), inset 0 0 0 5px var(--cinnabar);transform:rotate(-3deg)}
+.sealmark span{color:#fff;font-size:40px;line-height:1;font-weight:900}
+header.doc h1{font-family:"Zilla Slab",serif;font-weight:600;font-size:34px;letter-spacing:.01em}
+header.doc .sub{color:#9d9484;font-size:14px;margin-top:6px;max-width:70ch;line-height:1.5}
+header.doc .sub b{color:var(--pagetxt);font-weight:600}
+.legend{margin:26px auto 42px;max-width:1400px;font-size:13px;color:#9d9484;display:flex;gap:26px;flex-wrap:wrap}
+.legend i{font-style:normal;display:inline-flex;align-items:center;gap:7px}
+.dotc{width:11px;height:11px;border-radius:3px;background:var(--cinnabar);display:inline-block}
+.dotj{width:11px;height:11px;border-radius:3px;background:var(--jade);display:inline-block}
+.dotu{width:22px;height:11px;border-bottom:2px dotted var(--cinnabar);display:inline-block}
+
+/* ---------- grid of phones ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(395px,1fr));gap:54px 40px;max-width:1400px;margin:0 auto}
+figure{display:flex;flex-direction:column;align-items:center;gap:16px}
+figcaption{max-width:375px;font-size:13px;line-height:1.55;color:#9d9484}
+figcaption b{color:var(--pagetxt);font-weight:600;display:block;margin-bottom:3px;font-size:14px}
+figcaption b em{font-style:normal;color:var(--cinnabar);font-family:"Zilla Slab",serif;margin-right:8px}
+
+/* ---------- phone frame ---------- */
+.phone{width:375px;height:812px;background:var(--paper);border-radius:44px;box-shadow:0 0 0 11px #060504,0 0 0 13px #35302a,0 26px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;color:var(--ink);flex:none}
+.status{height:52px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 30px 6px;font-size:14px;font-weight:600;position:relative;z-index:5}
+.status .pill{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:118px;height:32px;background:#060504;border-radius:18px}
+.status .icons{letter-spacing:2px;font-size:12px}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:var(--ink);opacity:.85;border-radius:3px;z-index:9}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column}
+.content{flex:1;overflow:hidden;padding:0 20px;position:relative}
+
+/* nav + tab bar */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 10px;min-height:44px}
+.nav .title-lg{font-size:30px;font-weight:800;letter-spacing:.2px}
+.nav .btn-ic{width:34px;height:34px;border-radius:17px;background:var(--paper2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink2)}
+.nav .back{color:var(--cinnabar);font-size:16px;font-weight:500}
+.tabbar{height:82px;border-top:.5px solid var(--hairline);background:rgba(250,248,243,.96);display:flex;padding:9px 8px 0;z-index:6}
+.tab{flex:1;text-align:center;font-size:10px;color:var(--ink3);font-weight:500}
+.tab .ic{font-size:21px;display:block;margin-bottom:3px}
+.tab.on{color:var(--cinnabar)}
+
+/* generic bits */
+.card{background:#fff;border:.5px solid var(--hairline);border-radius:18px;box-shadow:0 1px 2px rgba(26,22,19,.05)}
+.btn{display:block;text-align:center;background:var(--cinnabar);color:#fff;font-weight:600;font-size:17px;padding:15px;border-radius:14px}
+.btn.ghost{background:var(--paper2);color:var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--paper2);border-radius:100px;padding:6px 12px;font-size:13px;font-weight:500;color:var(--ink2)}
+.chip .zh{font-size:14px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.fit{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--jade);background:var(--jade-soft);padding:4px 9px;border-radius:100px}
+.fit.warn{color:#9a6a12;background:#f6ecd7}
+.new-underline{border-bottom:2.5px dotted var(--cinnabar);padding-bottom:1px}
+ruby{ruby-position:over}
+rt{font-size:11px;color:var(--cinnabar);font-family:-apple-system,sans-serif;font-weight:500;letter-spacing:.02em}
+
+/* seal stamp */
+.seal{width:96px;height:96px;background:var(--cinnabar);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;box-shadow:inset 0 0 0 4px rgba(255,255,255,.9), inset 0 0 0 7px var(--cinnabar);transform:rotate(-4deg);position:relative}
+.seal:after{content:"";position:absolute;inset:0;border-radius:12px;background:
+ radial-gradient(circle at 20% 30%, rgba(255,255,255,.16) 0 6%, transparent 7%),
+ radial-gradient(circle at 75% 65%, rgba(122,16,19,.5) 0 5%, transparent 6%);mix-blend-mode:overlay}
+.seal .zh{color:#fff;font-weight:900;font-size:30px;line-height:1.08;text-align:center}
+.progressdots{display:flex;gap:6px}
+.pd{width:8px;height:8px;border-radius:4px;background:var(--hairline)}
+.pd.on{background:var(--cinnabar)}
+.toggle{width:50px;height:30px;border-radius:16px;background:#d7d3c8;position:relative;flex:none}
+.toggle.on{background:var(--jade)}
+.toggle i{position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:13px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.toggle.on i{left:auto;right:2px}
+.row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;font-size:16px}
+.row+.row{border-top:.5px solid var(--hairline)}
+.row .val{color:var(--ink3);font-size:15px;display:flex;align-items:center;gap:7px}
+.thumb{width:46px;height:46px;border-radius:9px;flex:none;background:repeating-linear-gradient(45deg,#e9e4d8,#e9e4d8 8px,#efeadf 8px,#efeadf 16px);display:flex;align-items:center;justify-content:center;font-size:17px;border:.5px solid var(--hairline)}
+.sechead{font-size:13px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin:20px 4px 8px}
+</style>
+</head>
+<body>
+
+<header class="doc">
+  <div class="sealmark"><span class="zh">朱</span></div>
+  <div>
+    <h1>Zhuwen — screen specifications M1–M15</h1>
+    <div class="sub"><b>Provably-comprehensible Mandarin reader.</b> iOS 17+, SwiftUI, no account, all state on device. Accent color carries meaning only: cinnabar marks <b>new frontier words</b> and <b>earned seals</b>; jade marks <b>fit / known</b>. Story text is Songti SC; UI chrome is SF Pro. Refer to plans/00-requirements-and-design.md for the requirement IDs cited in captions.</div>
+  </div>
+</header>
+<div class="legend">
+  <i><span class="dotc"></span> cinnabar = frontier / earned</i>
+  <i><span class="dotj"></span> jade = known / fit</i>
+  <i><span class="dotu"></span> dotted underline = first encounter of a new word (FR-4.2)</i>
+  <i>📷/🖼 hatched tiles = curated Wikimedia Commons imagery (I6 — every story, never AI)</i>
+  <i>Pinyin tone colors: <span style="color:var(--t1)">1 mā</span> <span style="color:var(--t2)">2 má</span> <span style="color:var(--t3)">3 mǎ</span> <span style="color:var(--t4)">4 mà</span> <span style="color:var(--t0)">0 ma</span></i>
+</div>
+
+<div class="grid">
+
+<!-- ============ M1 WELCOME ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="content" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:86px">
+    <div class="seal" style="width:112px;height:112px"><span class="zh" style="font-size:56px">朱</span></div>
+    <div class="slab" style="font-size:36px;font-weight:600;margin-top:30px">Zhuwen</div>
+    <div style="font-size:16px;color:var(--ink2);margin-top:8px;line-height:1.5;max-width:280px">Read Mandarin that is <b>98% words you already know</b>. The other 2% is how you grow.</div>
+    <div style="margin-top:38px;display:flex;flex-direction:column;gap:12px;font-size:15px;color:var(--ink2)">
+      <div>✓&nbsp; No account — there is nothing to sign into</div>
+      <div>✓&nbsp; No tracking, no ads, ever</div>
+      <div>✓&nbsp; Everything stays on your iPhone</div>
+    </div>
+    <div style="position:absolute;bottom:44px;left:20px;right:20px">
+      <a class="btn">Take the 4-minute placement</a>
+      <a class="btn ghost" style="margin-top:10px">I'm a complete beginner</a>
+    </div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M1</em>Welcome</b>First run only. States the coverage thesis and the privacy invariant (I2) in plain language. "Complete beginner" routes to the scripted Foundations course (FR-1.4), skipping placement.</figcaption>
+</figure>
+
+<!-- ============ M2 PLACEMENT ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="back">Cancel</span><span style="font-size:14px;font-weight:600;color:var(--ink3)">23 of 90</span><span style="width:44px"></span></div>
+  <div class="content" style="text-align:center">
+    <div style="height:4px;background:var(--paper2);border-radius:2px;margin:4px 4px 0"><div style="width:26%;height:4px;background:var(--cinnabar);border-radius:2px"></div></div>
+    <div class="eyebrow" style="margin-top:74px">Do you know this word?</div>
+    <div class="zh" style="font-size:76px;font-weight:700;margin-top:26px;letter-spacing:.04em">医院</div>
+    <div style="font-size:14px;color:var(--ink3);margin-top:18px">Be honest — pinyin and meaning stay hidden.<br>Guessing inflates your level and makes stories harder.</div>
+    <div style="position:absolute;bottom:44px;left:20px;right:20px;display:flex;gap:12px">
+      <a class="btn ghost" style="flex:1">Not yet</a>
+      <a class="btn" style="flex:1;background:var(--jade)">I know it</a>
+    </div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M2</em>Placement — word check</b>Adaptive yes/no vocabulary test, items stratified by HSK-3.0 level × frequency, with pseudoword foils to calibrate overclaiming (FR-1.1). ~4 min. Followed by two short reading passages (FR-1.3, uses the M5 reader).</figcaption>
+</figure>
+
+<!-- ============ M3 PLACEMENT RESULT ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="content" style="padding-top:34px">
+    <div class="eyebrow">Your starting point</div>
+    <div style="display:flex;gap:12px;margin-top:14px">
+      <div class="card" style="flex:1;padding:16px;text-align:center">
+        <div style="font-size:44px;font-weight:800;color:var(--cinnabar)">A2</div>
+        <div style="font-size:12px;color:var(--ink3);margin-top:2px">CEFR reading<br>(estimate)</div>
+      </div>
+      <div class="card" style="flex:1;padding:16px;text-align:center">
+        <div style="font-size:44px;font-weight:800">3</div>
+        <div style="font-size:12px;color:var(--ink3);margin-top:2px">HSK 3.0 level<br>(estimate)</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px;padding:18px">
+      <div style="font-size:15px;font-weight:600">≈ 1,100 words likely known</div>
+      <div style="font-size:12px;color:var(--ink3);margin-top:2px">Probability of knowing a word, by frequency rank</div>
+      <div style="display:flex;align-items:flex-end;gap:3px;height:96px;margin-top:14px">
+        <div style="flex:1;background:var(--jade);height:95%;border-radius:3px"></div>
+        <div style="flex:1;background:var(--jade);height:92%;border-radius:3px"></div>
+        <div style="flex:1;background:var(--jade);height:88%;border-radius:3px"></div>
+        <div style="flex:1;background:var(--jade);height:80%;border-radius:3px;opacity:.9"></div>
+        <div style="flex:1;background:var(--jade);height:66%;border-radius:3px;opacity:.8"></div>
+        <div style="flex:1;background:var(--jade);height:48%;border-radius:3px;opacity:.65"></div>
+        <div style="flex:1;background:var(--jade);height:30%;border-radius:3px;opacity:.5"></div>
+        <div style="flex:1;background:var(--jade);height:17%;border-radius:3px;opacity:.4"></div>
+        <div style="flex:1;background:var(--jade);height:9%;border-radius:3px;opacity:.3"></div>
+        <div style="flex:1;background:var(--jade);height:4%;border-radius:3px;opacity:.25"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-top:6px"><span>most common ←</span><span>rank 11,000 →</span></div>
+    </div>
+    <div style="font-size:13px;color:var(--ink3);margin-top:14px;line-height:1.5;padding:0 4px">This is a seed, not a verdict. Every word you tap — or don't — keeps refining the model as you read.</div>
+    <div style="position:absolute;bottom:44px;left:20px;right:20px"><a class="btn">Pick your first story</a></div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M3</em>Placement — result</b>Logistic knowledge curve over frequency rank seeds the known-word model probabilistically (FR-1.2). Both scales shown; everything labeled "estimate" (FR-6.3 / I4). Copy sets the "every tap teaches the model" expectation (I5).</figcaption>
+</figure>
+
+<!-- ============ M4 TODAY ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="title-lg">Today</span><span class="btn-ic">⚙︎</span></div>
+  <div class="content">
+    <div class="eyebrow">Saturday · July 4</div>
+    <div class="card" style="margin-top:10px;padding:0;position:relative;overflow:hidden">
+      <div style="height:104px;background:repeating-linear-gradient(45deg,#e9e4d8,#e9e4d8 10px,#efeadf 10px,#efeadf 20px);display:flex;align-items:center;justify-content:center;gap:8px;border-bottom:.5px solid var(--hairline)">
+        <span style="font-size:24px">📷</span><span style="font-size:11px;color:var(--ink3);line-height:1.4">Commons cover: <b>wet-market stall, Chengdu</b><br>CC-BY 4.0 · long-press for attribution (I6)</span>
+      </div>
+      <div style="padding:16px 20px 20px">
+      <span class="chip" style="background:var(--cinnabar-soft);color:var(--cinnabar)">Daily life</span>
+      <div class="zh" style="font-size:31px;font-weight:700;margin-top:12px">周末的市场</div>
+      <div style="font-size:14px;color:var(--ink3);margin-top:3px">The Weekend Market · 412 words · ~6 min</div>
+      <div style="display:flex;gap:8px;margin-top:14px;align-items:center">
+        <span class="fit">98.4% known</span>
+        <span class="fit" style="color:var(--cinnabar);background:var(--cinnabar-soft)">6 new words</span>
+        <span class="fit" style="color:var(--ink3);background:var(--paper2)">♪ audio</span>
+      </div>
+      <a class="btn" style="margin-top:16px">Begin reading</a>
+      </div>
+    </div>
+    <div class="sechead">New words in this story</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="chip"><span class="zh">热闹</span> <span style="color:var(--t4)">rè</span><span style="color:var(--t0)">nao</span></span>
+      <span class="chip"><span class="zh">摊位</span> <span style="color:var(--t1)">tān</span><span style="color:var(--t4)">wèi</span></span>
+      <span class="chip"><span class="zh">新鲜</span> <span style="color:var(--t1)">xīn</span><span style="color:var(--t1)">xiān</span></span>
+      <span class="chip">+ 3 more</span>
+    </div>
+    <div class="sechead">This week</div>
+    <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;gap:9px">
+        <div class="seal" style="width:26px;height:26px;border-radius:5px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9), inset 0 0 0 2.5px var(--cinnabar)"><span class="zh" style="font-size:12px">完</span></div>
+        <div class="seal" style="width:26px;height:26px;border-radius:5px;transform:rotate(3deg);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9), inset 0 0 0 2.5px var(--cinnabar)"><span class="zh" style="font-size:12px">完</span></div>
+        <div class="seal" style="width:26px;height:26px;border-radius:5px;transform:rotate(-2deg);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9), inset 0 0 0 2.5px var(--cinnabar)"><span class="zh" style="font-size:12px">完</span></div>
+        <div style="width:26px;height:26px;border-radius:5px;border:1.5px dashed var(--hairline)"></div>
+        <div style="width:26px;height:26px;border-radius:5px;border:1.5px dashed var(--hairline)"></div>
+        <div style="width:26px;height:26px;border-radius:5px;border:1.5px dashed var(--hairline)"></div>
+        <div style="width:26px;height:26px;border-radius:5px;border:1.5px dashed var(--hairline)"></div>
+      </div>
+      <div style="font-size:13px;color:var(--ink3)">3 stories sealed</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:14px;justify-content:center">
+      <span class="chip">Too easy?</span><span class="chip">Too hard?</span>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab on"><span class="ic zh">今</span>Today</div>
+    <div class="tab"><span class="ic zh">书</span>Library</div>
+    <div class="tab"><span class="ic zh">忆</span>Review</div>
+    <div class="tab"><span class="ic zh">进</span>Progress</div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M4</em>Today</b>Engine-selected daily story with honest fit stats (FR-3.2). Cover is the story's mandatory Commons image with long-press attribution (I6/FR-12.4). Week log uses earned seals, not streak guilt — missed days are quiet dashes. "Too easy / too hard" feeds the selector's difficulty controller (risk table §13). Tab icons are hanzi: 今 · 书 · 忆 · 进.</figcaption>
+</figure>
+
+<!-- ============ M5 READER ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="back">‹ Today</span><span style="font-size:15px;font-weight:600" class="zh">周末的市场</span><span class="btn-ic">Aa</span></div>
+  <div class="content">
+    <div class="zh" style="font-size:23px;line-height:2.15;margin-top:16px;font-weight:500">
+      今天是星期六。李明早上七点就起床了，因为他要去市场买菜。市场离他家不远，走路十分钟就到了。<br>
+      市场里人很多，非常<ruby class="new-underline">热闹<rt><span style="color:var(--t4)">rè</span><span style="color:var(--t0)">nao</span></rt></ruby>。李明先买了一些青菜和鸡蛋。然后，他看到一个卖鱼的<ruby class="new-underline">摊位<rt><span style="color:var(--t1)">tān</span><span style="color:var(--t4)">wèi</span></rt></ruby>。卖鱼的人大声说："今天的鱼很<ruby class="new-underline">新鲜<rt><span style="color:var(--t1)">xīn</span><span style="color:var(--t1)">xiān</span></rt></ruby>！"
+    </div>
+    <div style="position:absolute;bottom:24px;left:20px;right:20px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="flex:1;height:4px;background:var(--paper2);border-radius:2px"><div style="width:22%;height:4px;background:var(--cinnabar);border-radius:2px"></div></div>
+        <span style="font-size:12px;color:var(--ink3)">1 / 5</span>
+        <span class="btn-ic" style="width:44px;height:44px;border-radius:22px;background:var(--ink);color:#fff;font-size:18px">♪</span>
+      </div>
+    </div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M5</em>Reader</b>Songti serif at reading size, factory segmentation (FR-4.1). Frontier words get pinyin ruby + dotted cinnabar underline on first occurrence only; all other pinyin off in this mode (FR-4.3, "frontier-only"). Known words carry zero decoration — the page should feel like reading, not studying. ♪ opens M7.</figcaption>
+</figure>
+
+<!-- ============ M6 WORD SHEET ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status" style="opacity:.35"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="content" style="background:rgba(26,22,19,.32);margin:0;padding:0">
+    <div class="zh" style="font-size:23px;line-height:2.15;padding:60px 20px 0;opacity:.25">市场里人很多，非常热闹。李明先买了一些青菜和鸡蛋。</div>
+    <div style="position:absolute;bottom:0;left:0;right:0;background:var(--paper);border-radius:22px 22px 0 0;padding:14px 22px 40px;box-shadow:0 -8px 30px rgba(0,0,0,.18)">
+      <div style="width:36px;height:5px;border-radius:3px;background:var(--hairline);margin:0 auto 16px"></div>
+      <div style="display:flex;align-items:baseline;gap:14px">
+        <span class="zh" style="font-size:44px;font-weight:700">热闹</span>
+        <span style="font-size:22px;font-weight:500"><span style="color:var(--t4)">rè</span><span style="color:var(--t0)">nao</span></span>
+        <span class="btn-ic" style="margin-left:auto;background:var(--cinnabar-soft);color:var(--cinnabar)">🔊</span>
+      </div>
+      <div style="font-size:17px;margin-top:8px">lively; bustling; buzzing with activity</div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <span class="fit warn" style="background:var(--paper2);color:var(--ink2)">HSK 3.0 · Level 3</span>
+        <span class="fit" style="color:var(--cinnabar);background:var(--cinnabar-soft)">New — 1st of 3 encounters</span>
+      </div>
+      <div style="border-top:.5px solid var(--hairline);margin-top:16px;padding-top:14px;display:flex;gap:26px">
+        <div><span class="zh" style="font-size:26px;font-weight:700">热</span><div style="font-size:12px;color:var(--ink3);margin-top:3px"><span style="color:var(--t4)">rè</span> · hot</div></div>
+        <div><span class="zh" style="font-size:26px;font-weight:700">闹</span><div style="font-size:12px;color:var(--ink3);margin-top:3px"><span style="color:var(--t4)">nào</span> · noisy</div></div>
+        <div style="margin-left:auto;font-size:12px;color:var(--ink3);align-self:center;max-width:120px">"hot + noisy" —<br>a bustling scene</div>
+      </div>
+      <div style="background:var(--paper2);border-radius:12px;padding:12px 14px;margin-top:14px">
+        <div class="eyebrow" style="font-size:10px">In this story</div>
+        <div class="zh" style="font-size:16px;margin-top:5px">市场里人很多，非常<b style="color:var(--cinnabar)">热闹</b>。</div>
+      </div>
+      <a class="btn" style="margin-top:16px">Add to review</a>
+    </div>
+  </div>
+  <div class="homebar" style="background:#fff"></div>
+</div></div>
+<figcaption><b><em>M6</em>Word sheet</b>Tap any word (FR-4.1). Tone-colored pinyin, character decomposition with mnemonic gloss, encounter counter ("1st of 3" — the factory recurrence guarantee, §6), example from <i>this</i> story. 🔊 = system TTS (audio layer 2, §7). The tap itself already logged a lookup event (I5); Add-to-review is optional.</figcaption>
+</figure>
+
+<!-- ============ M7 LISTENING ============ -->
+<figure>
+<div class="phone"><div class="screen" style="background:var(--ink)">
+  <div class="status" style="color:#f0ece2"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="back" style="color:#d8d2c4">‹ Reader</span><span style="font-size:15px;font-weight:600;color:#f0ece2" class="zh">周末的市场</span><span class="btn-ic" style="background:#2c2822;color:#d8d2c4">⋯</span></div>
+  <div class="content">
+    <div class="zh" style="font-size:24px;line-height:2.2;margin-top:26px;color:#6f695d;font-weight:500">
+      今天是星期六。<span style="color:#f0ece2">李明早上七点就起床了，</span><span style="background:var(--cinnabar);color:#fff;border-radius:6px;padding:2px 4px">因为</span><span style="color:#4d483e">他要去市场买菜。市场离他家不远，走路十分钟就到了。</span>
+    </div>
+    <div style="position:absolute;bottom:30px;left:20px;right:20px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:22px">
+        <span class="chip" style="background:#2c2822;color:#d8d2c4">0.8×</span>
+        <span class="chip" style="background:#2c2822;color:#d8d2c4">Blind mode&nbsp;&nbsp;<span class="toggle" style="width:34px;height:20px"><i style="width:16px;height:16px"></i></span></span>
+        <span class="chip" style="background:#2c2822;color:#d8d2c4">A-B ↻</span>
+      </div>
+      <div style="height:4px;background:#2c2822;border-radius:2px"><div style="width:14%;height:4px;background:var(--cinnabar);border-radius:2px"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#6f695d;margin-top:5px"><span>0:19</span><span>2:22 · Voice: Xiaoyu (pack)</span></div>
+      <div style="display:flex;justify-content:center;align-items:center;gap:38px;margin-top:18px;color:#f0ece2">
+        <span style="font-size:22px">⟲ 5s</span>
+        <span style="width:66px;height:66px;border-radius:33px;background:var(--cinnabar);display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff">❙❙</span>
+        <span style="font-size:22px">5s ⟳</span>
+      </div>
+    </div>
+  </div>
+  <div class="homebar" style="background:#f0ece2"></div>
+</div></div>
+<figcaption><b><em>M7</em>Listening — karaoke</b>Word-synced highlight from factory forced-alignment timestamps (FR-5.1); tap any word to seek. Speed 0.6–1.2× pitch-preserved. Blind mode hides text for pure listening credit (FR-5.2). If the audio pack isn't installed, this screen runs on AVSpeechSynthesizer with delegate-driven highlight and is labeled "System voice" (§7 layer 3).</figcaption>
+</figure>
+
+<!-- ============ M8 COMPREHENSION + SEAL ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="content" style="text-align:center;padding-top:20px">
+    <div class="eyebrow">Question 3 of 3 · correct</div>
+    <div class="card" style="text-align:left;margin-top:10px;padding:16px">
+      <div class="zh" style="font-size:18px;font-weight:600">李明为什么起得很早？</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:15px">
+        <div class="zh" style="padding:11px 14px;border:.5px solid var(--hairline);border-radius:11px;color:var(--ink3)">他要去上班</div>
+        <div class="zh" style="padding:11px 14px;border-radius:11px;background:var(--jade-soft);border:1.5px solid var(--jade);font-weight:600">他要去市场买菜 ✓</div>
+        <div class="zh" style="padding:11px 14px;border:.5px solid var(--hairline);border-radius:11px;color:var(--ink3)">他要去看朋友</div>
+      </div>
+    </div>
+    <div style="margin-top:34px;display:flex;flex-direction:column;align-items:center">
+      <div class="seal" style="width:120px;height:120px"><span class="zh" style="font-size:34px">读完<br>为证</span></div>
+      <div class="slab" style="font-size:24px;font-weight:600;margin-top:22px">Story sealed</div>
+      <div style="font-size:14px;color:var(--ink2);margin-top:6px;line-height:1.6">3/3 comprehension · 412 words read<br><span class="zh">热闹 · 摊位 · 新鲜</span> + 3 more → now <b>learning</b></div>
+    </div>
+    <div style="position:absolute;bottom:44px;left:20px;right:20px;display:flex;gap:12px">
+      <a class="btn ghost" style="flex:1">Listen again</a>
+      <a class="btn" style="flex:1">Done</a>
+    </div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M8</em>Comprehension → seal</b>Three factory-gated MC questions in Chinese at/below band (FR-6.1). Passing stamps the story — the seal reads 读完为证, "read to completion, hereby attested" — with a stamp-press haptic + rotation animation (fade under Reduce Motion, NFR-6). Frontier words transition to <i>learning</i> and P(known) updates for every word exposed (FR-6.2).</figcaption>
+</figure>
+
+<!-- ============ M9 REVIEW ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="title-lg">Review</span><span style="font-size:14px;font-weight:600;color:var(--ink3)">12 due</span></div>
+  <div class="content">
+    <div class="card" style="margin-top:26px;padding:26px 22px;text-align:center">
+      <div class="eyebrow">From "The Weekend Market" · 2 days ago</div>
+      <div class="zh" style="font-size:24px;line-height:1.9;margin-top:20px">市场里人很多，<br>非常<b style="color:var(--cinnabar)">热闹</b>。</div>
+      <div style="border-top:.5px solid var(--hairline);margin-top:22px;padding-top:18px">
+        <div style="font-size:20px;font-weight:500"><span style="color:var(--t4)">rè</span><span style="color:var(--t0)">nao</span></div>
+        <div style="font-size:16px;margin-top:4px">lively; bustling</div>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--ink3);text-align:center;margin-top:16px">Did you remember it before revealing?</div>
+    <div style="position:absolute;bottom:120px;left:20px;right:20px;display:flex;gap:8px">
+      <a class="btn" style="flex:1;background:#b5443c;font-size:14px;padding:13px 4px">Again<br><span style="font-weight:400;font-size:11px;opacity:.85">10 min</span></a>
+      <a class="btn" style="flex:1;background:#b98a2f;font-size:14px;padding:13px 4px">Hard<br><span style="font-weight:400;font-size:11px;opacity:.85">2 d</span></a>
+      <a class="btn" style="flex:1;background:var(--jade);font-size:14px;padding:13px 4px">Good<br><span style="font-weight:400;font-size:11px;opacity:.85">5 d</span></a>
+      <a class="btn" style="flex:1;background:#3d7db0;font-size:14px;padding:13px 4px">Easy<br><span style="font-weight:400;font-size:11px;opacity:.85">12 d</span></a>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ic zh">今</span>Today</div>
+    <div class="tab"><span class="ic zh">书</span>Library</div>
+    <div class="tab on"><span class="ic zh">忆</span>Review</div>
+    <div class="tab"><span class="ic zh">进</span>Progress</div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M9</em>Review (FSRS)</b>Sentence-context cards only — the word always appears inside a sentence the learner actually read, with source attribution (FR-7.1). FSRS grades show projected intervals. Capped at 20/day by default; framed as maintenance, because the primary spaced repetition is re-encounter through story selection (FR-7.2 / FR-3.2).</figcaption>
+</figure>
+
+<!-- ============ M10 PROGRESS ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="title-lg">Progress</span></div>
+  <div class="content">
+    <div style="display:flex;gap:12px">
+      <div class="card" style="flex:1;padding:14px">
+        <div class="eyebrow">Reading</div>
+        <div style="font-size:32px;font-weight:800;color:var(--cinnabar);margin-top:4px">A2</div>
+        <div style="height:5px;background:var(--paper2);border-radius:3px;margin-top:8px"><div style="width:64%;height:5px;background:var(--cinnabar);border-radius:3px"></div></div>
+        <div style="font-size:11px;color:var(--ink3);margin-top:5px">64% toward B1 · est.</div>
+      </div>
+      <div class="card" style="flex:1;padding:14px">
+        <div class="eyebrow">Listening</div>
+        <div style="font-size:32px;font-weight:800;margin-top:4px">A1<span style="font-size:19px">+</span></div>
+        <div style="height:5px;background:var(--paper2);border-radius:3px;margin-top:8px"><div style="width:82%;height:5px;background:var(--ink2);border-radius:3px"></div></div>
+        <div style="font-size:11px;color:var(--ink3);margin-top:5px">82% toward A2 · est.</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px;padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div><span style="font-size:30px;font-weight:800">1,247</span> <span style="font-size:13px;color:var(--ink3)">words known</span></div>
+        <span class="fit">+38 this week</span>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:4px;height:64px;margin-top:12px">
+        <div style="flex:1;background:var(--paper2);height:30%;border-radius:3px"></div>
+        <div style="flex:1;background:var(--paper2);height:36%;border-radius:3px"></div>
+        <div style="flex:1;background:var(--paper2);height:41%;border-radius:3px"></div>
+        <div style="flex:1;background:var(--paper2);height:44%;border-radius:3px"></div>
+        <div style="flex:1;background:var(--jade);height:52%;border-radius:3px;opacity:.5"></div>
+        <div style="flex:1;background:var(--jade);height:58%;border-radius:3px;opacity:.7"></div>
+        <div style="flex:1;background:var(--jade);height:66%;border-radius:3px;opacity:.85"></div>
+        <div style="flex:1;background:var(--jade);height:78%;border-radius:3px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-top:5px"><span>8 weeks ago</span><span>now</span></div>
+    </div>
+    <div class="card" style="margin-top:12px;padding:16px;display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:15px;font-weight:600">HSK 3.0 · Level 3</div>
+        <div style="font-size:12px;color:var(--ink3);margin-top:2px">213 words to Level 4 coverage</div>
+      </div>
+      <span style="color:var(--ink3)">›</span>
+    </div>
+    <div class="card" style="margin-top:12px;padding:16px">
+      <div class="eyebrow">You can now…</div>
+      <div style="font-size:14px;margin-top:6px;line-height:1.55;color:var(--ink2)">Understand short, simple texts on familiar matters of a concrete type. <span style="color:var(--ink3)">(CEFR A2 can-do · methodology ⓘ)</span></div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ic zh">今</span>Today</div>
+    <div class="tab"><span class="ic zh">书</span>Library</div>
+    <div class="tab"><span class="ic zh">忆</span>Review</div>
+    <div class="tab on"><span class="ic zh">进</span>Progress</div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M10</em>Progress</b>Separate reading and listening band estimates (FR-6.3) — blind-mode listening feeds the right-hand card. Lexicon growth from the learner's own model, HSK-3.0 gap counter, and rotating CEFR can-do statements. The ⓘ opens the evidence page (I4 citation registry). Monthly checkpoint entry lives here for Pro (FR-6.4).</figcaption>
+</figure>
+
+<!-- ============ M11 LIBRARY ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="title-lg">Library</span></div>
+  <div class="content">
+    <div style="background:var(--paper2);border-radius:11px;padding:9px 12px;font-size:15px;color:var(--ink3)">🔍 Search 1,240 stories</div>
+    <div style="display:flex;gap:8px;margin-top:12px;overflow:hidden">
+      <span class="chip" style="background:var(--ink);color:#fff">Best fit</span>
+      <span class="chip">Courses</span><span class="chip">Topic ▾</span><span class="chip">Length ▾</span><span class="chip">♪</span>
+    </div>
+    <div class="card" style="margin-top:14px;padding:14px 16px">
+      <div style="display:flex;gap:12px;align-items:center"><div class="thumb">🖼</div><div style="flex:1"><div style="display:flex;gap:12px;align-items:center"><div class="thumb">📷</div><div style="flex:1"><div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span class="zh" style="font-size:19px;font-weight:700">小城的雨天</span>
+        <span class="fit">99.2% · 3 new</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink3);margin-top:3px">A Rainy Day in a Small Town · 380 words · ♪ · Fiction</div></div></div>
+    </div>
+    <div class="card" style="margin-top:10px;padding:14px 16px">
+      <div style="display:flex;gap:12px;align-items:center"><div class="thumb">📷</div><div style="flex:1"><div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span class="zh" style="font-size:19px;font-weight:700">我的第一次面试</span>
+        <span class="fit">98.7% · 5 new</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink3);margin-top:3px">My First Job Interview · 505 words · ♪ · Work</div></div></div>
+    </div>
+    <div class="card" style="margin-top:10px;padding:14px 16px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span class="zh" style="font-size:19px;font-weight:700">奶奶的菜谱 <span style="font-size:12px;color:var(--ink3);font-family:-apple-system,sans-serif">1/6</span></span>
+        <span class="fit">98.1% · 6 new</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink3);margin-top:3px">Grandma's Recipes — course, ch. 1 of 6 · ♪ · Food</div></div></div>
+    </div>
+    <div class="card" style="margin-top:10px;padding:14px 16px;opacity:.78">
+      <div style="display:flex;gap:12px;align-items:center"><div class="thumb">📷</div><div style="flex:1"><div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span class="zh" style="font-size:19px;font-weight:700">夜市的秘密</span>
+        <span class="fit warn">94.1% · 21 unknown</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink3);margin-top:3px">Secrets of the Night Market · above your level for now</div></div></div>
+    </div>
+    <div style="text-align:center;font-size:12px;color:var(--ink3);margin-top:14px">Fit is computed against <b>your</b> lexicon, on this device.</div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ic zh">今</span>Today</div>
+    <div class="tab on"><span class="ic zh">书</span>Library</div>
+    <div class="tab"><span class="ic zh">忆</span>Review</div>
+    <div class="tab"><span class="ic zh">进</span>Progress</div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M11</em>Library — the lattice</b>Every story shows a personal fit badge: live coverage % against the learner's bitmap (NFR-2) and new-word count. Every row carries its Commons cover thumbnail — no imageless stories exist (I6). Below-threshold stories are visible and honest, never locked (FR-3.3). Courses are chaptered arcs that step the lexicon forward (FR-3.4).</figcaption>
+</figure>
+
+<!-- ============ M12 PAYWALL ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span></span><span class="back">Not now</span></div>
+  <div class="content" style="text-align:center">
+    <div class="seal" style="width:74px;height:74px;margin:8px auto 0"><span class="zh" style="font-size:24px">朱文</span></div>
+    <div class="slab" style="font-size:28px;font-weight:600;margin-top:16px">Zhuwen Pro</div>
+    <div style="font-size:14px;color:var(--ink2);margin-top:6px">Free gives you one fitted story a day.<br>Pro removes the ration.</div>
+    <div style="text-align:left;margin:20px 8px 0;display:flex;flex-direction:column;gap:10px;font-size:15px">
+      <div>✓&nbsp; Unlimited stories, selected for your exact lexicon</div>
+      <div>✓&nbsp; Full library browsing with fit badges</div>
+      <div>✓&nbsp; Audio packs, blind listening &amp; A-B loop</div>
+      <div>✓&nbsp; Full progress dashboard + monthly checkpoints</div>
+      <div>✓&nbsp; Every future level pack included</div>
+    </div>
+    <div style="display:flex;gap:9px;margin-top:24px">
+      <div class="card" style="flex:1;padding:13px 6px"><div style="font-size:13px;font-weight:600">Monthly</div><div style="font-size:17px;font-weight:800;margin-top:3px">$7.99</div></div>
+      <div class="card" style="flex:1.25;padding:13px 6px;border:2px solid var(--cinnabar);position:relative"><div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--cinnabar);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap">30-DAY FREE TRIAL</div><div style="font-size:13px;font-weight:600">Annual</div><div style="font-size:17px;font-weight:800;margin-top:3px">$59.99</div><div style="font-size:11px;color:var(--ink3)">$5.00 / mo</div></div>
+      <div class="card" style="flex:1;padding:13px 6px"><div style="font-size:13px;font-weight:600">Lifetime</div><div style="font-size:17px;font-weight:800;margin-top:3px">$149.99</div></div>
+    </div>
+    <div style="position:absolute;bottom:44px;left:20px;right:20px">
+      <a class="btn">Start 30-day free trial</a>
+      <div style="font-size:11px;color:var(--ink3);margin-top:10px">Billed by the App Store. No account with us — ever.<br>Restore purchases · Terms · Privacy</div>
+    </div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M12</em>Paywall</b>Single factual screen (FR-9.4), dismissible, never shown mid-story. Cladiron playbook: 30-day trial on annual, lifetime justified by near-zero marginal cost (I3). StoreKit 2 only, no receipt server (FR-9.3).</figcaption>
+</figure>
+
+<!-- ============ M13 SETTINGS & PACKS ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="back">‹ Today</span><span style="font-size:16px;font-weight:600">Settings</span><span style="width:44px"></span></div>
+  <div class="content" style="overflow:hidden">
+    <div class="sechead" style="margin-top:6px">Reading</div>
+    <div class="card">
+      <div class="row"><span>Pinyin</span><span class="val">New words only ›</span></div>
+      <div class="row"><span>New-word underline</span><span class="toggle on"><i></i></span></div>
+      <div class="row"><span>Story font size</span><span class="val zh" style="font-size:13px">小 — <b style="font-size:19px">中</b> — 大</span></div>
+    </div>
+    <div class="sechead">Audio</div>
+    <div class="card">
+      <div class="row"><span>Story voice</span><span class="val">Xiaoyu (pack) ›</span></div>
+      <div class="row"><span>Word audio</span><span class="val">System (Tingting) ›</span></div>
+    </div>
+    <div class="sechead">Level packs</div>
+    <div class="card">
+      <div class="row"><span>A1 + Foundations</span><span class="val">48 MB · installed</span></div>
+      <div class="row"><span>A2 · with audio</span><span class="val">96 MB · installed</span></div>
+      <div class="row"><span>B1 · with audio</span><span class="val" style="color:var(--cinnabar);font-weight:600">Get · 132 MB</span></div>
+    </div>
+    <div class="sechead">Your data</div>
+    <div class="card">
+      <div class="row"><span>iCloud sync (private)</span><span class="toggle"><i></i></span></div>
+      <div class="row"><span>Export everything (JSON)</span><span class="val">›</span></div>
+      <div class="row"><span style="color:var(--cinnabar)">Erase everything</span><span></span></div>
+    </div>
+    <div style="font-size:12px;color:var(--ink3);margin-top:12px;line-height:1.5;padding:0 4px">Zhuwen makes no network requests except downloading packs and App Store purchases. There is no account and no analytics. <b>How we verify this ›</b></div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M13</em>Settings & packs</b>Pack manager with anonymous CDN downloads (FR-8), voice selection across the three audio layers (§7), iCloud private-DB sync off by default, export/erase (FR-10). The privacy footer states the network-surface guarantee (I2) and links to the verification page.</figcaption>
+</figure>
+
+<!-- ============ M14 FOUNDATIONS CARD (v2) ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="nav"><span class="back">Pause</span><span style="font-size:14px;font-weight:600;color:var(--ink3)">Foundations · Animals &amp; pets</span><span style="width:44px"></span></div>
+  <div class="content" style="text-align:center">
+    <div style="height:4px;background:var(--paper2);border-radius:2px;margin-top:2px"><div style="width:38%;height:4px;background:var(--cinnabar);border-radius:2px"></div></div>
+    <div style="margin-top:26px;display:inline-flex;align-items:center;gap:10px;background:var(--paper2);border-radius:100px;padding:10px 20px">
+      <span style="font-size:20px">🔊</span><span style="font-size:17px;font-weight:600"><span style="color:var(--t3)">gǒu</span></span>
+    </div>
+    <div style="font-size:13px;color:var(--ink3);margin-top:10px">Tap the matching photo</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px">
+      <div style="aspect-ratio:1;border-radius:16px;background:repeating-linear-gradient(45deg,#e9e4d8,#e9e4d8 10px,#efeadf 10px,#efeadf 20px);display:flex;align-items:center;justify-content:center;flex-direction:column;border:3px solid var(--jade);position:relative">
+        <span style="font-size:30px">📷</span><span style="font-size:11px;color:var(--ink3);padding:0 10px;line-height:1.4;margin-top:4px">Commons photo:<br><b>golden retriever</b></span>
+        <span style="position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:12px;background:var(--jade);color:#fff;font-size:13px;line-height:24px">✓</span>
+      </div>
+      <div style="aspect-ratio:1;border-radius:16px;background:repeating-linear-gradient(45deg,#e9e4d8,#e9e4d8 10px,#efeadf 10px,#efeadf 20px);display:flex;align-items:center;justify-content:center;flex-direction:column;border:.5px solid var(--hairline)">
+        <span style="font-size:30px">📷</span><span style="font-size:11px;color:var(--ink3);padding:0 10px;line-height:1.4;margin-top:4px">Commons photo:<br><b>tabby cat</b></span>
+      </div>
+      <div style="aspect-ratio:1;border-radius:16px;background:repeating-linear-gradient(45deg,#e9e4d8,#e9e4d8 10px,#efeadf 10px,#efeadf 20px);display:flex;align-items:center;justify-content:center;flex-direction:column;border:.5px solid var(--hairline)">
+        <span style="font-size:30px">📷</span><span style="font-size:11px;color:var(--ink3);padding:0 10px;line-height:1.4;margin-top:4px">Commons photo:<br><b>koi fish</b></span>
+      </div>
+      <div style="aspect-ratio:1;border-radius:16px;background:repeating-linear-gradient(45deg,#e9e4d8,#e9e4d8 10px,#efeadf 10px,#efeadf 20px);display:flex;align-items:center;justify-content:center;flex-direction:column;border:.5px solid var(--hairline)">
+        <span style="font-size:30px">📷</span><span style="font-size:11px;color:var(--ink3);padding:0 10px;line-height:1.4;margin-top:4px">Commons photo:<br><b>cup of tea</b></span>
+      </div>
+    </div>
+    <div style="margin-top:16px;display:inline-flex;align-items:baseline;gap:10px">
+      <span class="zh" style="font-size:40px;font-weight:700">狗</span>
+      <span style="font-size:18px;color:var(--t3);font-weight:500">gǒu</span>
+    </div>
+    <div style="font-size:11px;color:var(--ink3);margin-top:8px">Long-press any photo for author &amp; license · images from Wikimedia Commons</div>
+  </div>
+  <div class="homebar"></div>
+</div></div>
+<figcaption><b><em>M14</em>Foundations — recognize step (v2)</b>Zero-to-story bootstrap (§5A). Hear <span class="zh">狗</span>, pick the photo among four already-taught distractors (FR-11.3). Real photographs from Wikimedia Commons through the §8A pipeline — never AI imagery (FR-11.1) — with long-press attribution (FR-11.2). Hatched tiles here are placeholders naming the curated shot. Character + tone-colored pinyin confirm after the choice; the same tap feeds the one shared KnownWordModel.</figcaption>
+</figure>
+
+<!-- ============ M15 STORY PROVENANCE (v2) ============ -->
+<figure>
+<div class="phone"><div class="screen">
+  <div class="status" style="opacity:.35"><span>9:41</span><div class="pill"></div><span class="icons">▮▮▮ ⌁ ▐▋</span></div>
+  <div class="content" style="background:rgba(26,22,19,.32);margin:0;padding:0">
+    <div class="zh" style="font-size:23px;line-height:2.1;padding:60px 20px 0;opacity:.25">从前，有一只兔子，他跑得非常快。他常常笑乌龟…</div>
+    <div style="position:absolute;bottom:0;left:0;right:0;background:var(--paper);border-radius:22px 22px 0 0;padding:14px 22px 40px;box-shadow:0 -8px 30px rgba(0,0,0,.18)">
+      <div style="width:36px;height:5px;border-radius:3px;background:var(--hairline);margin:0 auto 16px"></div>
+      <div style="display:flex;gap:14px">
+        <div style="width:86px;height:112px;border-radius:10px;background:repeating-linear-gradient(45deg,#e9e4d8,#e9e4d8 10px,#efeadf 10px,#efeadf 20px);display:flex;align-items:center;justify-content:center;flex-direction:column;flex:none;border:.5px solid var(--hairline)">
+          <span style="font-size:22px">🖼</span><span style="font-size:9px;color:var(--ink3);text-align:center;padding:0 6px;margin-top:4px">Milo Winter plate, 1919 (PD)</span>
+        </div>
+        <div>
+          <div class="zh" style="font-size:24px;font-weight:700">龟兔赛跑</div>
+          <div style="font-size:13px;color:var(--ink3)">The Tortoise and the Hare</div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="fit" style="color:var(--ink2);background:var(--paper2)">A1 · 210 words</span>
+            <span class="fit">98.9% · 4 new</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--paper2);border-radius:12px;padding:12px 14px;margin-top:16px">
+        <div class="eyebrow" style="font-size:10px">Adapted from the human canon</div>
+        <div style="font-size:14px;margin-top:6px;line-height:1.5">Aesop's fables, <i>The Tortoise and the Hare</i> (Perry Index 226). Retold at your level from the public-domain original. Source &amp; beat sheet ›</div>
+      </div>
+      <div style="background:var(--paper2);border-radius:12px;padding:12px 14px;margin-top:10px">
+        <div class="eyebrow" style="font-size:10px">Cover art</div>
+        <div style="font-size:13px;margin-top:5px;color:var(--ink2)">Milo Winter, <i>The Aesop for Children</i> (1919), public domain, via Wikimedia Commons › </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <span class="chip">Also told at B1</span><span class="chip zh" style="font-size:13px">成语：龟兔赛跑</span>
+      </div>
+      <a class="btn" style="margin-top:16px">Read this story</a>
+    </div>
+  </div>
+  <div class="homebar" style="background:#fff"></div>
+</div></div>
+<figcaption><b><em>M15</em>Story info — provenance (v2)</b>Every narrative story declares its source (FR-12.1): canon entry, tier, and public-domain rationale, with link-out. Cover art is period illustration or Commons photography with attribution (FR-12.4), never AI-generated. Multi-band retellings of the same canon entry are cross-linked (FR-12.3); chengyu tie-ins surface where the tale <i>is</i> the idiom's origin (§6A.1).</figcaption>
+</figure>
+
+</div>
+
+</body>
+</html>
