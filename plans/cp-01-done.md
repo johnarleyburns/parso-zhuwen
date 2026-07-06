@@ -50,6 +50,11 @@ OK: pack a2 v0.0.0, lexicon fixture-hsk3.0-v0, 11 files
 ```
 
 ## Deviations / notes (for the next agent)
+- **Scale (MC-4 annotation):** CP-01 shipped **10** fixture stories (one A2 retelling per
+  seed canon entry), not the 20 the original scope implied. This was a walking-skeleton
+  choice — the pipeline, not content volume, was the CP-01 goal — and **content scale-up is
+  deferred to CP-09** (de-risked by the MC-2 spike harness). The `10 stories packed` figure
+  is asserted by the e2e test and reflected in the README status table.
 - CP-01 stories use the deterministic `FixtureProvider` (flagged `fixture:true`); real
   LLM retelling is CP-09. Stub images carry complete (fixture) provenance and pass I6.
 - Canon `source_urls` use real Wikipedia article URLs (verifiable); revision-permalink

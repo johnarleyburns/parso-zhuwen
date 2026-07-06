@@ -30,6 +30,19 @@ frontier words (Hu & Nation 98% coverage; Krashen i+1). See
 | CP-08 | Commerce & data: CDN **`PackClient`** (anonymous GET, verify-before-install, pack manager), **StoreKit 2** SKUs + `FeatureGate` (FR-9.3), paywall (M12), settings (M13), **export/erase/import** (FR-10.3), opt-in private **CloudKit** sync (off by default). Network-surface CI grep green; export→erase→import round-trips | ✅ done |
 | CP-08a…CP-10 | images/Foundations, scale-up, polish | ⏳ pending |
 
+### Mid-course correction (MC series — post-CP-08 audit remediation, `02-midcourse-correction.md`)
+
+| MC | Scope | State |
+|----|-------|-------|
+| MC-0 | **License** → GPLv3 + App Store §7 additional permission; `NOTICE-APP-STORE.md`, `CONTRIBUTING.md` (DCO) | ✅ done |
+| MC-1 | **In-repo `@main` app** (`ios/App`, XcodeGen, `make app`) + **durable SwiftData event log** (`ZhuwenPersistence`); I5 persistence-tested across relaunch + checkpoint | ✅ done |
+| MC-2 | **Content-reality harness**: `lexicon ingest`→`lexicon.sqlite`, `segment eval`, LLM `gen` client (DeepSeek), repair loop (§4.4), `spike` — hermetic. Live-LLM + HSK data **blocked** (`plans/blockers.md`) | ✅ done (harness) |
+| MC-3 | **Hosted CI** (`factory-ci.yml`, DCO check, artifact) + iOS weekly job; **resumable idempotent work queue** (`internal/workq`, `zhuwenctl run --resume`, kill-9 e2e) | ✅ done |
+| MC-4 | **Docs truth-up**: monorepo decision record, CP-01 10-vs-20 note, `internal/brief`/`gen` tests, this table | ✅ done |
+
+**Revised remaining order (post-MC-4):** CP-08a (images + Foundations) → CP-08 (already
+landed) → CP-09 (content scale-up, opened by importing `plans/mc-2-spike-report.md`) → CP-10.
+
 **Works today:** the Go factory builds a signed 10-story fixture pack from the embedded
 canon registry and verifies it (I1 + I6 enforced and tested). The iOS `ZhuwenPacks`
 package verifies that pack in Swift (minisign + hashes + content-level I6), rejects the
