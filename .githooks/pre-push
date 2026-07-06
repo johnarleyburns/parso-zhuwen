@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+# Pre-push quality gate: runs the heavier integration/e2e suites, the NFR-2 benchmark, and the
+# network-surface audit locally so only good builds reach the remote. GitHub Actions runs the fast
+# unit subset; this hook guards everything else on `git push`.
+#
+# Enable once per clone:  git config core.hooksPath .githooks
+set -e
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+echo "pre-push ▸ iOS: full swift test + NFR-2 bench + network-surface audit"
+make -C "$ROOT/ios" test
+make -C "$ROOT/ios" bench
+make -C "$ROOT/ios" audit
+
+echo "pre-push ▸ factory: fmt + vet + full test (incl. cmd/ e2e)"
+make -C "$ROOT/factory" ci
+
+echo "pre-push ▸ OK — integration/e2e green, pushing"

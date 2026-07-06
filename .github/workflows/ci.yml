@@ -1,0 +1,48 @@
+name: CI
+
+# Unit tests only (fast signal on every push and PR). The heavier integration/e2e suites
+# (factory cmd/ e2e, iOS placement-simulation + karaoke-drift acceptance), the NFR-2 selector
+# benchmark, and the network-surface audit are guarded locally by the pre-push hook
+# (.githooks/pre-push) so a broken build can never be pushed in the first place.
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  factory-unit:
+    name: factory unit (Go)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: factory
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: factory/go.mod
+          cache-dependency-path: factory/go.sum
+      - name: gofmt check
+        run: test -z "$(gofmt -l .)"
+      - name: vet
+        run: go vet ./...
+      - name: unit tests
+        run: make test-unit
+
+  ios-unit:
+    name: iOS unit (Swift)
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      - name: swift version
+        run: swift --version
+      - name: unit tests
+        run: make test-unit
+      - name: network-surface audit (I2)
+        run: make audit

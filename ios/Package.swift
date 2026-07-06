@@ -21,5 +21,6 @@ let package = Package(
         .testTarget(name: "ZhuwenPacksTests", dependencies: ["ZhuwenPacks"]),
         .testTarget(name: "ZhuwenCoreTests", dependencies: ["ZhuwenCore", "ZhuwenPacks"]),
         .testTarget(name: "ZhuwenAudioTests", dependencies: ["ZhuwenAudio", "ZhuwenPacks"]),
+        .testTarget(name: "ZhuwenUITests", dependencies: ["ZhuwenUI", "ZhuwenCore", "ZhuwenPacks"]),
     ]
 )

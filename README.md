@@ -24,7 +24,8 @@ frontier words (Hu & Nation 98% coverage; Krashen i+1). See
 | CP-05 | Placement (M1–M3): pseudoword foils, logistic fit over frequency rank → probabilistic **seed** of `KnownWordModel` + CEFR/HSK estimate (FR-1.2), reading-passage refinement (FR-1.3), absolute-beginner → Foundations (FR-1.4), **re-placement merge** (FR-1.5) | ✅ done |
 | CP-06 | Listening (M7): factory forced-alignment stage → per-word timings in packs; `ZhuwenAudio` karaoke (position→token resolver), speeds 0.6×–1.2×, blind mode, labeled system-TTS fallback (FR-5). Highlight drift <120 ms over a 3-min story | ✅ done |
 | CP-07 | Loop completion: comprehension → **seal** (M8), on-device **FSRS** review (M9, sentence-context, 20/day cap), Progress (M10) with **both-skill** reading+listening CEFR estimates. P(known) updates verified for exposure/lookup/grade paths | ✅ done |
-| CP-08…CP-10 | commerce, images/Foundations, scale-up, polish | ⏳ pending |
+| CP-08 | Commerce & data: CDN **`PackClient`** (anonymous GET, verify-before-install, pack manager), **StoreKit 2** SKUs + `FeatureGate` (FR-9.3), paywall (M12), settings (M13), **export/erase/import** (FR-10.3), opt-in private **CloudKit** sync (off by default). Network-surface CI grep green; export→erase→import round-trips | ✅ done |
+| CP-08a…CP-10 | images/Foundations, scale-up, polish | ⏳ pending |
 
 **Works today:** the Go factory builds a signed 10-story fixture pack from the embedded
 canon registry and verifies it (I1 + I6 enforced and tested). The iOS `ZhuwenPacks`
@@ -50,7 +51,19 @@ words as sentence-context cards (capped 20/day) whose grades fold into per-word 
 Progress dashboard (M10) reports **separate** reading and listening CEFR estimates (blind listens
 feed the listening band only), lexicon growth, and the HSK-3.0 gap. The known-word model stays a
 replayable projection of the append-only log — including FSRS state — and **P(known) updates are
-verified for the exposure / lookup / grade paths**. All of
+verified for the exposure / lookup / grade paths**. The **commerce & data** layer (CP-08) adds the
+app's *only* network surface — a `PackClient` in `ZhuwenPacks` that downloads additional band packs
+over an **anonymous, ephemeral** CDN GET and **verifies them (minisign + hashes + I6) before
+installing** (a tampered download is rejected, nothing lands on disk), backing a size/delete/
+re-download pack manager — plus **StoreKit 2** SKUs ($7.99/mo · $59.99/yr + 30-day trial · $149.99
+lifetime, no receipt server) behind a pure `FeatureGate` (free = the full method at one story/day;
+Pro removes the throttle and opens the lattice), a single dismissible **paywall** (M12), a
+**settings** screen (M13, FR-10.1 toggles + pack manager + privacy page), **export everything
+(JSON) / erase / import** (FR-10.3 — the learner archive is just the ordered event log + seed, so
+`export→erase→import` round-trips the exact `KnownWordModel`), and an **opt-in, off-by-default**
+private-CloudKit sync of learner state only. `URLSession` is confined to `PackClient` and enforced
+by a `grep-audit.sh` network-surface gate (no third-party SDKs, no `http://`, no secrets in
+UserDefaults — invariant I2). All of
 this is covered by `swift test`. Generation uses a deterministic fixture provider (real LLM
 retelling is CP-09); pack audio bytes are fixture stubs until the CosyVoice render (CP-09); the
 `@main` app target + XCUITests are assembled in Xcode over the tested packages.
@@ -85,10 +98,26 @@ without a simulator:
 cd ios
 make test         # swift test — ZhuwenPacks + ZhuwenCore + ZhuwenAudio (unit / integration / e2e vs Fixtures/)
 make bench        # NFR-2 selector benchmark under -c release (the 50 ms gate)
+make audit        # network-surface CI gate (I2): URLSession only in PackClient, no SDKs / http:// / secrets
 make build-ios    # xcodebuild the SwiftUI shell for the iOS 17 simulator
 ```
 
 See [`ios/README.md`](ios/README.md) for the package breakdown.
+
+## Continuous integration
+
+- **GitHub Actions** ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs the **unit
+  tests only** on every push and PR — `factory` Go units (`make test-unit` = `go test
+  ./internal/...`, plus `gofmt`/`vet`) on Linux, and iOS Swift units (`make test-unit`, skipping
+  the simulation/drift acceptance suites) plus the network-surface audit on macOS. Fast signal.
+- **Pre-push hook** ([`.githooks/pre-push`](.githooks/pre-push)) guards the heavier
+  **integration/e2e** suites, the NFR-2 benchmark, and the audit locally, so a broken build can
+  never be pushed: it runs `ios` full `swift test` + `make bench` + `make audit` and factory
+  `make ci` (incl. the `cmd/` e2e). Enable once per clone:
+
+  ```sh
+  git config core.hooksPath .githooks
+  ```
 
 ## Testing philosophy
 Every feature ships with unit, integration, and e2e tests. In the factory these are Go

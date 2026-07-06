@@ -1,7 +1,16 @@
-.PHONY: test vet fmt build fixtures ci clean
+.PHONY: test test-unit test-e2e vet fmt build fixtures ci clean
 
 test:
 	go test ./...
+
+# Unit tests only (GitHub Actions): the package units under internal/. The cmd/ e2e suite is
+# guarded by the pre-push hook (.githooks/pre-push), so only good builds get pushed.
+test-unit:
+	go test ./internal/...
+
+# e2e (cmd/zhuwenctl): pipeline resumability + verify round-trip. Guarded on git push.
+test-e2e:
+	go test ./cmd/...
 
 vet:
 	go vet ./...

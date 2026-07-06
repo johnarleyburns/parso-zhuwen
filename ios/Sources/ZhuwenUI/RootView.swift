@@ -57,7 +57,14 @@ struct TodayView: View {
             }
             .navigationTitle("Zhuwen")
             .toolbar {
-                Button("Placement") { showPlacement = true }
+                ToolbarItem(placement: .cancellationAction) {
+                    NavigationLink { model.makeSettingsView() } label: {
+                        Image(systemName: "gearshape")
+                    }
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Placement") { showPlacement = true }
+                }
             }
             .sheet(isPresented: $showPlacement) {
                 PlacementView(model: model.makePlacementFlow()) { _ in showPlacement = false }
