@@ -132,3 +132,11 @@ event log with a **replayable** projection (I5), tested for determinism.
 Each checkpoint must also satisfy the standing criteria in
 [`plans/exit-criteria.md`](plans/exit-criteria.md) (this README kept current; `make build`
 → `bin/`; green `make ci`).
+
+## License
+**GPLv3 with an App Store additional permission** (see [`LICENSE`](LICENSE) and
+[`NOTICE-APP-STORE.md`](NOTICE-APP-STORE.md)). The project is honestly copyleft under the
+GNU GPL version 3; a GPLv3 §7 additional permission explicitly authorizes distribution
+through Apple's App Store / TestFlight so it can also ship there. Contributions require a
+DCO sign-off (`git commit -s`) and are accepted under GPLv3 + that exception — see
+[`CONTRIBUTING.md`](CONTRIBUTING.md).
