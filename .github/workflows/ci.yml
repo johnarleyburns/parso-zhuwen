@@ -1,39 +1,24 @@
 name: CI
 
-# Unit tests only (fast signal on every push and PR). The heavier integration/e2e suites
-# (factory cmd/ e2e, iOS placement-simulation + karaoke-drift acceptance), the NFR-2 selector
-# benchmark, and the network-surface audit are guarded locally by the pre-push hook
-# (.githooks/pre-push) so a broken build can never be pushed in the first place.
+# iOS (Swift) CI. The Go factory has its own workflow (factory-ci.yml). Per-push/PR runs the
+# fast unit subset + the network-surface audit (I2). The heavier integration/e2e suites
+# (placement-simulation, karaoke-drift, 50k-event replay perf) + the NFR-2 benchmark are
+# guarded locally by the pre-push hook AND re-run here on a weekly schedule as a hosted signal
+# (MC-3: per-PR macOS unit kept because it is fast; weekly job covers the heavy suites).
 on:
   push:
   pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC — weekly full iOS suite
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
-  factory-unit:
-    name: factory unit (Go)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: factory
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: factory/go.mod
-          cache-dependency-path: factory/go.sum
-      - name: gofmt check
-        run: test -z "$(gofmt -l .)"
-      - name: vet
-        run: go vet ./...
-      - name: unit tests
-        run: make test-unit
-
   ios-unit:
     name: iOS unit (Swift)
+    if: github.event_name != 'schedule'
     runs-on: macos-14
     defaults:
       run:
@@ -44,5 +29,23 @@ jobs:
         run: swift --version
       - name: unit tests
         run: make test-unit
+      - name: network-surface audit (I2)
+        run: make audit
+
+  ios-full:
+    name: iOS full suite (weekly)
+    if: github.event_name == 'schedule'
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      - name: swift version
+        run: swift --version
+      - name: full test suite (incl. integration + replay perf)
+        run: make test
+      - name: NFR-2 selector benchmark
+        run: make bench
       - name: network-surface audit (I2)
         run: make audit

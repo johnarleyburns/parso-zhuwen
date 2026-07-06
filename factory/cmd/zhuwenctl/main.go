@@ -20,6 +20,7 @@ import (
 	"github.com/parso/zhuwen-factory/internal/repair"
 	"github.com/parso/zhuwen-factory/internal/segment"
 	"github.com/parso/zhuwen-factory/internal/spike"
+	"github.com/parso/zhuwen-factory/internal/workq"
 )
 
 func main() {
@@ -35,6 +36,8 @@ func main() {
 		err = cmdSegment(os.Args[2:])
 	case "spike":
 		err = cmdSpike(os.Args[2:])
+	case "run":
+		err = cmdRun(os.Args[2:])
 	case "build":
 		err = cmdBuild(os.Args[2:])
 	case "verify":
@@ -63,6 +66,9 @@ usage:
   zhuwenctl spike [--n <k>] [--live]
                                     run canon->brief->gen->segment->gate->repair (MC-2);
                                     --live uses the LLM (needs ZHUWEN_LLM_API_KEY), else fixtures
+  zhuwenctl run --db <path> [--stage gen] [--resume]
+                                    run the resumable SQLite work queue over the canon (MC-3);
+                                    --resume recovers a crashed run without double-charging
   zhuwenctl build --out <pack>      run the pipeline and emit a signed .zpack
                     [--pub <file>]  also write the verify pubkey (default <pack>.pub)
                     [--key <file>]  sign with a minisign secret key
@@ -219,6 +225,89 @@ func cmdSpike(args []string) error {
 			fmt.Printf("  %-24s %d\n", c, sum.FailureCodeHist[c])
 		}
 	}
+	return nil
+}
+
+// cmdRun implements `run`: drive the resumable SQLite work queue (MC-3). Each canon entry is a
+// `gen` unit; processing calls the fixture provider (deterministic) and caches the result. A
+// crash mid-stage (ZHUWEN_CRASH_AFTER=n, used by the kill-9 e2e) leaves the queue recoverable:
+// re-running with --resume completes the rest without recomputing or double-charging.
+func cmdRun(args []string) error {
+	dbPath := flagValue(args, "--db")
+	if dbPath == "" {
+		return fmt.Errorf("run: --db <path> required")
+	}
+	stage := flagValue(args, "--stage")
+	if stage == "" {
+		stage = "gen"
+	}
+	resume := hasFlag(args, "--resume")
+
+	lex, reg, spec, _, _, err := buildHarness()
+	if err != nil {
+		return err
+	}
+	provider := gen.NewFixtureProvider(lex, assets.FillerSimps())
+	briefs := map[string]brief.Brief{}
+	for _, e := range reg.All() {
+		briefs[e.CanonID] = brief.Compile(e, spec)
+	}
+
+	q, err := workq.Open(dbPath)
+	if err != nil {
+		return err
+	}
+	defer q.Close()
+
+	for ref := range briefs {
+		if err := q.Enqueue(stage, ref); err != nil {
+			return err
+		}
+	}
+	if resume {
+		if n, err := q.ResetStale(); err != nil {
+			return err
+		} else if n > 0 {
+			fmt.Printf("run: recovered %d stale unit(s) from a prior crash\n", n)
+		}
+	}
+
+	crashAfter := -1
+	if v := os.Getenv("ZHUWEN_CRASH_AFTER"); v != "" {
+		fmt.Sscanf(v, "%d", &crashAfter)
+	}
+	hook := func(processed int, ref string) {
+		if crashAfter >= 0 && processed >= crashAfter {
+			fmt.Printf("run: simulated crash after %d unit(s), mid-stage on %s\n", processed, ref)
+			os.Exit(137) // 128 + SIGKILL(9)
+		}
+	}
+
+	stageFn := func(q *workq.Queue, ref string) (string, int, error) {
+		b, ok := briefs[ref]
+		if !ok {
+			return "", 0, fmt.Errorf("run: no brief for ref %q", ref)
+		}
+		// Idempotency key per brief+candidate: a retry after a crash records at most one charge
+		// (models the upstream API's idempotency-key dedup), so kill -9 cannot double-charge.
+		if _, err := q.Charge(stage + ":" + ref); err != nil {
+			return "", 0, err
+		}
+		story, err := provider.Retell(b)
+		if err != nil {
+			return "", 0, err
+		}
+		return story.Text, 0, nil
+	}
+
+	if err := q.Process(stage, 4, stageFn, hook); err != nil {
+		return err
+	}
+	summary, err := q.Summary(stage)
+	if err != nil {
+		return err
+	}
+	fmt.Println("run:", summary)
 	return nil
 }
 

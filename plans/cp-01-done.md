@@ -62,3 +62,15 @@ OK: pack a2 v0.0.0, lexicon fixture-hsk3.0-v0, 11 files
 Freeze `schema.sql`, adopt the minisign detached-signature format, and produce the golden
 pack suite — unsigned / tampered / **imageless (I6)** — that the reference verifier must
 reject, then vendor `Fixtures/` into the iOS repo.
+
+## Back-fill (MC-3): resumability acceptance now met
+CP-01's plan called for a resumable, idempotent SQLite work queue (handoff §4 preamble;
+"resumable after kill -9 mid-stage"), but CP-01 shipped a pure-function synchronous pipeline
+and that acceptance was never actually satisfied. **MC-3 back-fills it:** `internal/workq`
+provides the `work(id, stage, ref, state, attempts, last_error, updated_at)` queue with a
+result cache and idempotency-keyed charge dedup, driven by `zhuwenctl run --db … [--resume]`.
+The kill-9 acceptance is now a passing e2e test
+(`cmd/zhuwenctl/workqueue_e2e_test.go::TestE2E_WorkQueueResumesAfterKillWithoutDoubleCharge`):
+SIGKILL-equivalent crash mid-stage → resume → identical final results, no double-charged gen
+calls. See `plans/mc-3-done.md`.
+
