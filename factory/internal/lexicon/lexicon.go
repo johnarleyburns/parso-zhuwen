@@ -155,3 +155,45 @@ func (l *Lexicon) DictEntries() map[string]int {
 	}
 	return m
 }
+
+// FromWords builds a Lexicon from an in-memory word slice (e.g. read back from
+// lexicon.sqlite). Word IDs and simplified forms must be unique and positive; the
+// resulting Lexicon is immutable and indexed like Ingest's output.
+func FromWords(version string, words []Word) (*Lexicon, error) {
+	l := &Lexicon{
+		version: version,
+		byID:    map[int]*Word{},
+		bySimp:  map[string]*Word{},
+	}
+	seenID := map[int]bool{}
+	seenSimp := map[string]bool{}
+	for _, w := range words {
+		if w.ID <= 0 {
+			return nil, fmt.Errorf("lexicon: invalid id %d for %q", w.ID, w.Simp)
+		}
+		if w.Simp == "" {
+			return nil, fmt.Errorf("lexicon: empty simp for id %d", w.ID)
+		}
+		if seenID[w.ID] {
+			return nil, fmt.Errorf("lexicon: duplicate id %d", w.ID)
+		}
+		if seenSimp[w.Simp] {
+			return nil, fmt.Errorf("lexicon: duplicate simp %q", w.Simp)
+		}
+		seenID[w.ID] = true
+		seenSimp[w.Simp] = true
+		l.words = append(l.words, w)
+		if w.ID > l.maxID {
+			l.maxID = w.ID
+		}
+	}
+	if len(l.words) == 0 {
+		return nil, fmt.Errorf("lexicon: no words")
+	}
+	for i := range l.words {
+		w := &l.words[i]
+		l.byID[w.ID] = w
+		l.bySimp[w.Simp] = w
+	}
+	return l, nil
+}
