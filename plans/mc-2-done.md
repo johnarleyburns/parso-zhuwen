@@ -43,3 +43,16 @@ is now a **direct** dependency of `internal/lexicon`. No new module added; CI-sa
 - [x] EC-1 README updated (new commands + blocker pointer)
 - [x] EC-2 `make build` → `bin/zhuwenctl` runs the new subcommands
 - [x] EC-3 `make ci` green; unit tests for every new feature
+
+## Follow-up (B-1 + B-2 resolved, 2026-07-06)
+Owner cleared the HSK licensing and supplied a DeepSeek key, so the spike was run for real:
+- **Real HSK-3.0 lexicon shipped** (`factory/data/hsk3.0/level-*.tsv`, 12,283 forms =
+  vocabulary + recognition characters, exact per-level mapping) via new `cmd/hskingest`;
+  ingested to `lexicon.sqlite` (`hsk3.0-v1`). Provenance in `factory/data/README.md`.
+- **Live DeepSeek spike run** with real repair-feedback (`gen.RepairProvider`), the completed
+  grammar whitelist (把/被 added), and the real HSK band (`pipeline.BuildHSKBand`).
+- **Outcome = ADJUST** (`plans/mc-2-spike-report.md`): 0% pass at A2 and B1 — naive prompting
+  can't hold the I1 budget; CP-09 needs vocabulary-constrained decoding, token-level repair,
+  budget-aware briefs, and proper-noun handling. **Gate budgets left untouched (I1).**
+- Blockers B-1 and B-2 marked RESOLVED.
+

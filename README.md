@@ -36,7 +36,7 @@ frontier words (Hu & Nation 98% coverage; Krashen i+1). See
 |----|-------|-------|
 | MC-0 | **License** → GPLv3 + App Store §7 additional permission; `NOTICE-APP-STORE.md`, `CONTRIBUTING.md` (DCO) | ✅ done |
 | MC-1 | **In-repo `@main` app** (`ios/App`, XcodeGen, `make app`) + **durable SwiftData event log** (`ZhuwenPersistence`); I5 persistence-tested across relaunch + checkpoint | ✅ done |
-| MC-2 | **Content-reality harness**: `lexicon ingest`→`lexicon.sqlite`, `segment eval`, LLM `gen` client (DeepSeek), repair loop (§4.4), `spike` — hermetic. Live-LLM + HSK data **blocked** (`plans/blockers.md`) | ✅ done (harness) |
+| MC-2 | **Content-reality harness**: `lexicon ingest`→`lexicon.sqlite`, `segment eval`, LLM `gen` client (DeepSeek), repair loop (§4.4), `spike`. Real **HSK-3.0 lexicon** ingested (`hsk3.0-v1`, 12,283 forms) + **live DeepSeek spike** run — outcome **ADJUST** (`plans/mc-2-spike-report.md`) | ✅ done |
 | MC-3 | **Hosted CI** (`factory-ci.yml`, DCO check, artifact) + iOS weekly job; **resumable idempotent work queue** (`internal/workq`, `zhuwenctl run --resume`, kill-9 e2e) | ✅ done |
 | MC-4 | **Docs truth-up**: monorepo decision record, CP-01 10-vs-20 note, `internal/brief`/`gen` tests, this table | ✅ done |
 
@@ -109,12 +109,13 @@ make ci           # fmt + vet + test
 make fixtures     # regenerate ios/Fixtures (DEV-signed, reproducible)
 ```
 
-Command reference: `zhuwenctl {lexicon | lexicon ingest | segment eval | spike | build | verify | keygen}` —
-run `zhuwenctl` with no args for usage. The `lexicon ingest` command expects an
-**operator-supplied, license-cleared** HSK-3.0 TSV (the raw lists are not distributed
-with the repo — see `plans/blockers.md` B-1 and `factory/data/README.md`). The `spike
---live` path requires `ZHUWEN_LLM_API_KEY` and is never exercised in CI. Pack format is
-documented in [`factory/PACK_FORMAT.md`](factory/PACK_FORMAT.md).
+Command reference: `zhuwenctl {lexicon | lexicon ingest | segment eval | spike | run | build | verify | keygen}` —
+run `zhuwenctl` with no args for usage. The real **HSK-3.0 lexicon** ships in-repo under
+`factory/data/hsk3.0/` (12,283 forms, exact per-level mapping; redistribution authorized —
+see `factory/data/README.md`) and is built with `zhuwenctl lexicon ingest --src data/hsk3.0
+--out lexicon.sqlite --version hsk3.0-v1` (regenerable via `cmd/hskingest`). The `spike --live`
+path reads `ZHUWEN_LLM_API_KEY` or `~/.deepseek-api-key` and is never exercised in CI. Pack
+format is documented in [`factory/PACK_FORMAT.md`](factory/PACK_FORMAT.md).
 
 ## iOS — build and test
 

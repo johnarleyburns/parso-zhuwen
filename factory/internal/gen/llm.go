@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 	"time"
@@ -26,10 +27,18 @@ type LLMConfig struct {
 	HTTPClient  *http.Client
 }
 
-// LLMConfigFromEnv reads the client config from the environment. Returns ok=false if no key is
-// set, so callers can fall back to the fixture provider and CI stays hermetic.
+// LLMConfigFromEnv reads the client config from the environment, falling back to the house
+// key file ~/.deepseek-api-key when ZHUWEN_LLM_API_KEY is unset. Returns ok=false if no key is
+// found anywhere, so callers can fall back to the fixture provider and CI stays hermetic.
 func LLMConfigFromEnv() (LLMConfig, bool) {
 	key := os.Getenv("ZHUWEN_LLM_API_KEY")
+	if key == "" {
+		if home, err := os.UserHomeDir(); err == nil {
+			if b, err := os.ReadFile(filepath.Join(home, ".deepseek-api-key")); err == nil {
+				key = strings.TrimSpace(string(b))
+			}
+		}
+	}
 	cfg := LLMConfig{
 		BaseURL:     envOr("ZHUWEN_LLM_BASE_URL", "https://api.deepseek.com/v1"),
 		Model:       envOr("ZHUWEN_LLM_MODEL", "deepseek-chat"),
@@ -49,8 +58,9 @@ func envOr(k, def string) string {
 // LLMProvider retells briefs via a real LLM. It implements gen.Provider so the pipeline is
 // unchanged; the app contains no generation code (I3) — this runs in the factory only.
 type LLMProvider struct {
-	cfg LLMConfig
-	lex *lexicon.Lexicon
+	cfg    LLMConfig
+	lex    *lexicon.Lexicon
+	tokens int // cumulative token usage across all Retell calls (spike cost metric)
 }
 
 // NewLLMProvider builds a provider. lex maps the brief's frontier/known word IDs to the actual
@@ -60,6 +70,37 @@ func NewLLMProvider(cfg LLMConfig, lex *lexicon.Lexicon) *LLMProvider {
 		cfg.HTTPClient = &http.Client{Timeout: 60 * time.Second}
 	}
 	return &LLMProvider{cfg: cfg, lex: lex}
+}
+
+// TokensUsed returns cumulative LLM token usage (for the spike's cost-per-story metric).
+func (p *LLMProvider) TokensUsed() int { return p.tokens }
+
+// RepairProvider is a Provider that can regenerate with feedback from a failed gate result — the
+// prior candidate plus a targeted rewrite prompt naming the exact violations (§4.4). The repair
+// loop uses this when available so iterations actually converge instead of blindly retrying.
+type RepairProvider interface {
+	Provider
+	RetellRepair(b brief.Brief, prior, repairPrompt string) (Story, error)
+}
+
+// RetellRepair regenerates the story given the previous (failed) candidate and a repair prompt.
+// It sends the original brief contract, the prior attempt (as the assistant turn), then the
+// repair instructions (as the next user turn) so the model edits rather than starts over.
+func (p *LLMProvider) RetellRepair(b brief.Brief, prior, repairPrompt string) (Story, error) {
+	if p.cfg.APIKey == "" {
+		return Story{}, fmt.Errorf("gen: no API key; refusing network call")
+	}
+	msgs := p.BuildMessages(b)
+	msgs = append(msgs,
+		ChatMessage{Role: "assistant", Content: prior},
+		ChatMessage{Role: "user", Content: repairPrompt})
+	text, tokens, err := p.complete(msgs)
+	if err != nil {
+		return Story{}, err
+	}
+	p.tokens += tokens
+	return Story{CanonID: b.CanonID, TitleZH: b.TitleZH, TitleEN: b.TitleEN,
+		Band: b.Band, Register: b.Register, Text: text}, nil
 }
 
 // ChatMessage is one OpenAI-style chat message.
@@ -176,35 +217,11 @@ func (p *LLMProvider) RetellWithUsage(b brief.Brief) (Story, int, error) {
 	if p.cfg.APIKey == "" {
 		return Story{}, 0, fmt.Errorf("gen: no API key (set ZHUWEN_LLM_API_KEY); refusing network call")
 	}
-	reqBody, err := json.Marshal(chatRequest{
-		Model:       p.cfg.Model,
-		Messages:    p.BuildMessages(b),
-		Temperature: p.cfg.Temperature,
-	})
+	text, tokens, err := p.complete(p.BuildMessages(b))
 	if err != nil {
 		return Story{}, 0, err
 	}
-	url := strings.TrimRight(p.cfg.BaseURL, "/") + "/chat/completions"
-	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(reqBody))
-	if err != nil {
-		return Story{}, 0, err
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+p.cfg.APIKey)
-
-	resp, err := p.cfg.HTTPClient.Do(req)
-	if err != nil {
-		return Story{}, 0, err
-	}
-	defer resp.Body.Close()
-	var buf bytes.Buffer
-	if _, err := buf.ReadFrom(resp.Body); err != nil {
-		return Story{}, 0, err
-	}
-	text, tokens, err := parseCompletion(buf.Bytes())
-	if err != nil {
-		return Story{}, 0, err
-	}
+	p.tokens += tokens
 	return Story{
 		CanonID:  b.CanonID,
 		TitleZH:  b.TitleZH,
@@ -214,4 +231,34 @@ func (p *LLMProvider) RetellWithUsage(b brief.Brief) (Story, int, error) {
 		Text:     text,
 		Fixture:  false,
 	}, tokens, nil
+}
+
+// complete posts a chat-completion request and returns the trimmed content + token usage.
+func (p *LLMProvider) complete(msgs []ChatMessage) (string, int, error) {
+	reqBody, err := json.Marshal(chatRequest{
+		Model:       p.cfg.Model,
+		Messages:    msgs,
+		Temperature: p.cfg.Temperature,
+	})
+	if err != nil {
+		return "", 0, err
+	}
+	url := strings.TrimRight(p.cfg.BaseURL, "/") + "/chat/completions"
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(reqBody))
+	if err != nil {
+		return "", 0, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+p.cfg.APIKey)
+
+	resp, err := p.cfg.HTTPClient.Do(req)
+	if err != nil {
+		return "", 0, err
+	}
+	defer resp.Body.Close()
+	var buf bytes.Buffer
+	if _, err := buf.ReadFrom(resp.Body); err != nil {
+		return "", 0, err
+	}
+	return parseCompletion(buf.Bytes())
 }

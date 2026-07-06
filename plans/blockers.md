@@ -1,59 +1,30 @@
 # Blockers
 
-Open items that require a human decision, a secret, or license-cleared data that an agent
-cannot supply without violating an invariant (handoff §0.7). Work around these by using the
-fixture data; do not fabricate the real inputs.
+Open items requiring a human decision, a secret, or license-cleared data that an agent cannot
+supply without violating an invariant (handoff §0.7). Resolved items are kept for the record.
 
 ---
 
-## B-1 — HSK-3.0 word list is not license-cleared for redistribution (MC-2.1)
+## B-1 — HSK-3.0 word list licensing — ✅ RESOLVED (2026-07-06)
 
-**Status:** OPEN — owner action required.
-
-**What.** MC-2.1 calls for ingesting the real HSK-3.0 vocabulary lists (~11k words) into
-`lexicon.sqlite`. The `zhuwenctl lexicon ingest` command and its input format are implemented
-and tested, and `factory/data/README.md` documents the expected source layout. **The raw HSK
-lists themselves are not committed**, because the redistribution terms of the official
-《国际中文教育中文水平等级标准》(HSK 3.0 / CLPS, MoE / CLEC, 2021) list are unclear — it is a
-government-published standard without an explicit open-content licence.
-
-**Why this is a blocker, not a workaround.** Handoff §0.7 forbids shipping content whose
-licensing is unclear; §0.4's license floor (Apache-2.0/MIT/BSD/MPL for code, per §8A for
-content) does not obviously cover this list. Shipping it would create the exact App
-Store/relicensing friction MC-0 just removed.
-
-**Owner action.** Provide one of:
-1. A written confirmation that the specific list file(s) may be redistributed under the
-   project licence (or a compatible content licence), plus the file(s); or
-2. A permissively-licensed equivalent frequency/level list (e.g. a CC-BY corpus-derived list)
-   to ingest instead; or
-3. A decision to keep the real list *out of the repo* and have operators supply it locally at
-   build time (the ingest command already supports `--src <dir>`), shipping only derived,
-   non-copyrightable artifacts (stable integer IDs + attributes) if that is cleared.
-
-**Until then.** The fixture lexicon (`internal/assets/lexicon.tsv`,
-`fixture-hsk3.0-v0`, 32 words) remains the tested lexicon for the whole pipeline; the real
-`lexicon_version` ships as a new version once cleared (the pack format already supports it).
+The project owner independently verified that the official HSK-3.0 vocabulary list may be
+redistributed as part of a language-learning application. The real lexicon is now committed at
+`factory/data/hsk3.0/level-*.tsv` (12,283 unique written forms — vocabulary + recognition
+characters — mapped exactly to the official per-level standard) and ingested to `lexicon.sqlite`
+(`lexicon_version = hsk3.0-v1`) via `zhuwenctl lexicon ingest`. Provenance, source, retrieval
+date, and the ID scheme are recorded in `factory/data/README.md`. The `cmd/hskingest` tool
+regenerates the TSVs from source. The fixture lexicon remains the tested lexicon (CI stays
+hermetic); the real lexicon ships as its own `lexicon_version`.
 
 ---
 
-## B-2 — Live LLM run for the MC-2 content spike needs an API key (MC-2.3/2.5)
+## B-2 — Live LLM spike — ✅ RESOLVED (2026-07-06); outcome = **ADJUST**
 
-**Status:** OPEN — owner action required.
+The DeepSeek key (`~/.deepseek-api-key`, read by `LLMConfigFromEnv`) was used to run the live
+MC-2 spike against the real HSK lexicon. Results and the go/adjust decision are in
+`plans/mc-2-spike-report.md`. **Headline: with naive prompting + a max-4 repair loop, DeepSeek
+does not yet produce stories that pass the I1 coverage gate at any tested band (0% pass).** Per
+MC-2.6 (discard ≫ 20%), the decision is **ADJUST — do NOT scale CP-09 content on this approach,
+and do NOT loosen the gate budgets (I1).** Concrete CP-09 recommendations are in the report.
 
-**What.** The MC-2 spike's core question — can a real Chinese-strong LLM retell canon beats
-inside a real band lexicon at acceptable pass-rates — requires a live model call. The
-`LLMProvider` (OpenAI-compatible; DeepSeek per house pattern) and the repair loop are
-implemented and hermetically tested (prompt construction + response parsing), but the actual
-generation is gated behind an explicit `--live` flag and reads its key from the environment
-(`ZHUWEN_LLM_API_KEY`); **no key is committed** (I2), and CI never takes the network path.
-
-**Owner action.** Run the spike locally with a key set, or provide a key/endpoint the
-maintainer can use, then fill in the live metrics in `plans/mc-2-spike-report.md`
-(pass rate @ iter 0, mean repair iterations, discard rate, token cost/story, failure-code
-histogram) and record the go/adjust decision. **Do not loosen gate budgets to hit the
-numbers (I1).**
-
-**Until then.** `plans/mc-2-spike-report.md` records the harness-readiness result and the
-mechanics validated with the deterministic fixture provider; the live-LLM section is marked
-BLOCKED on this item.
+No key is committed (I2); the LLM path stays behind `--live` and is never exercised in CI.
