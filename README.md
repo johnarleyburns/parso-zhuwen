@@ -156,6 +156,10 @@ See [`ios/README.md`](ios/README.md) for the package breakdown.
   ```sh
   git config core.hooksPath .githooks
   ```
+- **`testflight.yml`** (iOS) — builds the in-repo `@main` app (`ios/App`) and uploads it to
+  **TestFlight** (`guru.parso.zhuwen`) using App Store Connect API **cloud signing** (no
+  pre-made provisioning profile). Manual (`gh workflow run testflight.yml`) or on a `v*` tag.
+  See [`plans/testflight-done.md`](plans/testflight-done.md).
 
 ## Testing philosophy
 Every feature ships with unit, integration, and e2e tests. In the factory these are Go
