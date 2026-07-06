@@ -19,7 +19,7 @@ public enum Rating: Int, Equatable, CaseIterable {
 /// The memory state of one review card (FR-2.1 "FSRS memory params"). It is *derived* — the app
 /// never stores it out of band; it is reconstructed by folding the `.reviewGrade` events (I5),
 /// so the whole learner state stays a replayable projection of the log.
-public struct FSRSCard: Equatable {
+public struct FSRSCard: Equatable, Codable {
     public var stability: Double   // days; larger ⇒ remembered longer
     public var difficulty: Double  // 1…10
     public var due: Date           // next review time

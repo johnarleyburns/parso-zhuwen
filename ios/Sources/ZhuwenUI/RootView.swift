@@ -38,10 +38,12 @@ struct TodayView: View {
                             NavigationLink {
                                 ReaderView(model: model.readerModel(for: story),
                                            listen: { model.makeListeningModel(for: story) },
-                                           comprehension: { model.makeComprehensionView(for: story) })
+                                           comprehension: { model.makeComprehensionView(for: story) },
+                                           tapWord: { model.learner.lookup($0, storyID: story.id) })
                             } label: {
                                 StoryRow(story: story)
                             }
+                            .accessibilityIdentifier("todayStory")
                         }
                         if let m = model.manifest {
                             Section("Pack") {
@@ -83,7 +85,8 @@ struct LibraryView: View {
                 NavigationLink {
                     ReaderView(model: model.readerModel(for: story),
                                listen: { model.makeListeningModel(for: story) },
-                               comprehension: { model.makeComprehensionView(for: story) })
+                               comprehension: { model.makeComprehensionView(for: story) },
+                               tapWord: { model.learner.lookup($0, storyID: story.id) })
                 } label: {
                     StoryRow(story: story)
                 }

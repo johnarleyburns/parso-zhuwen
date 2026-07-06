@@ -14,6 +14,8 @@ public final class LearnerModel: ObservableObject {
     @Published public private(set) var events: [Event]
     @Published public private(set) var readStoryIDs: Set<String>
     @Published public private(set) var sealedStoryIDs: Set<String>
+    /// How many word lookups have been recorded (for the XCUITest persistence smoke test).
+    @Published public private(set) var lookupCount: Int = 0
 
     private let stories: [StoryRecord]
     private let lexicon: [WordRecord]
@@ -21,25 +23,34 @@ public final class LearnerModel: ObservableObject {
     private let reviewScheduler = ReviewScheduler()
     private let progressEstimator = ProgressEstimator()
     private let questionsProvider: (String) -> [QuestionRecord]
+    /// Optional durable mirror of the append-only log (SwiftData `PersistentEventLog` at the
+    /// `@main` layer). When present, every recorded event is also appended to it, and erase/import
+    /// rewrite it — so the log survives relaunch and is replayed back into `events` at launch (I5).
+    private let sink: EventSink?
 
     public init(stories: [StoryRecord], lexicon: [WordRecord],
                 seed: PlacementSeed = .empty, events: [Event] = [],
+                sink: EventSink? = nil,
                 questions: @escaping (String) -> [QuestionRecord] = { _ in [] }) {
         self.stories = stories
         self.lexicon = lexicon
         self.seed = seed.priors
         self.events = events
+        self.sink = sink
         self.questionsProvider = questions
         self.model = KnownWordModel.project(events, seed: seed.priors)
         self.readStoryIDs = Set(events.compactMap { $0.storyID })
         self.sealedStoryIDs = []
+        self.lookupCount = events.filter { $0.kind == .lookup }.count
     }
 
     /// Append one event and re-project (I5: state is a pure function of the log).
     public func record(_ event: Event) {
         events.append(event)
+        sink?.append(event)
         model.apply(event)
         if let sid = event.storyID { readStoryIDs.insert(sid) }
+        if event.kind == .lookup { lookupCount += 1 }
     }
 
     private func record(_ newEvents: [Event]) {
@@ -116,6 +127,8 @@ public final class LearnerModel: ObservableObject {
         events = []
         readStoryIDs = []
         sealedStoryIDs = []
+        lookupCount = 0
+        sink?.replaceAll([])
         model = KnownWordModel.project([], seed: seed)
     }
 
@@ -126,6 +139,8 @@ public final class LearnerModel: ObservableObject {
         events = archive.events
         readStoryIDs = Set(archive.events.compactMap { $0.storyID })
         sealedStoryIDs = []
+        lookupCount = archive.events.filter { $0.kind == .lookup }.count
+        sink?.replaceAll(archive.events)
         model = KnownWordModel.project(archive.events, seed: archive.seed)
     }
 

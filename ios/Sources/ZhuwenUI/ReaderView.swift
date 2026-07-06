@@ -8,15 +8,18 @@ public struct ReaderView: View {
     private let model: ReaderModel
     private let listen: (() -> ListeningModel)?
     private let comprehension: (() -> ComprehensionView)?
+    private let tapWord: ((Int) -> Void)?
     @State private var selectedGloss: Gloss?
     @State private var showListening = false
     @State private var showComprehension = false
 
     public init(model: ReaderModel, listen: (() -> ListeningModel)? = nil,
-                comprehension: (() -> ComprehensionView)? = nil) {
+                comprehension: (() -> ComprehensionView)? = nil,
+                tapWord: ((Int) -> Void)? = nil) {
         self.model = model
         self.listen = listen
         self.comprehension = comprehension
+        self.tapWord = tapWord
     }
 
     public var body: some View {
@@ -75,10 +78,12 @@ public struct ReaderView: View {
         if let wordID = token.wordID {
             Button {
                 selectedGloss = model.gloss(for: wordID)
+                tapWord?(wordID)
             } label: {
                 text.underline(token.isFrontier, pattern: .dot, color: .cinnabar)
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("readerToken")
         } else {
             text // literals / proper nouns are not tappable in CP-03
         }
