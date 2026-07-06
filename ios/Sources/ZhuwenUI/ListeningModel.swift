@@ -136,7 +136,8 @@ public final class ListeningModel: ObservableObject {
         stopTimer()
         // ~60 Hz sample of the narrator clock (drift << the 120 ms budget; see KaraokeDriftTests).
         let t = Timer(timeInterval: 1.0 / 60.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.refreshHighlight() }
+            guard let self else { return }
+            Task { @MainActor in self.refreshHighlight() }
         }
         RunLoop.main.add(t, forMode: .common)
         timer = t
