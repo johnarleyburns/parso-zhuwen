@@ -23,13 +23,21 @@ concurrency:
 jobs:
   testflight:
     name: build & upload to TestFlight
-    runs-on: macos-14
+    runs-on: macos-15
     env:
       APP_DIR: ios/App
       SCHEME: ZhuwenApp
       BUNDLE_ID: guru.parso.zhuwen
     steps:
       - uses: actions/checkout@v4
+
+      - name: Select latest Xcode
+        run: |
+          set -euo pipefail
+          latest="$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -1)"
+          echo "Using $latest"
+          sudo xcode-select -s "$latest/Contents/Developer"
+          xcodebuild -version
 
       - name: Install XcodeGen
         run: brew install xcodegen
@@ -90,7 +98,7 @@ jobs:
             CODE_SIGN_STYLE=Automatic \
             CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES \
             CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
-            clean archive
+            archive
 
       - name: Export .ipa
         working-directory: ${{ env.APP_DIR }}
