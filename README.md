@@ -81,6 +81,8 @@ make build        # compile commands into ./bin  (EC-2)
 ./bin/zhuwenctl lexicon
 ./bin/zhuwenctl build  --out /tmp/a2.zpack        # signed fixture pack (+ /tmp/a2.zpack.pub)
 ./bin/zhuwenctl verify /tmp/a2.zpack --pub /tmp/a2.zpack.pub
+./bin/zhuwenctl segment eval                        # FMM coverage + ambiguity report
+./bin/zhuwenctl spike --n 5                         # MC-2: canon->gen->gate->repair harness
 
 make test         # unit + integration + e2e (go test ./...)
 make vet
@@ -89,9 +91,12 @@ make ci           # fmt + vet + test
 make fixtures     # regenerate ios/Fixtures (DEV-signed, reproducible)
 ```
 
-Command reference: `zhuwenctl {lexicon | build | verify | keygen}` — run `zhuwenctl`
-with no args for usage. Pack format is documented in
-[`factory/PACK_FORMAT.md`](factory/PACK_FORMAT.md).
+Command reference: `zhuwenctl {lexicon | lexicon ingest | segment eval | spike | build | verify | keygen}` —
+run `zhuwenctl` with no args for usage. The `lexicon ingest` command expects an
+**operator-supplied, license-cleared** HSK-3.0 TSV (the raw lists are not distributed
+with the repo — see `plans/blockers.md` B-1 and `factory/data/README.md`). The `spike
+--live` path requires `ZHUWEN_LLM_API_KEY` and is never exercised in CI. Pack format is
+documented in [`factory/PACK_FORMAT.md`](factory/PACK_FORMAT.md).
 
 ## iOS — build and test
 

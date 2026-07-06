@@ -7,9 +7,19 @@ import (
 	"os"
 
 	"github.com/parso/zhuwen-factory/internal/assets"
+	"github.com/parso/zhuwen-factory/internal/brief"
+	"github.com/parso/zhuwen-factory/internal/canon"
 	"github.com/parso/zhuwen-factory/internal/fixtures"
+	"github.com/parso/zhuwen-factory/internal/gate"
+	"github.com/parso/zhuwen-factory/internal/gen"
+	"github.com/parso/zhuwen-factory/internal/grammar"
+	"github.com/parso/zhuwen-factory/internal/lexicon"
 	"github.com/parso/zhuwen-factory/internal/minisign"
 	"github.com/parso/zhuwen-factory/internal/pack"
+	"github.com/parso/zhuwen-factory/internal/pipeline"
+	"github.com/parso/zhuwen-factory/internal/repair"
+	"github.com/parso/zhuwen-factory/internal/segment"
+	"github.com/parso/zhuwen-factory/internal/spike"
 )
 
 func main() {
@@ -20,7 +30,11 @@ func main() {
 	var err error
 	switch os.Args[1] {
 	case "lexicon":
-		err = cmdLexicon()
+		err = cmdLexicon(os.Args[2:])
+	case "segment":
+		err = cmdSegment(os.Args[2:])
+	case "spike":
+		err = cmdSpike(os.Args[2:])
 	case "build":
 		err = cmdBuild(os.Args[2:])
 	case "verify":
@@ -42,6 +56,13 @@ func usage() {
 
 usage:
   zhuwenctl lexicon                 ingest the fixture lexicon and report
+  zhuwenctl lexicon ingest --src <dir|file> --out <lexicon.sqlite> --version <v>
+                                    ingest operator-supplied HSK-3.0 TSV(s) -> lexicon.sqlite
+                                    (real lists are license-gated; see plans/blockers.md B-1)
+  zhuwenctl segment eval            report FMM token/type coverage + ambiguity over the canon
+  zhuwenctl spike [--n <k>] [--live]
+                                    run canon->brief->gen->segment->gate->repair (MC-2);
+                                    --live uses the LLM (needs ZHUWEN_LLM_API_KEY), else fixtures
   zhuwenctl build --out <pack>      run the pipeline and emit a signed .zpack
                     [--pub <file>]  also write the verify pubkey (default <pack>.pub)
                     [--key <file>]  sign with a minisign secret key
@@ -51,12 +72,33 @@ usage:
 `)
 }
 
-func cmdLexicon() error {
+func cmdLexicon(args []string) error {
+	if len(args) > 0 && args[0] == "ingest" {
+		return cmdLexiconIngest(args[1:])
+	}
 	lex, err := assets.Lexicon()
 	if err != nil {
 		return err
 	}
 	fmt.Printf("lexicon %s: %d words, max id %d\n", lex.Version(), lex.Len(), lex.MaxID())
+	return nil
+}
+
+func cmdLexiconIngest(args []string) error {
+	src := flagValue(args, "--src")
+	out := flagValue(args, "--out")
+	version := flagValue(args, "--version")
+	if src == "" || out == "" || version == "" {
+		return fmt.Errorf("lexicon ingest: --src <dir|file>, --out <lexicon.sqlite>, --version <v> all required")
+	}
+	lex, err := lexicon.IngestDir(src, version)
+	if err != nil {
+		return err
+	}
+	if err := lexicon.WriteSQLite(lex, out); err != nil {
+		return err
+	}
+	fmt.Printf("ingested %s: %d words (max id %d) -> %s\n", version, lex.Len(), lex.MaxID(), out)
 	return nil
 }
 
@@ -76,6 +118,108 @@ func hasFlag(args []string, name string) bool {
 		}
 	}
 	return false
+}
+
+// buildHarness assembles the fixture lexicon, canon registry, A2 band, segmenter, and gate
+// checker shared by `segment eval` and `spike`. Everything is deterministic and offline.
+func buildHarness() (*lexicon.Lexicon, *canon.Registry, brief.BandSpec, *segment.Segmenter, repair.PipelineChecker, error) {
+	fail := func(err error) (*lexicon.Lexicon, *canon.Registry, brief.BandSpec, *segment.Segmenter, repair.PipelineChecker, error) {
+		return nil, nil, brief.BandSpec{}, nil, repair.PipelineChecker{}, err
+	}
+	lex, err := assets.Lexicon()
+	if err != nil {
+		return fail(err)
+	}
+	reg, err := assets.Canon()
+	if err != nil {
+		return fail(err)
+	}
+	spec, err := pipeline.BuildFixtureBand(lex, assets.FrontierSimps())
+	if err != nil {
+		return fail(err)
+	}
+	seg := segment.New(lex.DictEntries(), nil)
+	checker := repair.PipelineChecker{
+		Seg:      seg,
+		Band:     gate.Band{Known: spec.Known, Frontier: spec.Frontier, Grammar: spec.Grammar},
+		Detector: grammar.MarkerDetector{},
+		MaxID:    lex.MaxID(),
+		Cfg:      gate.DefaultConfig(),
+	}
+	return lex, reg, spec, seg, checker, nil
+}
+
+// cmdSegment implements `segment eval`: generate the fixture stories, then report FMM
+// coverage + ambiguity hotspots so the jieba-parity decision (MC-2.2) is data-driven.
+func cmdSegment(args []string) error {
+	if len(args) == 0 || args[0] != "eval" {
+		return fmt.Errorf("segment: expected `segment eval`")
+	}
+	lex, reg, spec, seg, _, err := buildHarness()
+	if err != nil {
+		return err
+	}
+	provider := gen.NewFixtureProvider(lex, assets.FillerSimps())
+	var texts []string
+	for _, e := range reg.All() {
+		b := brief.Compile(e, spec)
+		story, err := provider.Retell(b)
+		if err != nil {
+			return err
+		}
+		texts = append(texts, story.Text)
+	}
+	rep := seg.Eval(texts, 20)
+	fmt.Printf("segment eval (%s, %d stories):\n", lex.Version(), rep.Stories)
+	fmt.Printf("  tokens: %d (word %d, proper %d, literal %d)\n",
+		rep.TotalTokens, rep.WordTokens, rep.ProperTokens, rep.LiteralTokens)
+	fmt.Printf("  distinct in-lexicon types: %d\n", rep.DistinctTypes)
+	fmt.Printf("  token coverage: %.4f   literal (unresolved) rate: %.4f\n", rep.TokenCoverage, rep.LiteralRate)
+	fmt.Printf("  ambiguity hotspots: %d\n", len(rep.Hotspots))
+	for _, h := range rep.Hotspots {
+		fmt.Printf("    story %d @rune %d: chose %q, overlaps %q\n", h.StoryIdx, h.Rune, h.Chosen, h.Overlap)
+	}
+	return nil
+}
+
+// cmdSpike implements `spike`: run the content-reality harness and print the metrics.
+func cmdSpike(args []string) error {
+	n := 5
+	if v := flagValue(args, "--n"); v != "" {
+		fmt.Sscanf(v, "%d", &n)
+	}
+	live := hasFlag(args, "--live")
+
+	lex, reg, spec, _, checker, err := buildHarness()
+	if err != nil {
+		return err
+	}
+
+	var provider gen.Provider
+	if live {
+		cfg, ok := gen.LLMConfigFromEnv()
+		if !ok {
+			return fmt.Errorf("spike --live: ZHUWEN_LLM_API_KEY not set")
+		}
+		provider = gen.NewLLMProvider(cfg, lex)
+		fmt.Printf("spike: LIVE run (model %s @ %s)\n", cfg.Model, cfg.BaseURL)
+	} else {
+		provider = gen.NewFixtureProvider(lex, assets.FillerSimps())
+		fmt.Println("spike: fixture provider (deterministic; harness/mechanics only)")
+	}
+
+	sum := spike.Run(reg, spec, provider, checker, n)
+	fmt.Printf("entries=%d  pass@0=%d (%.0f%%)  passed=%d  discarded=%d (%.0f%%)  mean-repair-iters=%.2f  tokens=%d\n",
+		sum.Entries, sum.PassAtIter0, 100*sum.PassRateAtIter0(),
+		sum.Passed, sum.Discarded, 100*sum.DiscardRate(),
+		sum.MeanRepairIterations(), sum.TotalTokens)
+	if len(sum.FailureCodeHist) > 0 {
+		fmt.Println("failure-code histogram:")
+		for _, c := range sum.SortedFailureCodes() {
+			fmt.Printf("  %-24s %d\n", c, sum.FailureCodeHist[c])
+		}
+	}
+	return nil
 }
 
 // runFixturePipeline builds the CP-01 fixture pack (shared with genfixtures).
