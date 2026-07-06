@@ -14,7 +14,7 @@ name: testflight
 on:
   workflow_dispatch:
   push:
-    branches: ["testflight/**", "testflight-ci"]
+    tags: ["v*"]
 
 concurrency:
   group: testflight-${{ github.ref }}
