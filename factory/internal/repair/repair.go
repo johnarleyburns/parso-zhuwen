@@ -111,9 +111,21 @@ func (r *Reprocessor) Run(b brief.Brief, checker gateChecker) Fate {
 	f.Candidates = make([]gen.Story, 0, MaxIterations+1)
 	f.FailReasons = make([][]string, MaxIterations+1)
 	f.FailCodes = make([][]string, MaxIterations+1)
+	var prior gen.Story
+	var lastResult gate.Result
 
 	for iter := 0; iter <= MaxIterations; iter++ {
-		story, err := r.Provider.Retell(b)
+		var story gen.Story
+		var err error
+		if iter == 0 || prior.Text == "" {
+			story, err = r.Provider.Retell(b)
+		} else if rp, ok := r.Provider.(gen.RepairProvider); ok {
+			// Feed the prior candidate + a targeted rewrite prompt so the model actually fixes
+			// the named violations instead of regenerating blindly (§4.4).
+			story, err = rp.RetellRepair(b, prior.Text, RewritePrompt(lastResult, b))
+		} else {
+			story, err = r.Provider.Retell(b)
+		}
 		if err != nil {
 			// A provider error is not a gate failure — treat as unrecoverable discard.
 			f.FailReasons[iter] = []string{fmt.Sprintf("provider error: %v", err)}
@@ -121,6 +133,7 @@ func (r *Reprocessor) Run(b brief.Brief, checker gateChecker) Fate {
 		}
 		f.Candidates = append(f.Candidates, story)
 		f.Iterations = iter
+		prior = story
 
 		res := checker.Check(story.Text)
 		if res.Pass {
@@ -129,6 +142,7 @@ func (r *Reprocessor) Run(b brief.Brief, checker gateChecker) Fate {
 		}
 		f.FailReasons[iter] = res.Reasons
 		f.FailCodes[iter] = res.Codes
+		lastResult = res
 	}
 	return f // discarded after MaxIterations
 }

@@ -187,6 +187,34 @@ func BuildFixtureBand(lex *lexicon.Lexicon, frontierSimps []string) (brief.BandS
 	}, nil
 }
 
+// BuildHSKBand derives a band from the real HSK-3.0 lexicon: the known set is every word at or
+// below knownMaxLevel, the frontier-candidate set is every word at exactly frontierLevel, and the
+// grammar whitelist is the A2 set. This is the real content-bet band for the MC-2 spike — e.g.
+// A2 = known HSK 1–2, frontier HSK 3.
+func BuildHSKBand(lex *lexicon.Lexicon, band string, knownMaxLevel, frontierLevel, hsk3Level int) brief.BandSpec {
+	known := map[int]bool{}
+	frontier := map[int]bool{}
+	for _, w := range lex.Words() {
+		switch {
+		case w.HSK <= knownMaxLevel:
+			known[w.ID] = true
+		case w.HSK == frontierLevel:
+			frontier[w.ID] = true
+		}
+	}
+	grammarWhitelist := map[string]bool{
+		// The standard, teachable grammar points the detector recognizes; whitelisting them is
+		// band configuration (which structures A2+ learners have met), not an I1 budget change.
+		"le-aspect": true, "de-attributive": true, "bu-negation": true,
+		"zai-progressive": true, "guo-aspect": true, "ma-question": true,
+		"ba-construction": true, "bei-construction": true,
+	}
+	return brief.BandSpec{
+		Band: band, Known: known, Frontier: frontier, Grammar: grammarWhitelist,
+		LengthMin: 120, LengthMax: 400, Register: "narrative", HSK3Level: hsk3Level,
+	}
+}
+
 // SortedNewTypeSimps is a helper for demo output.
 func SortedNewTypeSimps(lex *lexicon.Lexicon, ids []int) []string {
 	cp := append([]int(nil), ids...)

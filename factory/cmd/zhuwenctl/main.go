@@ -195,19 +195,55 @@ func cmdSpike(args []string) error {
 		fmt.Sscanf(v, "%d", &n)
 	}
 	live := hasFlag(args, "--live")
+	lexPath := flagValue(args, "--lexicon")
 
-	lex, reg, spec, _, checker, err := buildHarness()
-	if err != nil {
-		return err
+	// Band: default fixture harness, or the real HSK band when --lexicon is given.
+	var lex *lexicon.Lexicon
+	var reg *canon.Registry
+	var spec brief.BandSpec
+	var checker repair.PipelineChecker
+	if lexPath != "" {
+		var err error
+		if lex, err = lexicon.ReadSQLite(lexPath); err != nil {
+			return err
+		}
+		if reg, err = assets.Canon(); err != nil {
+			return err
+		}
+		knownMax, frontier := 2, 3
+		if v := flagValue(args, "--known-max"); v != "" {
+			fmt.Sscanf(v, "%d", &knownMax)
+		}
+		if v := flagValue(args, "--frontier-level"); v != "" {
+			fmt.Sscanf(v, "%d", &frontier)
+		}
+		spec = pipeline.BuildHSKBand(lex, "A2", knownMax, frontier, knownMax)
+		seg := segment.New(lex.DictEntries(), nil)
+		checker = repair.PipelineChecker{
+			Seg:      seg,
+			Band:     gate.Band{Known: spec.Known, Frontier: spec.Frontier, Grammar: spec.Grammar},
+			Detector: grammar.MarkerDetector{},
+			MaxID:    lex.MaxID(),
+			Cfg:      gate.DefaultConfig(),
+		}
+		fmt.Printf("spike: real HSK lexicon %s (%d words); known HSK<=%d (%d), frontier HSK %d (%d)\n",
+			lex.Version(), lex.Len(), knownMax, len(spec.Known), frontier, len(spec.Frontier))
+	} else {
+		var err error
+		if lex, reg, spec, _, checker, err = buildHarness(); err != nil {
+			return err
+		}
 	}
 
 	var provider gen.Provider
+	var llm *gen.LLMProvider
 	if live {
 		cfg, ok := gen.LLMConfigFromEnv()
 		if !ok {
-			return fmt.Errorf("spike --live: ZHUWEN_LLM_API_KEY not set")
+			return fmt.Errorf("spike --live: no API key (set ZHUWEN_LLM_API_KEY or ~/.deepseek-api-key)")
 		}
-		provider = gen.NewLLMProvider(cfg, lex)
+		llm = gen.NewLLMProvider(cfg, lex)
+		provider = llm
 		fmt.Printf("spike: LIVE run (model %s @ %s)\n", cfg.Model, cfg.BaseURL)
 	} else {
 		provider = gen.NewFixtureProvider(lex, assets.FillerSimps())
@@ -215,14 +251,42 @@ func cmdSpike(args []string) error {
 	}
 
 	sum := spike.Run(reg, spec, provider, checker, n)
-	fmt.Printf("entries=%d  pass@0=%d (%.0f%%)  passed=%d  discarded=%d (%.0f%%)  mean-repair-iters=%.2f  tokens=%d\n",
+	fmt.Printf("entries=%d  pass@0=%d (%.0f%%)  passed=%d  discarded=%d (%.0f%%)  mean-repair-iters=%.2f\n",
 		sum.Entries, sum.PassAtIter0, 100*sum.PassRateAtIter0(),
 		sum.Passed, sum.Discarded, 100*sum.DiscardRate(),
-		sum.MeanRepairIterations(), sum.TotalTokens)
+		sum.MeanRepairIterations())
+	if llm != nil {
+		perStory := 0
+		if sum.Passed > 0 {
+			perStory = llm.TokensUsed() / sum.Passed
+		}
+		fmt.Printf("tokens: %d total, ~%d per shipped story\n", llm.TokensUsed(), perStory)
+	}
 	if len(sum.FailureCodeHist) > 0 {
 		fmt.Println("failure-code histogram:")
 		for _, c := range sum.SortedFailureCodes() {
 			fmt.Printf("  %-24s %d\n", c, sum.FailureCodeHist[c])
+		}
+	}
+	if hasFlag(args, "--verbose") {
+		for _, f := range sum.Fates {
+			status := "DISCARDED"
+			if f.Passed {
+				status = "PASSED"
+			}
+			fmt.Printf("\n--- %s [%s] iters=%d ---\n", f.Brief.CanonID, status, f.Iterations)
+			if len(f.Candidates) > 0 {
+				last := f.Candidates[len(f.Candidates)-1].Text
+				if len(last) > 220 {
+					last = last[:220] + "…"
+				}
+				fmt.Printf("last candidate: %s\n", last)
+			}
+			for i, reasons := range f.FailReasons {
+				if len(reasons) > 0 {
+					fmt.Printf("iter %d fails: %v\n", i, reasons)
+				}
+			}
 		}
 	}
 	return nil
