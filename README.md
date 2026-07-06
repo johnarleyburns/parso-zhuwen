@@ -1,5 +1,8 @@
 # Zhuwen (朱文) — Chinese by Reading
 
+[![factory-ci](https://github.com/johnarleyburns/parso-zhuwen/actions/workflows/factory-ci.yml/badge.svg)](https://github.com/johnarleyburns/parso-zhuwen/actions/workflows/factory-ci.yml)
+[![CI](https://github.com/johnarleyburns/parso-zhuwen/actions/workflows/ci.yml/badge.svg)](https://github.com/johnarleyburns/parso-zhuwen/actions/workflows/ci.yml)
+
 Provably-comprehensible Mandarin reading & listening app. Every story surfaced to a
 learner is ≥98% words they already know; the ≤2% new words are deliberately chosen
 frontier words (Hu & Nation 98% coverage; Krashen i+1). See
@@ -83,6 +86,8 @@ make build        # compile commands into ./bin  (EC-2)
 ./bin/zhuwenctl verify /tmp/a2.zpack --pub /tmp/a2.zpack.pub
 ./bin/zhuwenctl segment eval                        # FMM coverage + ambiguity report
 ./bin/zhuwenctl spike --n 5                         # MC-2: canon->gen->gate->repair harness
+./bin/zhuwenctl run --db /tmp/work.db               # MC-3: resumable SQLite work queue
+./bin/zhuwenctl run --db /tmp/work.db --resume      #        recover a crashed run (no double-charge)
 
 make test         # unit + integration + e2e (go test ./...)
 make vet
@@ -121,14 +126,18 @@ See [`ios/README.md`](ios/README.md) for the package breakdown.
 
 ## Continuous integration
 
-- **GitHub Actions** ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs the **unit
-  tests only** on every push and PR — `factory` Go units (`make test-unit` = `go test
-  ./internal/...`, plus `gofmt`/`vet`) on Linux, and iOS Swift units (`make test-unit`, skipping
-  the simulation/drift acceptance suites) plus the network-surface audit on macOS. Fast signal.
-- **Pre-push hook** ([`.githooks/pre-push`](.githooks/pre-push)) guards the heavier
+- **`factory-ci.yml`** (Go) — runs the **full** factory gate `make ci` (`gofmt` + `vet` +
+  `go test ./...`, including the `cmd/` e2e and the MC-3 kill-9 work-queue e2e) on Linux for
+  every push and PR, uploads the built `zhuwenctl` binary as an artifact, and enforces the
+  **DCO sign-off** (`git commit -s`) on every PR commit (MC-0/MC-3). Target < 3 min.
+- **`ci.yml`** (iOS) — runs the Swift **unit** subset (`make test-unit`, which also covers the
+  `LaunchReplayTests` I5 durability check) plus the network-surface audit on macOS for every
+  push/PR, and re-runs the **full** iOS suite (`make test` incl. integration + 50k-replay perf,
+  `make bench`, `make audit`) on a **weekly schedule** — the per-PR macOS unit job is kept
+  because it is fast; the weekly job is the hosted signal for the heavy suites.
+- **Pre-push hook** ([`.githooks/pre-push`](.githooks/pre-push)) still guards the heavier
   **integration/e2e** suites, the NFR-2 benchmark, and the audit locally, so a broken build can
-  never be pushed: it runs `ios` full `swift test` + `make bench` + `make audit` and factory
-  `make ci` (incl. the `cmd/` e2e). Enable once per clone:
+  never be pushed. Enable once per clone:
 
   ```sh
   git config core.hooksPath .githooks

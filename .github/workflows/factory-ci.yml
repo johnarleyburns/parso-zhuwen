@@ -1,0 +1,61 @@
+name: factory-ci
+
+# MC-3: hosted CI for the Go content factory. Runs the FULL factory gate (`make ci` =
+# fmt + vet + test incl. the cmd/ e2e and the MC-3 kill-9 work-queue e2e) on every push and
+# PR, uploads the built zhuwenctl binary, and enforces the DCO sign-off (MC-0.5). Fast (<3 min).
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: factory-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  factory:
+    name: factory (Go, make ci)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: factory
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: factory/go.mod
+          cache-dependency-path: factory/go.sum
+      - name: make ci (fmt + vet + test, incl. e2e)
+        run: make ci
+      - name: build zhuwenctl
+        run: make build
+      - name: upload zhuwenctl artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: zhuwenctl-${{ github.sha }}
+          path: factory/bin/zhuwenctl
+          if-no-files-found: error
+          retention-days: 14
+
+  dco:
+    name: DCO sign-off
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify Signed-off-by on every PR commit
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          bad=0
+          for c in $(git rev-list --no-merges "$base..$head"); do
+            if ! git show -s --format=%B "$c" | grep -qiE '^Signed-off-by: .+ <.+@.+>'; then
+              subject=$(git show -s --format=%s "$c")
+              echo "::error::commit $c ($subject) is missing a DCO Signed-off-by trailer (use 'git commit -s')"
+              bad=1
+            fi
+          done
+          if [ "$bad" -ne 0 ]; then exit 1; fi
+          echo "all PR commits carry a DCO sign-off"
