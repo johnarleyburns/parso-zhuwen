@@ -40,7 +40,7 @@ repo under `Fixtures/` and treated as golden inputs.
 | I2 no accounts/server state | n/a | all state SwiftData; network only `PackClient`+StoreKit; optional CloudKit private DB | grep for URLSession outside PackClient; privacy manifest check |
 | I3 pregenerated only | everything rendered offline | no generation code paths exist | dependency scan: no LLM/TTS SDKs in app |
 | I4 evidence-gated claims | citations table in pack | `PedagogyClaim` private init from registry | DOI validation script |
-| I5 every tap teaches | n/a | append-only `Event` log; `WordState` = pure projection | replay test: rebuild WordState from events == stored |
+| I5 every tap teaches | n/a | append-only `Event` log; `WordState` = pure projection; durable `PersistentEventLog` (SwiftData) rebuilt by replay at launch | replay test: rebuild WordState from events == stored — **persistence-tested** across a `ModelContainer` teardown/relaunch (MC-1 `LaunchReplayTests`) |
 | I6 every story has a Commons image | pack builder hard-fails NULL/AI/unlicensed images | UI assumes cover non-nil (non-optional field) | golden imageless fixture must fail build |
 
 ## 3. Pack format (CP-02 deliverable, frozen thereafter)

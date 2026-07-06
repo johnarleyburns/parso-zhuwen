@@ -1,13 +1,13 @@
 import Foundation
 
 /// The lifecycle state of a lexicon word for the learner (00 §9, FR-2.1).
-public enum LearningState: String, Equatable {
+public enum LearningState: String, Equatable, Codable {
     case unseen, introduced, learning, known, mastered
 }
 
 /// The projected state of one word. A pure function of the ordered events that touched it
 /// (plus any placement seed), so the whole model is replayable (I5).
-public struct WordState: Equatable {
+public struct WordState: Equatable, Codable {
     public var wordID: Int
     public var state: LearningState
     public var pKnown: Double
@@ -49,7 +49,7 @@ public struct WordState: Equatable {
 /// positive evidence, a lookup is strong negative evidence, explicit marks are absolute,
 /// grades and comprehension nudge proportionally. FSRS memory parameters and placement's
 /// logistic seed arrive in CP-07 / CP-05 and feed the same model.
-public struct KnownWordModel: Equatable {
+public struct KnownWordModel: Equatable, Codable {
     /// Effective-known threshold for the coverage gate (FR-2.3).
     public static let knownThreshold = 0.8
     public static let masteredThreshold = 0.95

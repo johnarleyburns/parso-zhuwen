@@ -20,6 +20,8 @@ public final class AppModel: ObservableObject {
     private let packStore: PackStore?
 
     public init(store packStore: PackStore,
+                events: [Event] = [],
+                eventSink: EventSink? = nil,
                 commerce: StoreModel? = nil,
                 sync: SyncModel? = nil,
                 packManager: PackManagerModel? = nil,
@@ -32,6 +34,7 @@ public final class AppModel: ObservableObject {
         self.lexicon = lexicon
         self.learner = LearnerModel(
             stories: stories, lexicon: lexicon,
+            events: events, sink: eventSink,
             questions: { [weak packStore] id in (try? packStore?.questions(for: id)) ?? [] })
         self.store = commerce ?? StoreModel()
         self.sync = sync ?? SyncModel()

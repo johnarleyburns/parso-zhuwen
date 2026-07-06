@@ -59,9 +59,21 @@ public struct Event: Equatable, Codable {
     }
 }
 
+/// A sink for appended events (I5). Lets `LearnerModel` mirror its in-memory log into a
+/// durable store (`ZhuwenPersistence.PersistentEventLog`) without `ZhuwenUI` depending on
+/// SwiftData. There is no per-event delete/mutate; `replaceAll` exists only for erase/import
+/// (FR-10.3), which rewrites the whole log rather than editing history.
+public protocol EventSink: AnyObject {
+    /// Append one event (append-only; never mutates prior events).
+    func append(_ event: Event)
+    /// Replace the entire log (erase → empty, or import → a new archive's events). The store
+    /// still only ever appends internally; this is the sole whole-log reset path.
+    func replaceAll(_ events: [Event])
+}
+
 /// An append-only event log (I5). There is deliberately no delete/mutate API: the model is
 /// rebuilt by replaying `events`, and persistence (SwiftData) simply stores the same list.
-public final class EventLog {
+public final class EventLog: EventSink {
     public private(set) var events: [Event]
 
     public init(_ events: [Event] = []) { self.events = events }
@@ -71,6 +83,9 @@ public final class EventLog {
     public func append(_ event: Event) { events.append(event) }
 
     public func append(contentsOf newEvents: [Event]) { events.append(contentsOf: newEvents) }
+
+    /// Whole-log reset (erase/import, FR-10.3). Not a per-event mutation.
+    public func replaceAll(_ events: [Event]) { self.events = events }
 
     /// Events touching a given word, in order.
     public func events(for wordID: Int) -> [Event] { events.filter { $0.wordID == wordID } }
