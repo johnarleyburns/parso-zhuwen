@@ -42,6 +42,8 @@ func main() {
 		err = cmdBuild(os.Args[2:])
 	case "verify":
 		err = cmdVerify(os.Args[2:])
+	case "images":
+		err = cmdImages(os.Args[2:])
 	case "keygen":
 		err = cmdKeygen(os.Args[2:])
 	default:
@@ -75,6 +77,12 @@ usage:
                     [--devkey]      sign with the reproducible DEV fixture key
   zhuwenctl verify <pack> --pub <f> verify signature + hashes + I6 + lexicon_version
   zhuwenctl keygen --out <prefix>   write <prefix>.pub / <prefix>.key (minisign)
+  zhuwenctl images fetch            query Wikimedia Commons (--live required; network)
+    --inventory <tsv> --out <dir> [--n <k>]
+  zhuwenctl images gate             gate candidates through license/AI/resolution filter
+    --candidates <json> --out <json>
+  zhuwenctl images curate           load decisions + lexicon → curated image records
+    --decisions <json> --lexicon <sqlite> --out <json>
 `)
 }
 

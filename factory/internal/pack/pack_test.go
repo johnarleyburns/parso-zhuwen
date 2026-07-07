@@ -133,6 +133,76 @@ func TestI6AICategorizedFailsBuild(t *testing.T) {
 	}
 }
 
+func TestI6FoundationsCardMissingImage(t *testing.T) {
+	p := validPack()
+	p.FoundationsCards = []FoundationsCard{
+		{WordID: 1, ImageID: "img-foundations-dog", SetID: "animals", Stage: "F0"},
+	}
+	err := Build(p, filepath.Join(t.TempDir(), "x.zpack"), mustPriv(t))
+	if err == nil || !strings.Contains(err.Error(), "missing image") {
+		t.Fatalf("expected foundations_card missing-image failure, got %v", err)
+	}
+}
+
+func TestI6FoundationsCardEmptyImageID(t *testing.T) {
+	p := validPack()
+	p.FoundationsCards = []FoundationsCard{
+		{WordID: 1, ImageID: "", SetID: "animals", Stage: "F0"},
+	}
+	err := Build(p, filepath.Join(t.TempDir(), "x.zpack"), mustPriv(t))
+	if err == nil || !strings.Contains(err.Error(), "no image_id") {
+		t.Fatalf("expected foundations_card no-image_id failure, got %v", err)
+	}
+}
+
+func TestFoundationsCardRoundTrip(t *testing.T) {
+	p := validPack()
+	fcImage := validImage()
+	fcImage.ID = "img-foundations-dog"
+	p.Images = append(p.Images, fcImage)
+	p.FoundationsCards = []FoundationsCard{
+		{WordID: 101, ImageID: "img-foundations-dog", SetID: "animals", Stage: "F0", DistractorIDs: []int{102, 103, 104}},
+	}
+	p.Stories = nil
+
+	out, pub := buildTemp(t, p)
+	man, err := Verify(out, pub, nil)
+	if err != nil {
+		t.Fatalf("verify: %v", err)
+	}
+	if _, ok := man.Files["content.sqlite"]; !ok {
+		t.Error("manifest missing content.sqlite hash")
+	}
+
+	dbBytes := entryBytes(t, out, "content.sqlite")
+	tmp := filepath.Join(t.TempDir(), "fc.sqlite")
+	if err := os.WriteFile(tmp, dbBytes, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	db, err := sql.Open("sqlite", tmp)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer db.Close()
+
+	var wordID int
+	var imageID, setID, stage string
+	var distractorIDs string
+	if err := db.QueryRow(`SELECT word_id, image_id, set_id, stage, distractor_ids FROM foundations_card WHERE word_id = 101`).Scan(&wordID, &imageID, &setID, &stage, &distractorIDs); err != nil {
+		t.Fatal(err)
+	}
+	if wordID != 101 || imageID != "img-foundations-dog" || setID != "animals" || stage != "F0" {
+		t.Fatalf("row = word_id=%d image=%q set=%q stage=%q", wordID, imageID, setID, stage)
+	}
+	var ids []int
+	if err := json.Unmarshal([]byte(distractorIDs), &ids); err != nil {
+		t.Fatalf("distractor_ids json: %v", err)
+	}
+	if len(ids) != 3 || ids[0] != 102 || ids[2] != 104 {
+		t.Fatalf("distractor_ids = %v", ids)
+	}
+}
+
 // --- Golden negative suite (handoff §6 CP-02): unsigned / tampered / imageless ---
 
 func TestGoldenUnsignedRejected(t *testing.T) {
