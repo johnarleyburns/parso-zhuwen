@@ -1,0 +1,1734 @@
+[
+  {
+    "simp": "三轮车",
+    "decision": "File:Shanghai recycling transport tricycle.jpg",
+    "set": "transport",
+    "en": "tricycle",
+    "status": "commons"
+  },
+  {
+    "simp": "乌龟",
+    "decision": "https://commons.wikimedia.org/wiki/File:Balkan_pond_turtle_(Mauremys_rivulata)_Butrint.jpg",
+    "set": "animals",
+    "en": "turtle",
+    "status": "custom"
+  },
+  {
+    "simp": "书",
+    "decision": "File:Liji 2.jpg",
+    "set": "home",
+    "pinyin": "shū",
+    "en": "book",
+    "status": "commons"
+  },
+  {
+    "simp": "书包",
+    "decision": "File:Backpack small.jpg",
+    "set": "home",
+    "pinyin": "shū bāo",
+    "en": "backpack",
+    "status": "commons"
+  },
+  {
+    "simp": "云",
+    "decision": "https://commons.wikimedia.org/wiki/File:Cumulonimbus_-_visualization.jpg",
+    "set": "weather",
+    "pinyin": "yún",
+    "en": "cloud",
+    "status": "custom"
+  },
+  {
+    "simp": "人",
+    "decision": "File:Person Odessa.jpg",
+    "status": "commons",
+    "pinyin": "rén",
+    "en": "person",
+    "set": "family"
+  },
+  {
+    "simp": "伞",
+    "decision": "File:Beige and brown oil-paper umbrella on the edge of a wooden house in Luang Prabang Laos.jpg",
+    "set": "home",
+    "pinyin": "sǎn",
+    "en": "umbrella",
+    "status": "commons"
+  },
+  {
+    "simp": "儿子",
+    "decision": "File:Son (Ardennes) vue du village.JPG",
+    "set": "family",
+    "pinyin": "ér zi",
+    "en": "son",
+    "status": "commons"
+  },
+  {
+    "simp": "兔子",
+    "decision": "File:Lapin blanc.jpg",
+    "set": "animals",
+    "pinyin": "tù zi",
+    "en": "rabbit",
+    "status": "commons"
+  },
+  {
+    "simp": "公共汽车",
+    "decision": "File:La Ferrière Airoux 86 Bus&abri bus 2014.jpg",
+    "set": "transport",
+    "en": "bus",
+    "status": "commons"
+  },
+  {
+    "simp": "公园",
+    "decision": "File:Nara Park, November 2016.jpg",
+    "set": "places",
+    "pinyin": "gōng yuán",
+    "en": "park",
+    "status": "commons"
+  },
+  {
+    "simp": "写字",
+    "decision": "File:Flickr - boellstiftung - Konferenzeindrücke (15).jpg",
+    "set": "actions",
+    "en": "writing",
+    "status": "commons"
+  },
+  {
+    "simp": "农场",
+    "decision": "File:Farm in Forêt (Trooz).jpg",
+    "set": "places",
+    "pinyin": "nóng chǎng",
+    "en": "farm",
+    "status": "commons"
+  },
+  {
+    "simp": "冰",
+    "decision": "File:IceBlockNearJoekullsarlon.jpg",
+    "set": "weather",
+    "pinyin": "bīng",
+    "en": "ice",
+    "status": "commons"
+  },
+  {
+    "simp": "冰淇淋",
+    "decision": "https://commons.wikimedia.org/wiki/File:Soft_serve_ice_cream_cone_from_Mixue_Ice_Cream_%26_Tea,_Sihui_East_(20210420184605).jpg",
+    "set": "food-drink",
+    "en": "ice cream",
+    "status": "custom"
+  },
+  {
+    "simp": "冰箱",
+    "decision": "File:Open refrigerator with food at night.jpg",
+    "set": "home",
+    "pinyin": "bīng xiāng",
+    "en": "refrigerator",
+    "status": "commons"
+  },
+  {
+    "simp": "出租车",
+    "decision": "File:Taxi of Kolkata.jpg",
+    "set": "transport",
+    "pinyin": "chū zū chē",
+    "en": "taxi",
+    "status": "commons"
+  },
+  {
+    "simp": "刀",
+    "decision": "File:Steelport 6-Inch Chef Knife (2026)-104A7331.jpg",
+    "set": "home",
+    "pinyin": "dāo",
+    "en": "knife",
+    "status": "commons"
+  },
+  {
+    "simp": "勺子",
+    "decision": "File:SpoonCollection.jpg",
+    "set": "kitchen",
+    "pinyin": "sháo zi",
+    "en": "spoon",
+    "status": "commons"
+  },
+  {
+    "simp": "包子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Empanadilles_xineses_(1).jpg",
+    "set": "food-drink",
+    "pinyin": "bāo zi",
+    "en": "steamed bun",
+    "status": "custom"
+  },
+  {
+    "simp": "医生",
+    "decision": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B5%D0%B9%D1%80%D0%BE%D1%85%D0%B8%D1%80%D1%83%D1%80%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%B2_%D0%98%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82%D0%B5_%D0%A1%D0%BA%D0%BB%D0%B8%D1%84%D0%BE%D1%81%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE.jpg",
+    "set": "family",
+    "pinyin": "yī sheng",
+    "en": "doctor",
+    "status": "custom"
+  },
+  {
+    "simp": "医院",
+    "decision": "https://commons.wikimedia.org/wiki/File:Inauguraci%C3%B3n_del_Hospital_Regional_de_Apatzing%C3%A1n._(20503993770).jpg",
+    "set": "places",
+    "pinyin": "yī yuàn",
+    "en": "hospital",
+    "status": "custom"
+  },
+  {
+    "simp": "卡车",
+    "decision": "File:Recology Lodal Garbage Truck 14425 in San Francisco.jpg",
+    "set": "transport",
+    "pinyin": "kǎ chē",
+    "en": "truck",
+    "status": "commons"
+  },
+  {
+    "simp": "厨房",
+    "decision": "https://commons.wikimedia.org/wiki/File:Milwaukee_Public_Museum_January_2023_26_(Asia--Chinese_House-_Kitchen).jpg",
+    "set": "places",
+    "pinyin": "chú fáng",
+    "en": "kitchen",
+    "status": "custom"
+  },
+  {
+    "simp": "叉子",
+    "decision": "File:Assorted forks.jpg",
+    "set": "kitchen",
+    "pinyin": "chā zi",
+    "en": "fork",
+    "status": "commons"
+  },
+  {
+    "simp": "叶子",
+    "decision": "File:Vein skeleton of a leaf (de-ghosted).jpg",
+    "set": "weather",
+    "pinyin": "yè zi",
+    "en": "leaf",
+    "status": "commons"
+  },
+  {
+    "simp": "吃",
+    "decision": "File:019 Anhinga eating a fish in Encontro das Águas State Park Photo by Giles Laurent.jpg",
+    "set": "actions",
+    "pinyin": "chī",
+    "en": "eating",
+    "status": "commons"
+  },
+  {
+    "simp": "咖啡",
+    "decision": "File:A small cup of coffee.JPG",
+    "set": "food-drink",
+    "pinyin": "kā fēi",
+    "en": "coffee",
+    "status": "commons"
+  },
+  {
+    "simp": "哥哥",
+    "decision": "https://commons.wikimedia.org/wiki/File:-Young_Chinese_Gentleman-_MET_DP155371.jpg",
+    "set": "family",
+    "pinyin": "gē ge",
+    "en": "older brother",
+    "status": "custom"
+  },
+  {
+    "simp": "唱歌",
+    "decision": "File:Patti Smith performing in Finland, 2007.jpg",
+    "set": "actions",
+    "en": "singing",
+    "status": "commons"
+  },
+  {
+    "simp": "商店",
+    "decision": "File:Comercio en la plaza del 9 de abril de 1947, Tánger, Marruecos, 2015-12-11, DD 78.JPG",
+    "set": "places",
+    "pinyin": "shāng diàn",
+    "en": "store shop",
+    "status": "commons"
+  },
+  {
+    "simp": "喝",
+    "decision": "File:011 Jaguar drinking in Encontro das Águas State Park Photo by Giles Laurent.jpg",
+    "set": "actions",
+    "pinyin": "hē",
+    "en": "drinking",
+    "status": "commons"
+  },
+  {
+    "simp": "嘴",
+    "decision": "https://commons.wikimedia.org/wiki/File:Mouth_of_Akhenaten_or_Nefertiti_MET_21.9.18_v1.jpg",
+    "set": "body",
+    "pinyin": "zuǐ",
+    "en": "mouth",
+    "status": "custom"
+  },
+  {
+    "simp": "围巾",
+    "decision": "File:Scarf shop.jpg",
+    "set": "clothing",
+    "pinyin": "wéi jīn",
+    "en": "scarf",
+    "status": "commons"
+  },
+  {
+    "simp": "图书馆",
+    "decision": "File:Austria - Göttweig Abbey - 2015.jpg",
+    "set": "places",
+    "pinyin": "tú shū guǎn",
+    "en": "library",
+    "status": "commons"
+  },
+  {
+    "simp": "地铁",
+    "decision": "File:Man at Dundas subway station, Toronto, 2008-05-06.jpg",
+    "set": "transport",
+    "pinyin": "dì tiě",
+    "en": "subway",
+    "status": "commons"
+  },
+  {
+    "simp": "坐",
+    "decision": "File:Darshan Singh, Village Akbarpur Afghana.jpg",
+    "set": "actions",
+    "pinyin": "zuò",
+    "en": "sitting",
+    "status": "commons"
+  },
+  {
+    "simp": "塔",
+    "decision": "https://zh.wikipedia.org/zh-cn/%E5%A1%94#/media/File:The_Fugong_Temple_Wooden_Pagoda.jpg",
+    "set": "buildings",
+    "pinyin": "tǎ",
+    "en": "tower",
+    "status": "custom"
+  },
+  {
+    "simp": "外套",
+    "decision": "File:Norma Kamali \"Sleeping Bag\" coat, 1980-1985.jpg",
+    "set": "clothing",
+    "pinyin": "wài tào",
+    "en": "coat",
+    "status": "commons"
+  },
+  {
+    "simp": "大象",
+    "decision": "File:Red elephant in dirt.jpg",
+    "set": "animals",
+    "pinyin": "dà xiàng",
+    "en": "elephant",
+    "status": "commons"
+  },
+  {
+    "simp": "天空",
+    "decision": "File:Linden trees and the sky in Planina, Postojna, Slovenia.jpg",
+    "set": "weather",
+    "pinyin": "tiān kōng",
+    "en": "sky",
+    "status": "commons"
+  },
+  {
+    "simp": "太阳",
+    "decision": "File:084 Sun setting in the Namib desert Photo by Giles Laurent.jpg",
+    "set": "weather",
+    "pinyin": "tài yáng",
+    "en": "sun",
+    "status": "commons"
+  },
+  {
+    "simp": "头",
+    "decision": "https://commons.wikimedia.org/wiki/File:Human_head_plug-N_3352-IMG-IMG_0071.JPG",
+    "set": "body",
+    "pinyin": "tóu",
+    "en": "head",
+    "status": "custom"
+  },
+  {
+    "simp": "头发",
+    "decision": "File:Blond hair going gray 01.jpg",
+    "set": "body",
+    "pinyin": "tóu fa",
+    "en": "hair",
+    "status": "commons"
+  },
+  {
+    "simp": "女儿",
+    "decision": "File:Daughter.jpg",
+    "set": "family",
+    "pinyin": "nǚ ér",
+    "en": "daughter",
+    "status": "commons"
+  },
+  {
+    "simp": "奶奶",
+    "decision": "https://commons.wikimedia.org/wiki/File:Old_woman,_Canton,_Kwangtung_province,_China_Wellcome_V0037119.jpg",
+    "set": "family",
+    "pinyin": "nǎi nai",
+    "en": "grandmother",
+    "status": "custom"
+  },
+  {
+    "simp": "妈妈",
+    "decision": "https://commons.wikimedia.org/wiki/File:Mother_and_Child_(8597873910).jpg",
+    "set": "family",
+    "pinyin": "mā ma",
+    "en": "mother",
+    "status": "custom"
+  },
+  {
+    "simp": "妹妹",
+    "decision": "https://commons.wikimedia.org/wiki/File:Young_girl_smiling_portrait.jpg",
+    "set": "family",
+    "pinyin": "mèi mei",
+    "en": "younger sister",
+    "status": "custom"
+  },
+  {
+    "simp": "姐姐",
+    "decision": "https://commons.wikimedia.org/wiki/File:Asian_girl_by_swanky.jpg",
+    "set": "family",
+    "pinyin": "jiě jie",
+    "en": "older sister",
+    "status": "custom"
+  },
+  {
+    "simp": "娃娃",
+    "decision": "File:Dutch doll from Gröden.jpg",
+    "set": "sports-toys",
+    "pinyin": "wá wa",
+    "en": "doll",
+    "status": "commons"
+  },
+  {
+    "simp": "学校",
+    "decision": "File:A Hayesville High School classroom in Clay County, N.C., in 2004.jpg",
+    "set": "places",
+    "pinyin": "xué xiào",
+    "en": "school",
+    "status": "commons"
+  },
+  {
+    "simp": "学生",
+    "decision": "https://commons.wikimedia.org/wiki/File:Chinese_Teacher_and_Students_2007-11-8.jpg",
+    "set": "family",
+    "pinyin": "xué sheng",
+    "en": "student",
+    "status": "custom"
+  },
+  {
+    "simp": "宝宝",
+    "decision": "File:Baby care, Baby girl, Moscow, Russia.jpg",
+    "set": "family",
+    "en": "baby",
+    "status": "commons"
+  },
+  {
+    "simp": "家",
+    "decision": "File:Ljungris July 2013.jpg",
+    "set": "places",
+    "pinyin": "jiā",
+    "en": "home house",
+    "status": "commons"
+  },
+  {
+    "simp": "山",
+    "decision": "File:Everest, Himalayas.jpg",
+    "set": "places",
+    "pinyin": "shān",
+    "en": "mountain",
+    "status": "commons"
+  },
+  {
+    "simp": "岛",
+    "decision": "File:Unnamed island, Cheow Lan Lake.jpg",
+    "set": "weather",
+    "pinyin": "dǎo",
+    "en": "island",
+    "status": "commons"
+  },
+  {
+    "simp": "巧克力",
+    "decision": "https://commons.wikimedia.org/wiki/File:Chocolate_4.jpg",
+    "set": "food-drink",
+    "pinyin": "qiǎo kè lì",
+    "en": "chocolate",
+    "status": "custom"
+  },
+  {
+    "simp": "帽子",
+    "decision": "https://commons.wikimedia.org/wiki/File:HK_people_boy_wearing_hat_September_2024_R12S_01.jpg",
+    "set": "clothing",
+    "pinyin": "mào zi",
+    "en": "hat",
+    "status": "custom"
+  },
+  {
+    "simp": "床",
+    "decision": "https://commons.wikimedia.org/wiki/File:Bed_at_Fang_Jia_La.jpg",
+    "set": "home",
+    "pinyin": "chuáng",
+    "en": "bed",
+    "status": "custom"
+  },
+  {
+    "simp": "弟弟",
+    "decision": "https://commons.wikimedia.org/wiki/File:Asian_boy_holding_a_kiwi.jpg",
+    "set": "family",
+    "pinyin": "dì di",
+    "en": "younger brother",
+    "status": "custom"
+  },
+  {
+    "simp": "彩虹",
+    "decision": "File:Landscape with rainbow and the Old Bridge over the Nam Khan river in Luang Prabang Laos.jpg",
+    "set": "weather",
+    "pinyin": "cǎi hóng",
+    "en": "rainbow",
+    "status": "commons"
+  },
+  {
+    "simp": "房子",
+    "decision": "File:RUS-2016-Bolshoi Zayatsky Island-Stone House.jpg",
+    "set": "buildings",
+    "pinyin": "fáng zi",
+    "en": "house",
+    "status": "commons"
+  },
+  {
+    "simp": "手",
+    "decision": "https://commons.wikimedia.org/wiki/File:Hand_of_a_Teenage_Boy.png",
+    "set": "body",
+    "pinyin": "shǒu",
+    "en": "hand",
+    "status": "custom"
+  },
+  {
+    "simp": "手套",
+    "decision": "File:Centre de Documentació Museu Tèxtil de Terrassa- Reserves- Teixits- Guants002.JPG",
+    "set": "clothing",
+    "pinyin": "shǒu tào",
+    "en": "gloves",
+    "status": "commons"
+  },
+  {
+    "simp": "手指",
+    "decision": "https://commons.wikimedia.org/wiki/File:Index_finger_front.JPG",
+    "set": "body",
+    "pinyin": "shǒu zhǐ",
+    "en": "finger",
+    "status": "custom"
+  },
+  {
+    "simp": "手机",
+    "decision": "https://commons.wikimedia.org/wiki/File:A_man_using_a_cell_phone_to_take_a_photo.jpg",
+    "set": "home",
+    "pinyin": "shǒu jī",
+    "en": "smartphone",
+    "status": "custom"
+  },
+  {
+    "simp": "手表",
+    "decision": "File:Fossil wristwatch with white background.jpg",
+    "set": "clothing",
+    "pinyin": "shǒu biǎo",
+    "en": "wristwatch",
+    "status": "commons"
+  },
+  {
+    "simp": "扫把",
+    "decision": "https://commons.wikimedia.org/wiki/File:Lustenau-Sperger-Homemade_broom-01ASD.jpg",
+    "set": "home",
+    "en": "broom",
+    "status": "custom"
+  },
+  {
+    "simp": "报纸",
+    "decision": "https://commons.wikimedia.org/wiki/File:FamilyMart_Beijie_Store_newspaper_stand_20190810.jpg",
+    "set": "home",
+    "pinyin": "bào zhǐ",
+    "en": "newspaper",
+    "status": "custom"
+  },
+  {
+    "simp": "摩托车",
+    "decision": "File:Five children on a motorcycle.jpg",
+    "set": "transport",
+    "pinyin": "mó tuō chē",
+    "en": "motorcycle",
+    "status": "commons"
+  },
+  {
+    "simp": "教室",
+    "decision": "https://commons.wikimedia.org/wiki/File:Andrew_Classroom_De_La_Salle_University.jpeg",
+    "set": "places",
+    "pinyin": "jiào shì",
+    "en": "classroom",
+    "status": "custom"
+  },
+  {
+    "simp": "星星",
+    "decision": "File:Hubble ultra deep field.jpg",
+    "set": "weather",
+    "pinyin": "xīng xing",
+    "en": "stars",
+    "status": "commons"
+  },
+  {
+    "simp": "月亮",
+    "decision": "File:FullMoon2010.jpg",
+    "set": "weather",
+    "pinyin": "yuè liang",
+    "en": "moon",
+    "status": "commons"
+  },
+  {
+    "simp": "朋友",
+    "decision": "https://commons.wikimedia.org/wiki/File:Old_Town_kids,_China.jpg",
+    "set": "family",
+    "pinyin": "péng you",
+    "en": "friends",
+    "status": "custom"
+  },
+  {
+    "simp": "机场",
+    "decision": "File:Pulkovo Airport panoramic view.jpg",
+    "set": "places",
+    "pinyin": "jī chǎng",
+    "en": "airport",
+    "status": "commons"
+  },
+  {
+    "simp": "杯子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Chinese_-_Cup_-_Walters_49630.jpg",
+    "set": "home",
+    "pinyin": "bēi zi",
+    "en": "cup",
+    "status": "custom"
+  },
+  {
+    "simp": "枕头",
+    "decision": "https://commons.wikimedia.org/wiki/File:Pillow_(Bahto).jpg",
+    "set": "home",
+    "pinyin": "zhěn tou",
+    "en": "pillow",
+    "status": "custom"
+  },
+  {
+    "simp": "果汁",
+    "decision": "File:Pineapple Juice fruits-465832.jpg",
+    "set": "food-drink",
+    "pinyin": "guǒ zhī",
+    "en": "fruit juice",
+    "status": "commons"
+  },
+  {
+    "simp": "树",
+    "decision": "File:Flooded Albizia Saman (rain tree) in the Mekong.jpg",
+    "set": "weather",
+    "pinyin": "shù",
+    "en": "tree",
+    "status": "commons"
+  },
+  {
+    "simp": "桌子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Chinese_Round_Table_(Natural_Hakka,_Taiwan).jpg",
+    "set": "home",
+    "pinyin": "zhuō zi",
+    "en": "table",
+    "status": "custom"
+  },
+  {
+    "simp": "桥",
+    "decision": "https://commons.wikimedia.org/wiki/File:Bridge_and_waterway_of_Suzhou,Suzhou,China.JPG",
+    "set": "buildings",
+    "pinyin": "qiáo",
+    "en": "bridge",
+    "status": "custom"
+  },
+  {
+    "simp": "梨",
+    "decision": "File:Pear DS.jpg",
+    "set": "food-drink",
+    "pinyin": "lí",
+    "en": "pear",
+    "status": "commons"
+  },
+  {
+    "simp": "森林",
+    "decision": "File:Spruce forest at Holma.jpg",
+    "set": "weather",
+    "pinyin": "sēn lín",
+    "en": "forest",
+    "status": "commons"
+  },
+  {
+    "simp": "椅子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Carved_and_Upholstered_Chair_from_the_Chinese_Pavilion_of_the_1904_World%27s_Fair_-_DPLA_-_503750b0def17a4d890a0c8844cbe873_(page_4).jpg",
+    "set": "home",
+    "pinyin": "yǐ zi",
+    "en": "chair",
+    "status": "custom"
+  },
+  {
+    "simp": "楼",
+    "decision": "https://commons.wikimedia.org/wiki/File:Pudong_Shanghai_November_2017_panorama.jpg",
+    "set": "buildings",
+    "pinyin": "lóu",
+    "en": "tall building",
+    "status": "custom"
+  },
+  {
+    "simp": "橙子",
+    "decision": "File:Oranges - whole-halved-segment.jpg",
+    "set": "food-drink",
+    "pinyin": "chéng zi",
+    "en": "orange fruit",
+    "status": "commons"
+  },
+  {
+    "simp": "橙汁",
+    "decision": "File:Orange juice 1 edit1.jpg",
+    "set": "food-drink",
+    "en": "orange juice",
+    "status": "commons"
+  },
+  {
+    "simp": "橙色",
+    "decision": "File:Orange color flower.jpg",
+    "set": "colors",
+    "en": "orange color",
+    "status": "commons"
+  },
+  {
+    "simp": "毛巾",
+    "decision": "File:Towel and small towel.jpg",
+    "set": "home",
+    "pinyin": "máo jīn",
+    "en": "towel",
+    "status": "commons"
+  },
+  {
+    "simp": "水",
+    "decision": "File:2006-02-13 Drop-impact.jpg",
+    "set": "food-drink",
+    "pinyin": "shuǐ",
+    "en": "glass of water",
+    "status": "commons"
+  },
+  {
+    "simp": "汤",
+    "decision": "https://commons.wikimedia.org/wiki/File:Northern_Chinese_pork_belly_with_sheunghai_noodle_soup.jpg",
+    "set": "food-drink",
+    "pinyin": "tāng",
+    "en": "soup",
+    "status": "custom"
+  },
+  {
+    "simp": "汽车",
+    "decision": "File:2013 Porsche 911 Carrera 4S (991) (9626546987).jpg",
+    "set": "transport",
+    "pinyin": "qì chē",
+    "en": "car",
+    "status": "commons"
+  },
+  {
+    "simp": "沙发",
+    "decision": "File:America, New York, Empire style, 19th century - Sofa - 1971.29 - Cleveland Museum of Art.tif",
+    "set": "home",
+    "pinyin": "shā fā",
+    "en": "sofa",
+    "status": "commons"
+  },
+  {
+    "simp": "沙滩",
+    "decision": "File:Seal Rocks, Ocean Beach, San Francisco.jpg",
+    "set": "weather",
+    "pinyin": "shā tān",
+    "en": "beach",
+    "status": "commons"
+  },
+  {
+    "simp": "沙漠",
+    "decision": "File:Libya 4985 Tadrart Acacus Luca Galuzzi 2007.jpg",
+    "set": "places",
+    "pinyin": "shā mò",
+    "en": "desert",
+    "status": "commons"
+  },
+  {
+    "simp": "河",
+    "decision": "https://commons.wikimedia.org/wiki/File:Amazon_CIAT_(2).jpg",
+    "set": "places",
+    "pinyin": "hé",
+    "en": "river",
+    "status": "custom"
+  },
+  {
+    "simp": "海",
+    "decision": "File:Atlantic near Faroe Islands.jpg",
+    "set": "places",
+    "pinyin": "hǎi",
+    "en": "sea",
+    "status": "commons"
+  },
+  {
+    "simp": "游泳",
+    "decision": "File:Girl with swimming board.jpg",
+    "set": "actions",
+    "pinyin": "yóu yǒng",
+    "en": "swimming",
+    "status": "commons"
+  },
+  {
+    "simp": "湖",
+    "decision": "File:Gentau Pic du Midi Ossau.jpg",
+    "set": "places",
+    "pinyin": "hú",
+    "en": "lake",
+    "status": "commons"
+  },
+  {
+    "simp": "火",
+    "decision": "File:FIRE 01.JPG",
+    "set": "weather",
+    "pinyin": "huǒ",
+    "en": "fire",
+    "status": "commons"
+  },
+  {
+    "simp": "火车",
+    "decision": "File:UBTZ 2TE116UM-022 Cagaan Had - Sumangijn Zoo.jpg",
+    "set": "transport",
+    "pinyin": "huǒ chē",
+    "en": "train",
+    "status": "commons"
+  },
+  {
+    "simp": "火车站",
+    "decision": "File:Jeseník train station 2025.01.jpg",
+    "set": "places",
+    "en": "train station",
+    "status": "commons"
+  },
+  {
+    "simp": "灯",
+    "decision": "File:Lamp with a lampshade illuminated by sunlight.jpg",
+    "set": "home",
+    "pinyin": "dēng",
+    "en": "lamp",
+    "status": "commons"
+  },
+  {
+    "simp": "熊",
+    "decision": "File:Kamchatka Brown Bear near Dvuhyurtochnoe on 2015-07-23.jpg",
+    "set": "animals",
+    "pinyin": "xióng",
+    "en": "bear",
+    "status": "commons"
+  },
+  {
+    "simp": "熊猫",
+    "decision": "File:Ailuropoda melanoleuca (Panda géant) - 445.jpg",
+    "set": "animals",
+    "en": "panda",
+    "status": "commons"
+  },
+  {
+    "simp": "爷爷",
+    "decision": "File:Face detail, Manzanar Relocation Center, Manzanar, California. Grandfather and grandson of Japanese ancestry at . . . - NARA - 537994 (cropped).jpg",
+    "set": "family",
+    "pinyin": "yé ye",
+    "en": "grandfather",
+    "status": "commons"
+  },
+  {
+    "simp": "爸爸",
+    "decision": "https://commons.wikimedia.org/wiki/File:Father_and_Daughter_(22791421).jpg",
+    "set": "family",
+    "pinyin": "bà ba",
+    "en": "father",
+    "status": "custom"
+  },
+  {
+    "simp": "牙",
+    "decision": "https://commons.wikimedia.org/wiki/File:%D8%A3%D8%B3%D9%86%D8%A7%D9%86_%D9%82%D8%B7%D8%A9_%D9%8A%D9%82%D8%A7%D8%B1%D8%A8_%D8%B9%D9%85%D8%B1%D9%87%D8%A7_%D8%A7%D9%84%D8%B3%D9%86%D8%A9.jpg",
+    "set": "body",
+    "pinyin": "yá",
+    "en": "tooth",
+    "status": "custom"
+  },
+  {
+    "simp": "牛",
+    "decision": "File:Cow female black white.jpg",
+    "set": "animals",
+    "pinyin": "niú",
+    "en": "cow",
+    "status": "commons"
+  },
+  {
+    "simp": "牛奶",
+    "decision": "File:Glass of Milk (33657535532).jpg",
+    "set": "food-drink",
+    "pinyin": "niú nǎi",
+    "en": "milk",
+    "status": "commons"
+  },
+  {
+    "simp": "狗",
+    "decision": "File:Liver yellow dog in the water looking at viewer at golden hour in Don Det Laos.jpg",
+    "set": "animals",
+    "pinyin": "gǒu",
+    "en": "dog",
+    "status": "commons"
+  },
+  {
+    "simp": "狮子",
+    "decision": "File:Lion (Panthera leo) male 6y.jpg",
+    "set": "animals",
+    "pinyin": "shī zi",
+    "en": "lion",
+    "status": "commons"
+  },
+  {
+    "simp": "猪",
+    "decision": "File:Pot-bellied pigs in Lisbon Zoo 2008.jpg",
+    "set": "animals",
+    "pinyin": "zhū",
+    "en": "pig",
+    "status": "commons"
+  },
+  {
+    "simp": "猫",
+    "decision": "File:Six weeks old cat (aka).jpg",
+    "set": "animals",
+    "pinyin": "māo",
+    "en": "cat",
+    "status": "commons"
+  },
+  {
+    "simp": "猴子",
+    "decision": "File:Macaque India 3.jpg",
+    "set": "animals",
+    "pinyin": "hóu zi",
+    "en": "monkey",
+    "status": "commons"
+  },
+  {
+    "simp": "玩具",
+    "decision": "https://commons.wikimedia.org/wiki/File:Soviet_toys_-_National_museum_of_Udmurt_Republic.jpg",
+    "set": "sports-toys",
+    "pinyin": "wán jù",
+    "en": "toy",
+    "status": "custom"
+  },
+  {
+    "simp": "球",
+    "decision": "https://commons.wikimedia.org/wiki/File:Many_balls.jpg",
+    "set": "sports-toys",
+    "pinyin": "qiú",
+    "en": "ball",
+    "status": "custom"
+  },
+  {
+    "simp": "瓶子",
+    "decision": "File:Beer bottles 2018 G1.jpg",
+    "set": "kitchen",
+    "pinyin": "píng zi",
+    "en": "bottle",
+    "status": "commons"
+  },
+  {
+    "simp": "电脑",
+    "decision": "File:Laptop der Marke exone go 20240203 HOF06886 RAW-Export 000276.png",
+    "set": "home",
+    "pinyin": "diàn nǎo",
+    "en": "laptop computer",
+    "status": "commons"
+  },
+  {
+    "simp": "电视",
+    "decision": "File:Television IN A CORNER !.jpg",
+    "set": "home",
+    "pinyin": "diàn shì",
+    "en": "television",
+    "status": "commons"
+  },
+  {
+    "simp": "电话",
+    "decision": "File:004 2018 07 18 Telefone.jpg",
+    "set": "home",
+    "pinyin": "diàn huà",
+    "en": "telephone",
+    "status": "commons"
+  },
+  {
+    "simp": "白色",
+    "decision": "File:African Cape Daisy (Osteospermum barberiae).jpg",
+    "set": "colors",
+    "pinyin": "bái sè",
+    "en": "white color",
+    "status": "commons"
+  },
+  {
+    "simp": "皮带",
+    "decision": "File:Germany Belt-and-Buckle-02.jpg",
+    "set": "clothing",
+    "en": "belt",
+    "status": "commons"
+  },
+  {
+    "simp": "盆",
+    "decision": "https://commons.wikimedia.org/wiki/File:%E9%BE%8D%E6%B4%97%E7%9B%86-1.jpg",
+    "set": "home",
+    "pinyin": "pén",
+    "en": "basin",
+    "status": "custom"
+  },
+  {
+    "simp": "盒子",
+    "decision": "File:Mejsene fodres-4.jpg",
+    "set": "kitchen",
+    "pinyin": "hé zi",
+    "en": "box",
+    "status": "commons"
+  },
+  {
+    "simp": "盘子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Octagonal_plate,_early_18th_century,_Chinese_export_ware,_hard-paste_porcelain,_Honolulu_Museum_of_Art.JPG",
+    "set": "home",
+    "pinyin": "pán zi",
+    "en": "plate",
+    "status": "custom"
+  },
+  {
+    "simp": "眼睛",
+    "decision": "File:Wonder eye.png",
+    "set": "body",
+    "pinyin": "yǎn jing",
+    "en": "eye",
+    "status": "commons"
+  },
+  {
+    "simp": "眼镜",
+    "decision": "File:2023 Okulary korekcyjne.jpg",
+    "set": "clothing",
+    "pinyin": "yǎn jìng",
+    "en": "eyeglasses",
+    "status": "commons"
+  },
+  {
+    "simp": "睡觉",
+    "decision": "File:131 Baby Cape fur seal sleeping at Cape cross Photo by Giles Laurent.jpg",
+    "set": "actions",
+    "pinyin": "shuì jiào",
+    "en": "sleeping",
+    "status": "commons"
+  },
+  {
+    "simp": "石头",
+    "decision": "File:Gletsjerpad naar de Morteratschgletsjer 12-09-2019. (d.j.b) 28.jpg",
+    "set": "weather",
+    "pinyin": "shí tou",
+    "en": "stone",
+    "status": "commons"
+  },
+  {
+    "simp": "碗",
+    "decision": "https://commons.wikimedia.org/wiki/File:Chinese_Bowl_-_ABDMS000799.jpg",
+    "set": "home",
+    "pinyin": "wǎn",
+    "en": "bowl",
+    "status": "custom"
+  },
+  {
+    "simp": "窗户",
+    "decision": "File:Fischerkirche (window), Born a. Darß.jpg",
+    "set": "home",
+    "pinyin": "chuāng hu",
+    "en": "window",
+    "status": "commons"
+  },
+  {
+    "simp": "站",
+    "decision": "File:112 Meerkat standing in the Kalahari Desert of Namibia Photo by Giles Laurent.jpg",
+    "set": "actions",
+    "pinyin": "zhàn",
+    "en": "standing",
+    "status": "commons"
+  },
+  {
+    "simp": "笔",
+    "decision": "File:Fountain pen writing (literacy).jpg",
+    "set": "home",
+    "pinyin": "bǐ",
+    "en": "pen",
+    "status": "commons"
+  },
+  {
+    "simp": "筷子",
+    "decision": "File:Sake, Chopsticks, Paper Rest.jpg",
+    "set": "kitchen",
+    "pinyin": "kuài zi",
+    "en": "chopsticks",
+    "status": "commons"
+  },
+  {
+    "simp": "篮球",
+    "decision": "File:Isolated basketball.png",
+    "set": "sports-toys",
+    "pinyin": "lán qiú",
+    "en": "basketball",
+    "status": "commons"
+  },
+  {
+    "simp": "米",
+    "decision": "File:Rice Grains at Bakin Dogo Market Kaduna North.jpg",
+    "set": "food-drink",
+    "pinyin": "mǐ",
+    "en": "rice grain",
+    "status": "commons"
+  },
+  {
+    "simp": "米饭",
+    "decision": "File:Meshi 001.jpg",
+    "set": "food-drink",
+    "pinyin": "mǐ fàn",
+    "en": "cooked rice",
+    "status": "commons"
+  },
+  {
+    "simp": "粉色",
+    "decision": "https://commons.wikimedia.org/wiki/File:Keukenhof_2018_DSC_0059.jpg",
+    "set": "colors",
+    "en": "pink color",
+    "status": "custom"
+  },
+  {
+    "simp": "糖",
+    "decision": "https://commons.wikimedia.org/wiki/File:Barrels_of_Candy_in_a_Candy_Shop_in_Savannah,_GA.jpg",
+    "set": "food-drink",
+    "pinyin": "táng",
+    "en": "candy",
+    "status": "custom"
+  },
+  {
+    "simp": "红色",
+    "decision": "File:Bloem van een Camellia × williamsii 'Roger Hall'. 20-04-2021 (actm.) 01.jpg",
+    "set": "colors",
+    "pinyin": "hóng sè",
+    "en": "red color",
+    "status": "commons"
+  },
+  {
+    "simp": "绿色",
+    "decision": "https://commons.wikimedia.org/wiki/File:Eucomis_kuiflelie._07-06-2023._(d.j.b).jpg",
+    "set": "colors",
+    "pinyin": "lǜ sè",
+    "en": "green color",
+    "status": "custom"
+  },
+  {
+    "simp": "羊",
+    "decision": "File:Flock of sheep.jpg",
+    "set": "animals",
+    "pinyin": "yáng",
+    "en": "sheep",
+    "status": "commons"
+  },
+  {
+    "simp": "老师",
+    "decision": "https://commons.wikimedia.org/wiki/File:Teacher_Education_Program_provides_training_to_Chinese_visitors_(8138781755).jpg",
+    "set": "family",
+    "pinyin": "lǎo shī",
+    "en": "teacher",
+    "status": "custom"
+  },
+  {
+    "simp": "老虎",
+    "decision": "File:Bengal tiger (Panthera tigris tigris) female 3.jpg",
+    "set": "animals",
+    "pinyin": "lǎo hǔ",
+    "en": "tiger",
+    "status": "commons"
+  },
+  {
+    "simp": "耳朵",
+    "decision": "https://commons.wikimedia.org/wiki/File:Blond_Female_Ear.jpg",
+    "set": "body",
+    "pinyin": "ěr duo",
+    "en": "ear",
+    "status": "custom"
+  },
+  {
+    "simp": "肉",
+    "decision": "https://commons.wikimedia.org/wiki/File:Tomahawk_Pork_Chop_from_Netherlands.jpg",
+    "set": "food-drink",
+    "pinyin": "ròu",
+    "en": "meat",
+    "status": "custom"
+  },
+  {
+    "simp": "肩膀",
+    "decision": "https://commons.wikimedia.org/wiki/File:Medical_X-Ray_imaging_BTZ03_nevit.jpg",
+    "set": "body",
+    "pinyin": "jiān bǎng",
+    "en": "shoulder",
+    "status": "custom"
+  },
+  {
+    "simp": "背",
+    "decision": "File:Adult Female Back In a Lateral Recumbent Position.jpg",
+    "set": "body",
+    "pinyin": "bēi",
+    "en": "back body",
+    "status": "commons"
+  },
+  {
+    "simp": "胡萝卜",
+    "decision": "File:Carrots at Ljubljana Central Market.JPG",
+    "set": "food-drink",
+    "en": "carrot",
+    "status": "commons"
+  },
+  {
+    "simp": "胳膊",
+    "decision": "https://commons.wikimedia.org/wiki/File:Extended_arm.jpg",
+    "set": "body",
+    "pinyin": "gē bo",
+    "en": "arm",
+    "status": "custom"
+  },
+  {
+    "simp": "脚",
+    "decision": "https://commons.wikimedia.org/wiki/File:Newborn_baby_feet_(Unsplash).jpg",
+    "set": "body",
+    "pinyin": "jiǎo",
+    "en": "foot",
+    "status": "custom"
+  },
+  {
+    "simp": "脸",
+    "decision": "File:Boy Face from Venezuela.jpg",
+    "set": "body",
+    "pinyin": "liǎn",
+    "en": "face",
+    "status": "commons"
+  },
+  {
+    "simp": "腿",
+    "decision": "File:Female Legs On Beach.png",
+    "set": "body",
+    "pinyin": "tuǐ",
+    "en": "leg",
+    "status": "commons"
+  },
+  {
+    "simp": "膝盖",
+    "decision": "File:Knees MET 67.187.171.jpg",
+    "set": "body",
+    "pinyin": "xī gài",
+    "en": "knee",
+    "status": "commons"
+  },
+  {
+    "simp": "自行车",
+    "decision": "File:20180929 UCI Road World Championships Innsbruck Women Elite Road Race Charlotte Becker 850 7872.jpg",
+    "set": "transport",
+    "pinyin": "zì xíng chē",
+    "en": "bicycle",
+    "status": "commons"
+  },
+  {
+    "simp": "船",
+    "decision": "File:Rowing boat on a house roof - Fira - Santorini - Greece - 02.jpg",
+    "set": "transport",
+    "pinyin": "chuán",
+    "en": "boat",
+    "status": "commons"
+  },
+  {
+    "simp": "花",
+    "decision": "File:Flower jtca001.jpg",
+    "set": "weather",
+    "pinyin": "huā",
+    "en": "flower",
+    "status": "commons"
+  },
+  {
+    "simp": "苹果",
+    "decision": "File:Red Apple.jpg",
+    "set": "food-drink",
+    "pinyin": "píng guǒ",
+    "en": "apple",
+    "status": "commons"
+  },
+  {
+    "simp": "茶",
+    "decision": "File:Tea in different grade of fermentation.jpg",
+    "set": "food-drink",
+    "pinyin": "chá",
+    "en": "tea",
+    "status": "commons"
+  },
+  {
+    "simp": "草",
+    "decision": "File:Dülmen, Kirchspiel, Börnste, Feld -- 2017 -- 3171.jpg",
+    "set": "weather",
+    "pinyin": "cǎo",
+    "en": "grass",
+    "status": "commons"
+  },
+  {
+    "simp": "草莓",
+    "decision": "File:Strawberry-1.jpg",
+    "set": "food-drink",
+    "en": "strawberry",
+    "status": "commons"
+  },
+  {
+    "simp": "葡萄",
+    "decision": "File:Edle Weinrebe, 'Vitis vinifera' subsp. 'vinifera.jpg",
+    "set": "food-drink",
+    "pinyin": "pú tao",
+    "en": "grapes",
+    "status": "commons"
+  },
+  {
+    "simp": "蓝色",
+    "decision": "https://commons.wikimedia.org/wiki/File:Blue_wall.jpg",
+    "set": "colors",
+    "en": "blue color",
+    "status": "custom"
+  },
+  {
+    "simp": "蔬菜",
+    "decision": "https://commons.wikimedia.org/wiki/File:Vegetable_harvest.jpg",
+    "set": "food-drink",
+    "pinyin": "shū cài",
+    "en": "vegetables",
+    "status": "custom"
+  },
+  {
+    "simp": "虾",
+    "decision": "https://commons.wikimedia.org/wiki/File:Shrimp_or_prawn_from_Barra_de_Navidad,_Jalisco.png",
+    "set": "animals",
+    "pinyin": "xiā",
+    "en": "shrimp",
+    "status": "custom"
+  },
+  {
+    "simp": "蛇",
+    "decision": "File:The Grass Snake - Natrix natrix.jpg",
+    "set": "animals",
+    "pinyin": "shé",
+    "en": "snake",
+    "status": "commons"
+  },
+  {
+    "simp": "蛋糕",
+    "decision": "File:Piece of chocolate cake on a white plate decorated with chocolate sauce.jpg",
+    "set": "food-drink",
+    "pinyin": "dàn gāo",
+    "en": "cake",
+    "status": "commons"
+  },
+  {
+    "simp": "蜜蜂",
+    "decision": "File:Pollinationn.jpg",
+    "set": "animals",
+    "pinyin": "mì fēng",
+    "en": "bee",
+    "status": "commons"
+  },
+  {
+    "simp": "蝴蝶",
+    "decision": "File:Peacock butterfly (Aglais io) 2.jpg",
+    "set": "animals",
+    "pinyin": "hú dié",
+    "en": "butterfly",
+    "status": "commons"
+  },
+  {
+    "simp": "螃蟹",
+    "decision": "File:Carcinus maenas.jpg",
+    "set": "animals",
+    "pinyin": "páng xiè",
+    "en": "crab",
+    "status": "commons"
+  },
+  {
+    "simp": "街道",
+    "decision": "File:Gyedong-gil street with climbing plants at golden hour in Seoul South Korea.jpg",
+    "set": "places",
+    "pinyin": "jiē dào",
+    "en": "street",
+    "status": "commons"
+  },
+  {
+    "simp": "衣服",
+    "decision": "File:Window shopping in Mexico City.jpg",
+    "set": "home",
+    "pinyin": "yī fu",
+    "en": "clothes",
+    "status": "commons"
+  },
+  {
+    "simp": "衬衫",
+    "decision": "File:Blue Business Shirt.jpg",
+    "set": "clothing",
+    "pinyin": "chèn shān",
+    "en": "shirt",
+    "status": "commons"
+  },
+  {
+    "simp": "袜子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Face_socks.png",
+    "set": "clothing",
+    "pinyin": "wà zi",
+    "en": "socks",
+    "status": "custom"
+  },
+  {
+    "simp": "裙子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Girls%27_ceremonial_uniform_of_Beijing_101_Middle_School_(20260328130029).jpg",
+    "set": "clothing",
+    "pinyin": "qún zi",
+    "en": "skirt",
+    "status": "custom"
+  },
+  {
+    "simp": "裤子",
+    "decision": "File:Trousers-colourisolated.jpg",
+    "set": "clothing",
+    "pinyin": "kù zi",
+    "en": "trousers",
+    "status": "commons"
+  },
+  {
+    "simp": "西瓜",
+    "decision": "File:Taiwan 2009 Tainan City Organic Farm Watermelon FRD 7962.jpg",
+    "set": "food-drink",
+    "pinyin": "xī guā",
+    "en": "watermelon",
+    "status": "commons"
+  },
+  {
+    "simp": "警察",
+    "decision": "https://commons.wikimedia.org/wiki/File:Police_on_Patrol,_East_Nanjing_Road,_Shanghai.jpg",
+    "set": "family",
+    "pinyin": "jǐng chá",
+    "en": "police officer",
+    "status": "custom"
+  },
+  {
+    "simp": "读书",
+    "decision": "File:Reading moment.tif",
+    "set": "actions",
+    "pinyin": "dú shū",
+    "en": "reading a book",
+    "status": "commons"
+  },
+  {
+    "simp": "走路",
+    "decision": "https://commons.wikimedia.org/wiki/File:A_man_is_walking_alone_along_the_brick_wall_at_the_square_Mr._Visserplein_in_Amsterdam_downtown;_free_photo_Amsterdam,_Fons_Heijnsbroek,_Autumn_2008.tiff",
+    "set": "actions",
+    "pinyin": "zǒu lù",
+    "en": "walking",
+    "status": "custom"
+  },
+  {
+    "simp": "超市",
+    "decision": "https://commons.wikimedia.org/wiki/File:SZ_%E6%B7%B1%E5%9C%B3_Shenzhen_%E5%85%89%E6%98%8E%E6%96%B0%E5%8D%80_Guangming_District_N_%E6%AC%A1%E6%96%B9%E5%85%AC%E5%9C%92%E5%95%86%E5%A0%B4_N_Square_Park_shop_%E8%8F%AF%E6%BD%A4%E8%90%AC%E5%AE%B6%E8%B6%85%E5%B8%82_China_Resources_Vanguard_Supermarket_November_2025_R12S_02.jpg",
+    "set": "places",
+    "pinyin": "chāo shì",
+    "en": "supermarket",
+    "status": "custom"
+  },
+  {
+    "simp": "足球",
+    "decision": "File:Just a soccer ball (34782492153).jpg",
+    "set": "sports-toys",
+    "pinyin": "zú qiú",
+    "en": "soccer ball",
+    "status": "commons"
+  },
+  {
+    "simp": "跑",
+    "decision": "File:Running Man Kyle Cassidy.jpg",
+    "set": "actions",
+    "pinyin": "pǎo",
+    "en": "running",
+    "status": "commons"
+  },
+  {
+    "simp": "路",
+    "decision": "https://commons.wikimedia.org/wiki/File:20260405_China_National_Highway_207_in_Huguan.jpg",
+    "set": "places",
+    "pinyin": "lù",
+    "en": "road",
+    "status": "custom"
+  },
+  {
+    "simp": "跳舞",
+    "decision": "File:A man dancing with fire at a Pongal Festival in Namakkal, Tamil Nadu, India.jpg",
+    "set": "actions",
+    "pinyin": "tiào wǔ",
+    "en": "dancing",
+    "status": "commons"
+  },
+  {
+    "simp": "车",
+    "decision": "File:2013 Porsche 911 Carrera 4S (991) (9626546987).jpg",
+    "status": "commons",
+    "pinyin": "chē",
+    "en": "car",
+    "set": "transport"
+  },
+  {
+    "simp": "轮船",
+    "decision": "File:Chemical Challenger (ship, 2015) Sète cf01.jpg",
+    "set": "transport",
+    "pinyin": "lún chuán",
+    "en": "ship",
+    "status": "commons"
+  },
+  {
+    "simp": "钟",
+    "decision": "File:London Big Ben Inner Clock Face 1070925-PSD.jpg",
+    "set": "home",
+    "pinyin": "zhōng",
+    "en": "clock",
+    "status": "commons"
+  },
+  {
+    "simp": "钥匙",
+    "decision": "File:Key,.,.jpg",
+    "set": "home",
+    "pinyin": "yào shi",
+    "en": "key",
+    "status": "commons"
+  },
+  {
+    "simp": "银行",
+    "decision": "File:Bank of America Building Baltimore MD1.jpg",
+    "set": "places",
+    "pinyin": "yín háng",
+    "en": "bank building",
+    "status": "commons"
+  },
+  {
+    "simp": "锅",
+    "decision": "File:COOKING POT ON FIRE.jpg",
+    "set": "kitchen",
+    "pinyin": "guō",
+    "en": "cooking pot",
+    "status": "commons"
+  },
+  {
+    "simp": "镜子",
+    "decision": "https://commons.wikimedia.org/wiki/File:2008-03-14_Convex_mirror_in_Atlanta_garage_entrance.jpg",
+    "set": "home",
+    "pinyin": "jìng zi",
+    "en": "mirror",
+    "status": "custom"
+  },
+  {
+    "simp": "门",
+    "decision": "https://commons.wikimedia.org/wiki/File:China_Jinan_Door_5196943.jpg",
+    "set": "home",
+    "pinyin": "mén",
+    "en": "door",
+    "status": "custom"
+  },
+  {
+    "simp": "雨",
+    "decision": "File:Purple rain on roof.jpg",
+    "set": "weather",
+    "pinyin": "yǔ",
+    "en": "rain",
+    "status": "commons"
+  },
+  {
+    "simp": "雨衣",
+    "decision": "File:Raincoat for Cyclists (1649092784).jpg",
+    "set": "clothing",
+    "pinyin": "yǔ yī",
+    "en": "raincoat",
+    "status": "commons"
+  },
+  {
+    "simp": "雪",
+    "decision": "File:Snow Scene at Shipka Pass 1.JPG",
+    "set": "weather",
+    "pinyin": "xuě",
+    "en": "snow",
+    "status": "commons"
+  },
+  {
+    "simp": "雷",
+    "decision": "File:Lightning Pritzerbe 01 (MK).jpg",
+    "set": "weather",
+    "pinyin": "léi",
+    "en": "lightning",
+    "status": "commons"
+  },
+  {
+    "simp": "青蛙",
+    "decision": "File:Red-eyed Tree Frog - Litoria chloris edit1.jpg",
+    "set": "animals",
+    "en": "frog",
+    "status": "commons"
+  },
+  {
+    "simp": "面包",
+    "decision": "https://commons.wikimedia.org/wiki/File:Songpan.qingke.mianbao.jpg",
+    "set": "food-drink",
+    "pinyin": "miàn bāo",
+    "en": "bread",
+    "status": "custom"
+  },
+  {
+    "simp": "面条",
+    "decision": "File:Noodles 2.png",
+    "set": "food-drink",
+    "en": "noodles",
+    "status": "commons"
+  },
+  {
+    "simp": "鞋",
+    "decision": "File:Reebok Royal Glide Ripple Clip shoe.jpg",
+    "set": "home",
+    "pinyin": "xié",
+    "en": "shoes",
+    "status": "commons"
+  },
+  {
+    "simp": "风",
+    "decision": "https://commons.wikimedia.org/wiki/File:Gone_with_the_Wind_(Autant_en_emporte_le_vent_)_MET_DP809644.jpg",
+    "set": "weather",
+    "pinyin": "fēng",
+    "en": "wind",
+    "status": "custom"
+  },
+  {
+    "simp": "风筝",
+    "decision": "File:Jules and Gabriel flying a kite at Alameda Afonso Henriques, Lisbon, Portugal (PPL1-Corrected) julesvernex2-2.jpg",
+    "set": "sports-toys",
+    "pinyin": "fēng zheng",
+    "en": "kite",
+    "status": "commons"
+  },
+  {
+    "simp": "飞机",
+    "decision": "File:Aeroflot Airbus A330 Kustov.jpg",
+    "set": "transport",
+    "en": "airplane",
+    "status": "commons"
+  },
+  {
+    "simp": "饭店",
+    "decision": "https://commons.wikimedia.org/wiki/File:Inside_a_restaurant_in_Xitianwei_(20170124133015).jpg",
+    "set": "places",
+    "pinyin": "fàn diàn",
+    "en": "restaurant",
+    "status": "custom"
+  },
+  {
+    "simp": "饺子",
+    "decision": "File:Dumplings on a blue plate.jpg",
+    "set": "food-drink",
+    "pinyin": "jiǎo zi",
+    "en": "dumplings",
+    "status": "commons"
+  },
+  {
+    "simp": "饼干",
+    "decision": "File:Cookie stack.jpg",
+    "set": "food-drink",
+    "pinyin": "bǐng gān",
+    "en": "cookie",
+    "status": "commons"
+  },
+  {
+    "simp": "香蕉",
+    "decision": "File:Bananas on black background 02.jpg",
+    "set": "food-drink",
+    "pinyin": "xiāng jiāo",
+    "en": "banana",
+    "status": "commons"
+  },
+  {
+    "simp": "马",
+    "decision": "File:Horse December 2014-1.jpg",
+    "set": "animals",
+    "pinyin": "mǎ",
+    "en": "horse",
+    "status": "commons"
+  },
+  {
+    "simp": "鱼",
+    "decision": "File:Astronotus ocellatus.jpg",
+    "set": "animals",
+    "pinyin": "yú",
+    "en": "fish",
+    "status": "commons"
+  },
+  {
+    "simp": "鸟",
+    "decision": "File:Female house sparrow at Kodai.jpg",
+    "set": "animals",
+    "pinyin": "niǎo",
+    "en": "bird",
+    "status": "commons"
+  },
+  {
+    "simp": "鸡",
+    "decision": "File:Gallus gallus domesticus LC0262.jpg",
+    "set": "animals",
+    "pinyin": "jī",
+    "en": "chicken",
+    "status": "commons"
+  },
+  {
+    "simp": "鸡蛋",
+    "decision": "https://commons.wikimedia.org/wiki/File:6-Pack-Chicken-Eggs.jpg",
+    "set": "food-drink",
+    "pinyin": "jī dàn",
+    "en": "egg",
+    "status": "custom"
+  },
+  {
+    "simp": "鸭",
+    "decision": "File:Male mallard duck 2.jpg",
+    "set": "animals",
+    "pinyin": "yā",
+    "en": "duck",
+    "status": "commons"
+  },
+  {
+    "simp": "鸭子",
+    "decision": "File:Male mallard duck 2.jpg",
+    "set": "animals",
+    "pinyin": "yā zi",
+    "en": "duck",
+    "status": "commons"
+  },
+  {
+    "simp": "黄色",
+    "decision": "https://commons.wikimedia.org/wiki/File:Yellow_Color.jpg",
+    "set": "colors",
+    "pinyin": "huáng sè",
+    "en": "yellow color",
+    "status": "custom"
+  },
+  {
+    "simp": "黑色",
+    "decision": "File:Black Color.jpg",
+    "set": "colors",
+    "pinyin": "hēi sè",
+    "en": "black color",
+    "status": "commons"
+  },
+  {
+    "simp": "鼻子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Nose_Job,_Andra_Ursuta_01.jpg",
+    "set": "body",
+    "pinyin": "bí zi",
+    "en": "nose",
+    "status": "custom"
+  }
+]

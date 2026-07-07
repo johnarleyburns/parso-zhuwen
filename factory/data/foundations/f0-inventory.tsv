@@ -1,0 +1,220 @@
+# Foundations concrete candidate inventory (00 §5A.2). columns: simp\tpinyin\ten\tset\thsk3_level
+# imageability is decided empirically by the §8A Commons pipeline (blocker B-3 resolution).
+# hsk3_level 0 = not a standalone HSK-3.0 form (compound/loanword; pattern-taught or gloss-introduced).
+狗	gǒu	dog	animals	1
+猫	māo	cat	animals	1
+鱼	yú	fish	animals	2
+鸟	niǎo	bird	animals	2
+马	mǎ	horse	animals	3
+牛	niú	cow	animals	1
+羊	yáng	sheep	animals	3
+猪	zhū	pig	animals	5
+鸡	jī	chicken	animals	1
+鸭子	yā zi	duck	animals	5
+兔子	tù zi	rabbit	animals	5
+蛇	shé	snake	animals	5
+老虎	lǎo hǔ	tiger	animals	4
+大象	dà xiàng	elephant	animals	5
+熊猫		panda	animals	0
+猴子	hóu zi	monkey	animals	5
+狮子	shī zi	lion	animals	6
+熊	xióng	bear	animals	3
+蝴蝶	hú dié	butterfly	animals	5
+青蛙		frog	animals	0
+米饭	mǐ fàn	cooked rice	food-drink	1
+面条		noodles	food-drink	0
+面包	miàn bāo	bread	food-drink	1
+饺子	jiǎo zi	dumplings	food-drink	1
+包子	bāo zi	steamed bun	food-drink	1
+茶	chá	tea	food-drink	1
+水	shuǐ	glass of water	food-drink	1
+牛奶	niú nǎi	milk	food-drink	1
+咖啡	kā fēi	coffee	food-drink	2
+果汁	guǒ zhī	fruit juice	food-drink	4
+苹果	píng guǒ	apple	food-drink	1
+香蕉	xiāng jiāo	banana	food-drink	3
+西瓜	xī guā	watermelon	food-drink	3
+葡萄	pú tao	grapes	food-drink	4
+橙子	chéng zi	orange fruit	food-drink	5
+草莓		strawberry	food-drink	0
+鸡蛋	jī dàn	egg	food-drink	1
+肉	ròu	meat	food-drink	2
+蔬菜	shū cài	vegetables	food-drink	5
+蛋糕	dàn gāo	cake	food-drink	3
+巧克力	qiǎo kè lì	chocolate	food-drink	4
+冰淇淋		ice cream	food-drink	0
+糖	táng	candy	food-drink	3
+饼干	bǐng gān	cookie	food-drink	4
+汤	tāng	soup	food-drink	4
+爸爸	bà ba	father	family	1
+妈妈	mā ma	mother	family	1
+哥哥	gē ge	older brother	family	1
+弟弟	dì di	younger brother	family	1
+姐姐	jiě jie	older sister	family	1
+妹妹	mèi mei	younger sister	family	1
+儿子	ér zi	son	family	1
+女儿	nǚ ér	daughter	family	1
+爷爷	yé ye	grandfather	family	2
+奶奶	nǎi nai	grandmother	family	2
+宝宝		baby	family	0
+朋友	péng you	friends	family	1
+老师	lǎo shī	teacher	family	1
+学生	xué sheng	student	family	1
+医生	yī sheng	doctor	family	1
+警察	jǐng chá	police officer	family	4
+手	shǒu	hand	body	1
+脚	jiǎo	foot	body	3
+眼睛	yǎn jing	eye	body	2
+嘴	zuǐ	mouth	body	3
+耳朵	ěr duo	ear	body	3
+鼻子	bí zi	nose	body	4
+头发	tóu fa	hair	body	3
+脸	liǎn	face	body	3
+牙	yá	tooth	body	3
+腿	tuǐ	leg	body	3
+头	tóu	head	body	2
+胳膊	gē bo	arm	body	4
+红色	hóng sè	red color	colors	2
+绿色	lǜ sè	green color	colors	2
+蓝色		blue color	colors	0
+黄色	huáng sè	yellow color	colors	3
+白色	bái sè	white color	colors	2
+黑色	hēi sè	black color	colors	2
+橙色		orange color	colors	0
+粉色		pink color	colors	0
+桌子	zhuō zi	table	home	1
+椅子	yǐ zi	chair	home	1
+门	mén	door	home	2
+窗户	chuāng hu	window	home	4
+床	chuáng	bed	home	1
+杯子	bēi zi	cup	home	1
+手机	shǒu jī	smartphone	home	1
+电脑	diàn nǎo	laptop computer	home	1
+电视	diàn shì	television	home	1
+钥匙	yào shi	key	home	4
+灯	dēng	lamp	home	3
+书	shū	book	home	1
+书包	shū bāo	backpack	home	2
+笔	bǐ	pen	home	2
+衣服	yī fu	clothes	home	1
+鞋	xié	shoes	home	3
+钟	zhōng	clock	home	1
+碗	wǎn	bowl	home	3
+盘子	pán zi	plate	home	3
+刀	dāo	knife	home	4
+伞	sǎn	umbrella	home	3
+毛巾	máo jīn	towel	home	4
+镜子	jìng zi	mirror	home	4
+冰箱	bīng xiāng	refrigerator	home	3
+沙发	shā fā	sofa	home	3
+枕头	zhěn tou	pillow	home	6
+筷子	kuài zi	chopsticks	kitchen	3
+勺子	sháo zi	spoon	kitchen	3
+叉子	chā zi	fork	kitchen	5
+锅	guō	cooking pot	kitchen	5
+瓶子	píng zi	bottle	kitchen	3
+盒子	hé zi	box	kitchen	4
+家	jiā	home house	places	1
+学校	xué xiào	school	places	1
+商店	shāng diàn	store shop	places	1
+医院	yī yuàn	hospital	places	1
+饭店	fàn diàn	restaurant	places	1
+公园	gōng yuán	park	places	3
+路	lù	road	places	2
+山	shān	mountain	places	3
+河	hé	river	places	3
+海	hǎi	sea	places	3
+图书馆	tú shū guǎn	library	places	3
+超市	chāo shì	supermarket	places	1
+火车站		train station	places	0
+机场	jī chǎng	airport	places	2
+银行	yín háng	bank building	places	3
+教室	jiào shì	classroom	places	2
+厨房	chú fáng	kitchen	places	4
+房子	fáng zi	house	buildings	3
+楼	lóu	tall building	buildings	2
+桥	qiáo	bridge	buildings	4
+塔	tǎ	tower	buildings	6
+雨	yǔ	rain	weather	1
+雪	xuě	snow	weather	1
+风	fēng	wind	weather	3
+天空	tiān kōng	sky	weather	5
+太阳	tài yáng	sun	weather	3
+月亮	yuè liang	moon	weather	3
+星星	xīng xing	stars	weather	4
+云	yún	cloud	weather	4
+火	huǒ	fire	weather	1
+花	huā	flower	weather	2
+树	shù	tree	weather	3
+草	cǎo	grass	weather	3
+石头	shí tou	stone	weather	5
+森林	sēn lín	forest	weather	4
+沙滩	shā tān	beach	weather	7
+彩虹	cǎi hóng	rainbow	weather	6
+汽车	qì chē	car	transport	3
+自行车	zì xíng chē	bicycle	transport	3
+公共汽车		bus	transport	0
+飞机		airplane	transport	0
+火车	huǒ chē	train	transport	1
+船	chuán	boat	transport	3
+出租车	chū zū chē	taxi	transport	1
+地铁	dì tiě	subway	transport	2
+摩托车	mó tuō chē	motorcycle	transport	6
+卡车	kǎ chē	truck	transport	7
+裤子	kù zi	trousers	clothing	2
+帽子	mào zi	hat	clothing	4
+手套	shǒu tào	gloves	clothing	5
+袜子	wà zi	socks	clothing	4
+裙子	qún zi	skirt	clothing	3
+眼镜	yǎn jìng	eyeglasses	clothing	4
+手表	shǒu biǎo	wristwatch	clothing	2
+围巾	wéi jīn	scarf	clothing	5
+外套	wài tào	coat	clothing	4
+衬衫	chèn shān	shirt	clothing	3
+跑	pǎo	running	actions	2
+走路	zǒu lù	walking	actions	2
+坐	zuò	sitting	actions	1
+站	zhàn	standing	actions	2
+游泳	yóu yǒng	swimming	actions	2
+跳舞	tiào wǔ	dancing	actions	2
+吃	chī	eating	actions	1
+喝	hē	drinking	actions	1
+睡觉	shuì jiào	sleeping	actions	1
+唱歌		singing	actions	0
+读书	dú shū	reading a book	actions	1
+写字		writing	actions	0
+球	qiú	ball	sports-toys	2
+足球	zú qiú	soccer ball	sports-toys	2
+篮球	lán qiú	basketball	sports-toys	2
+玩具	wán jù	toy	sports-toys	5
+风筝	fēng zheng	kite	sports-toys	7
+娃娃	wá wa	doll	sports-toys	6
+蜜蜂	mì fēng	bee	animals	6
+乌龟		turtle	animals	0
+鸭	yā	duck	animals	5
+虾	xiā	shrimp	animals	7
+螃蟹	páng xiè	crab	animals	7
+橙汁		orange juice	food-drink	0
+米	mǐ	rice grain	food-drink	1
+梨	lí	pear	food-drink	5
+胡萝卜		carrot	food-drink	0
+手指	shǒu zhǐ	finger	body	5
+肩膀	jiān bǎng	shoulder	body	6
+膝盖	xī gài	knee	body	7
+背	bēi	back body	body	4
+电话	diàn huà	telephone	home	1
+报纸	bào zhǐ	newspaper	home	3
+盆	pén	basin	home	5
+扫把		broom	home	0
+街道	jiē dào	street	places	4
+农场	nóng chǎng	farm	places	7
+湖	hú	lake	places	5
+沙漠	shā mò	desert	places	5
+雷	léi	lightning	weather	6
+冰	bīng	ice	weather	3
+叶子	yè zi	leaf	weather	4
+岛	dǎo	island	weather	6
+轮船	lún chuán	ship	transport	6
+三轮车		tricycle	transport	0
+雨衣	yǔ yī	raincoat	clothing	3
+皮带		belt	clothing	0
