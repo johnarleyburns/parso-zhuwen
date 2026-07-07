@@ -16,7 +16,8 @@ struct ZhuwenApp: App {
 
     init() {
         let resetRequested = ProcessInfo.processInfo.arguments.contains("-uiTestReset")
-        let (model, log) = ZhuwenApp.bootstrap(resetStore: resetRequested)
+        let skipOnboarding = ProcessInfo.processInfo.arguments.contains("-uiTestSkipOnboarding")
+        let (model, log) = ZhuwenApp.bootstrap(resetStore: resetRequested, skipOnboarding: skipOnboarding)
         _app = StateObject(wrappedValue: model)
         eventLog = log
     }
@@ -33,8 +34,8 @@ struct ZhuwenApp: App {
 
     // MARK: - Bootstrap
 
-    private static func bootstrap(resetStore: Bool) -> (AppModel, PersistentEventLog?) {
-        let log = openLog(resetStore: resetStore)
+    private static func bootstrap(resetStore: Bool, skipOnboarding: Bool) -> (AppModel, PersistentEventLog?) {
+        let (log, placement) = openStores(resetStore: resetStore)
         guard let packURL = Bundle.main.url(forResource: "fixture-a2-v0", withExtension: "zpack"),
               let pubURL = Bundle.main.url(forResource: "zhuwen-dev", withExtension: "pub"),
               let pub = try? Minisign.PublicKey(file: String(contentsOf: pubURL, encoding: .utf8)),
@@ -43,17 +44,24 @@ struct ZhuwenApp: App {
             fatalError("ZhuwenApp requires bundled fixture-a2-v0.zpack + zhuwen-dev.pub")
         }
         let model = AppModel(store: store, events: log?.events ?? [], eventSink: log,
+                             placementStore: placement,
+                             forceRoute: skipOnboarding ? .loop : nil,
                              sync: SyncModel(enabled: false, engine: NoOpSyncEngine()))
         return (model, log)
     }
 
-    private static func openLog(resetStore: Bool) -> PersistentEventLog? {
+    private static func openStores(resetStore: Bool) -> (PersistentEventLog?, PersistentPlacementStore?) {
         let base = URL.applicationSupportDirectory.appending(path: "Zhuwen", directoryHint: .isDirectory)
         try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
         let url = base.appending(path: "learner.store")
-        guard let log = try? PersistentEventLog(url: url) else { return nil }
-        if resetStore { log.replaceAll([]) }
-        return log
+        guard let container = try? LearnerStore.container(url: url) else { return (nil, nil) }
+        let log = PersistentEventLog(container: container)
+        let placement = PersistentPlacementStore(container: container)
+        if resetStore {
+            log.replaceAll([])
+            placement.clear()
+        }
+        return (log, placement)
     }
 }
 

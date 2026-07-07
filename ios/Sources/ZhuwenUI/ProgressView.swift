@@ -16,8 +16,9 @@ public struct LearnerProgressView: View {
             ScrollView {
                 VStack(spacing: 12) {
                     HStack(spacing: 12) {
-                        BandCard(title: "Reading", band: r.readingLabel,
-                                 progress: r.readingProgressToNext, tint: .cinnabar)
+                        BandCard(title: "Reading", band: r.readingBand == .a0 ? "Pre-A1" : r.readingLabel,
+                                 progress: r.readingProgressToNext, tint: .cinnabar,
+                                 note: r.readingBand == .a0 ? "Foundations" : nil)
                         BandCard(title: "Listening", band: r.listeningLabel,
                                  progress: r.listeningProgressToNext, tint: .secondary)
                     }
@@ -83,11 +84,15 @@ private struct BandCard: View {
     let band: String
     let progress: Double
     let tint: Color
+    var note: String? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title).font(.footnote.weight(.semibold)).foregroundColor(.secondary).textCase(.uppercase)
             Text(band).font(.system(size: 32, weight: .heavy)).foregroundColor(tint)
+            if let note {
+                Text(note).font(.caption2.weight(.semibold)).foregroundColor(.cinnabar)
+            }
             ProgressView(value: min(1, max(0, progress))).tint(tint)
             Text("\(Int((progress * 100).rounded()))% to next · est.")
                 .font(.caption2).foregroundColor(.secondary)

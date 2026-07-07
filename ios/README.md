@@ -8,9 +8,9 @@ module, zip via an in-package reader.
 | Target | Role |
 |--------|------|
 | `ZhuwenPacks` | pack I/O: `ZipArchive` (STORED zip), `Minisign` verify, `PackVerifier` (sig + hashes + lexicon_version + content-level I6), `PackStore` typed SQLite queries + story audio extraction + `alignment(storyID:)`; **`PackClient`** (CP-08): the app's sole network chokepoint — anonymous ephemeral CDN GET via `PackFetcher`/`URLSessionPackFetcher`, verify-before-install, `PackCatalog`/`RemotePack`/`InstalledPack` pack manager (list/size/delete/redownload). Owns pack I/O + network (I2). |
-| `ZhuwenCore` | domain models + `ReaderModel` (tap-to-gloss); the learner engine: `EventLog` (append-only, I5; incl. `.listen` blind/karaoke events), `KnownWordModel` (replayable projection, now with per-word `FSRSCard` memory), `FrontierQueue` (FR-2.4), `CoverageGate`+`StoryCandidate` (I1), `Selector` (bitmap AND + popcount scoring, NFR-2), `WordBitmap`, `LexiconStore`; **placement** (FR-1): `PseudowordGenerator` foils, `PlacementItemBuilder`/`PlacementSession`, `PlacementEstimator` (logistic fit + guessing correction → CEFR/HSK + seed), `PlacementSeed` (re-placement merge); **loop completion** (CP-07): `FSRSScheduler` (open FSRS-4.5, on-device), `ComprehensionSession` (M8 → seal + P(known) boost), `ReviewScheduler`/`ReviewCard` (M9 sentence-context, 20/day cap), `ProgressEstimator`/`ProgressReport` (M10 both-skill CEFR + HSK gap + growth); **commerce & data** (CP-08): `Entitlement`/`StoreProduct`/`ProductCatalog` (FR-9.3 SKUs) + `FeatureGate` (free/Pro), `LearnerArchive` (export/erase/import round-trip, FR-10.3), `LearnerSettings` (FR-10.1, sync off by default). |
+| `ZhuwenCore` | domain models + `ReaderModel` (tap-to-gloss); the learner engine: `EventLog` (append-only, I5; incl. `.listen` blind/karaoke events), `KnownWordModel` (replayable projection, now with per-word `FSRSCard` memory), `FrontierQueue` (FR-2.4), `CoverageGate`+`StoryCandidate` (I1), `Selector` (bitmap AND + popcount scoring, NFR-2), `WordBitmap`, `LexiconStore`; **placement** (FR-1): `PseudowordGenerator` foils, `PlacementItemBuilder`/`PlacementSession`, `PlacementEstimator` (logistic fit + guessing correction → CEFR/HSK + seed), `PlacementSeed` (re-placement merge), `PlacementSnapshot`/`PlacementStore` (durable onboarding gate); **Foundations** (FR-11, CP-08a): `FoundationsProgram`/`FoundationsSet`/`FoundationsCard`, `FoundationsSession` (F0 introduce→recognize→read→bind, ends on an F1/F2 recombination pass), `FoundationsDeck` (FR-11.3 distractors), `HandoffGate` (F3: ≥20 A1 stories ≥98%, reuses the I1 formula), `startingSet(for:)` (FR-11.6); **loop completion** (CP-07): `FSRSScheduler` (open FSRS-4.5, on-device), `ComprehensionSession` (M8 → seal + P(known) boost), `ReviewScheduler`/`ReviewCard` (M9 sentence-context, 20/day cap), `ProgressEstimator`/`ProgressReport` (M10 both-skill CEFR + HSK gap + growth); **commerce & data** (CP-08): `Entitlement`/`StoreProduct`/`ProductCatalog` (FR-9.3 SKUs) + `FeatureGate` (free/Pro), `LearnerArchive` (export/erase/import round-trip, FR-10.3), `LearnerSettings` (FR-10.1, sync off by default). |
 | `ZhuwenAudio` | listening (FR-5): `AlignmentTrack` (pure position→token resolver, the drift-critical core), `Karaoke` engine (speed 0.6×–1.2×, blind reveal), `CharTokenMap` (TTS range→token), `AudioNarrator` protocol + `PackAudioNarrator` (AVAudioPlayer, pitch-preserved rate) / `SystemTTSNarrator` (labeled `AVSpeechSynthesizer` fallback, §7) / `SystemVoice` (enhanced-voice detection). |
-| `ZhuwenUI` | SwiftUI shell: `RootView` tabs (Today · Library · Review · Progress) + Settings entry, `ReaderView` (tap-to-gloss sheet, cinnabar frontier underline, Listen + Finish→comprehension entries), `ListeningView` (M7 karaoke) + `ListeningModel`, `PlacementView` (M1–M3) + `PlacementFlowModel`, `ComprehensionView` (M8 seal stamp, Reduce-Motion fade), `ReviewView` (M9), `LearnerProgressView` (M10), `LearnerModel` (owns the event log → projection → M8/M9/M10 + export/erase/import); **commerce & data** (CP-08): `StoreModel`+`EntitlementProvider` (StoreKit 2 wrapper, `#if canImport(StoreKit)`), `PaywallView` (M12), `SettingsView`+`PackManagerModel`+privacy page (M13), `SyncModel`+`LearnerSyncEngine` (`CloudKitSyncEngine` guarded, off by default), `AppModel`. |
+| `ZhuwenUI` | SwiftUI shell: `RootView` (onboarding gate → Foundations → tabs: Today · Library · Review · Progress) + Settings entry, `ReaderView` (tap-to-gloss sheet, cinnabar frontier underline, Listen + Finish→comprehension entries), `ListeningView` (M7 karaoke) + `ListeningModel`, `PlacementView` (M1–M3) + `PlacementFlowModel`, `FoundationsView` (M14 picture-word course) + `FoundationsModel` + attribution/`CreditsView` + `MethodologyView`, `ComprehensionView` (M8 seal stamp, Reduce-Motion fade), `ReviewView` (M9), `LearnerProgressView` (M10, "Pre-A1 · Foundations" until handoff), `LearnerModel` (owns the event log → projection → M8/M9/M10 + export/erase/import); **commerce & data** (CP-08): `StoreModel`+`EntitlementProvider` (StoreKit 2 wrapper, `#if canImport(StoreKit)`), `PaywallView` (M12), `SettingsView`+`PackManagerModel`+privacy page (M13), `SyncModel`+`LearnerSyncEngine` (`CloudKitSyncEngine` guarded, off by default), `AppModel` (owns the first-run onboarding route). |
 
 The `@main` app target + on-simulator XCUITests are assembled in Xcode (thin shell over
 the tested packages); all logic is covered by `swift test` on the host.
@@ -36,7 +36,8 @@ regression guard and prints the measurement.
 `cd ../factory && make fixtures`):
 - `fixture-a2-v0.zpack` + `zhuwen-dev.pub` — positive pack + verify key. Each story now
   ships stub audio (`audio/<id>.opus`) + word-level `alignment` rows (CP-06; real CosyVoice
-  render is CP-09).
+  render is CP-09). The pack also ships Foundations F0 `foundations_card` rows (CP-08a) that
+  resolve to provenanced images and drive the on-device Foundations engine + M14 UI.
 - `golden-{unsigned,tampered,imageless}.zpack` — must be rejected by `PackVerifier`
   (mirrors the Go golden suite; handoff §7 — one vector set, two implementations).
 - `gate-vectors.json` — the shared coverage-gate (I1) vector suite generated by the Go
@@ -66,4 +67,17 @@ regression guard and prints the measurement.
   `KnownWordModel` (`LearnerArchiveTests`, the acceptance); opt-in private-CloudKit sync off by
   default. `URLSession` confined to `PackClient`, enforced by `make audit` (`grep-audit.sh`, §8).
   All commerce/data views compile for iOS 17. ✅
-- CP-08a+: images/Foundations, scale-up, polish — pending.
+- CP-08a: images/Foundations. The pack now ships Foundations F0 `foundations_card` rows resolving to
+  fully-provenanced Commons images (I6 extended to `foundations_card`, `verifyFoundationsI6`).
+  `ZhuwenCore.FoundationsProgram`/`FoundationsSession` drive the F0 four-step cycle and end each
+  5–8 min sitting on an F1/F2 recombination pass (FR-11.4); every interaction folds into the one
+  `KnownWordModel` (I5). `HandoffGate` reuses the I1 coverage formula (F3: ≥20 A1 stories ≥98%); a
+  zero-knowledge learner reaches handoff in ~300 words (`FoundationsSimulationTests`, the CP-08a
+  acceptance). `FoundationsView` (M14) renders photo + audio + hanzi + tone-colored pinyin with
+  recognition grids, a long-press attribution sheet, and a full Credits screen (FR-11.2). First-run
+  onboarding auto-presents placement, persists the result (`PlacementSnapshot`/
+  `PersistentPlacementStore`), and routes complete/partial beginners into Foundations at their first
+  unmastered set (FR-1.4/11.6) until the F3 handoff (FR-11.5); re-run from Settings still merges
+  (FR-1.5). Methodology page states the §5A.4 honest limits (I4). `make audit` stays green (no new
+  app network surface; Commons fetch is factory-only, I2). ✅
+- CP-08+: scale-up, polish — pending.

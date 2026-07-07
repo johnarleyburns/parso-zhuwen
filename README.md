@@ -28,7 +28,8 @@ frontier words (Hu & Nation 98% coverage; Krashen i+1). See
 | CP-06 | Listening (M7): factory forced-alignment stage → per-word timings in packs; `ZhuwenAudio` karaoke (position→token resolver), speeds 0.6×–1.2×, blind mode, labeled system-TTS fallback (FR-5). Highlight drift <120 ms over a 3-min story | ✅ done |
 | CP-07 | Loop completion: comprehension → **seal** (M8), on-device **FSRS** review (M9, sentence-context, 20/day cap), Progress (M10) with **both-skill** reading+listening CEFR estimates. P(known) updates verified for exposure/lookup/grade paths | ✅ done |
 | CP-08 | Commerce & data: CDN **`PackClient`** (anonymous GET, verify-before-install, pack manager), **StoreKit 2** SKUs + `FeatureGate` (FR-9.3), paywall (M12), settings (M13), **export/erase/import** (FR-10.3), opt-in private **CloudKit** sync (off by default). Network-surface CI grep green; export→erase→import round-trips | ✅ done |
-| CP-08a…CP-10 | images/Foundations, scale-up, polish | ⏳ pending |
+| CP-08a | Images + Foundations: §8A Commons image pipeline (`internal/images`: license/quality gate, fetch, curate, join) + `zhuwenctl images`; Foundations F0–F3 (`internal/foundations`) built on the curated inventory; on-device Foundations engine + M14 UI (`FoundationsProgram`/`Session`/`HandoffGate`, attribution/Credits), first-run onboarding gating, methodology page (I4). I6 extended to `foundations_card`; a zero-knowledge learner reaches the F3 handoff in ~300 words | ✅ done |
+| CP-08…CP-10 | scale-up, polish | ⏳ pending |
 
 ### Mid-course correction (MC series — post-CP-08 audit remediation, `02-midcourse-correction.md`)
 

@@ -253,6 +253,46 @@ public struct PassageOutcome: Equatable {
     }
 }
 
+// MARK: - Persisted onboarding snapshot (FR-1.4 / plan Part C first-run gating)
+
+/// A durable summary of a completed placement run: enough to (a) know onboarding is done so it
+/// never re-presents, (b) re-seed `KnownWordModel`, and (c) route to Foundations vs the story
+/// loop. Codable so the `@main` layer can persist it (SwiftData) without leaking model types.
+public struct PlacementSnapshot: Codable, Equatable {
+    public let seedPriors: [Int: Double]
+    public let cefr: String
+    public let hskLevel: Int
+    public let route: String
+    public let estimatedKnownCount: Int
+
+    public init(seedPriors: [Int: Double], cefr: String, hskLevel: Int, route: String, estimatedKnownCount: Int) {
+        self.seedPriors = seedPriors
+        self.cefr = cefr
+        self.hskLevel = hskLevel
+        self.route = route
+        self.estimatedKnownCount = estimatedKnownCount
+    }
+
+    public init(result: PlacementResult) {
+        self.init(seedPriors: result.seed.priors, cefr: result.cefr.rawValue,
+                  hskLevel: result.hskLevel, route: result.route.rawValue,
+                  estimatedKnownCount: result.estimatedKnownCount)
+    }
+
+    public var seed: PlacementSeed { PlacementSeed(seedPriors) }
+    public var placementRoute: PlacementRoute { PlacementRoute(rawValue: route) ?? .foundations }
+}
+
+/// A persistence sink for the onboarding snapshot (implemented by the `@main` layer over
+/// SwiftData). Kept in `ZhuwenCore` so `ZhuwenUI`/`AppModel` never import SwiftData directly —
+/// the same seam as `EventSink`.
+public protocol PlacementStore: AnyObject {
+    func load() -> PlacementSnapshot?
+    func save(_ snapshot: PlacementSnapshot)
+    /// Clear the snapshot (erase/reset, FR-10.3).
+    func clear()
+}
+
 // MARK: - Small math helpers
 
 @inline(__always) func sigmoid(_ x: Double) -> Double { 1 / (1 + exp(-x)) }

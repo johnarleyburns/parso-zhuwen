@@ -1,7 +1,10 @@
 import SwiftUI
+import ZhuwenCore
 import ZhuwenPacks
 
-/// RootView is the app's tab shell (00 §10): Today · Library · Review · Progress.
+/// RootView is the app's tab shell (00 §10): Today · Library · Review · Progress. On first run it
+/// auto-presents placement (FR-1.4); complete/partial beginners are routed into Foundations
+/// (FR-11.6) until the F3 handoff fires (FR-11.5), when the regular loop activates.
 public struct RootView: View {
     @ObservedObject private var model: AppModel
 
@@ -10,6 +13,21 @@ public struct RootView: View {
     }
 
     public var body: some View {
+        switch model.onboardingRoute {
+        case .needsPlacement:
+            PlacementView(model: model.makePlacementFlow()) { result in
+                if let result { model.completePlacement(result) }
+            }
+            .accessibilityIdentifier("onboardingPlacement")
+        case .foundations:
+            FoundationsView(model: model.makeFoundationsModel()) { model.finishHandoff() }
+                .accessibilityIdentifier("foundationsCourse")
+        case .loop:
+            loop
+        }
+    }
+
+    private var loop: some View {
         TabView {
             TodayView(model: model)
                 .tabItem { Label("Today", systemImage: "book") }
@@ -27,7 +45,6 @@ public struct RootView: View {
 /// Today: the engine-selected story (CP-04 will do real selection; CP-03 shows the first).
 struct TodayView: View {
     @ObservedObject var model: AppModel
-    @State private var showPlacement = false
 
     var body: some View {
         NavigationStack {
@@ -64,12 +81,6 @@ struct TodayView: View {
                         Image(systemName: "gearshape")
                     }
                 }
-                ToolbarItem(placement: .primaryAction) {
-                    Button("Placement") { showPlacement = true }
-                }
-            }
-            .sheet(isPresented: $showPlacement) {
-                PlacementView(model: model.makePlacementFlow()) { _ in showPlacement = false }
             }
         }
     }

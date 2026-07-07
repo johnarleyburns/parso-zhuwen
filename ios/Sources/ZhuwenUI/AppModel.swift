@@ -11,6 +11,8 @@ import ZhuwenPacks
 public final class AppModel: ObservableObject {
     @Published public private(set) var stories: [StoryRecord] = []
     @Published public private(set) var lexicon: [WordRecord] = []
+    /// Where first-run onboarding + the Foundations gate route the learner (FR-1.4/11.5/11.6).
+    @Published public private(set) var onboardingRoute: OnboardingRoute
     public let manifest: PackManifest?
     public let learner: LearnerModel
     public let store: StoreModel
@@ -18,28 +20,49 @@ public final class AppModel: ObservableObject {
     public let packManager: PackManagerModel
     @Published public var settings: LearnerSettings
     private let packStore: PackStore?
+    private let placementStore: PlacementStore?
+    private let foundationsCards: [FoundationsCardRecord]
+    private let images: [ImageRecord]
+
+    /// The three first-run/loop states (plan Part C point 14 + FR-11.5). Onboarding auto-presents
+    /// placement when no result is persisted; complete/partial beginners route to Foundations at
+    /// their first unmastered set; the regular loop activates at the F3 handoff.
+    public enum OnboardingRoute: Equatable {
+        case needsPlacement
+        case foundations
+        case loop
+    }
 
     public init(store packStore: PackStore,
                 events: [Event] = [],
                 eventSink: EventSink? = nil,
+                placementStore: PlacementStore? = nil,
+                forceRoute: OnboardingRoute? = nil,
                 commerce: StoreModel? = nil,
                 sync: SyncModel? = nil,
                 packManager: PackManagerModel? = nil,
                 settings: LearnerSettings = .default) {
         self.packStore = packStore
+        self.placementStore = placementStore
         self.manifest = packStore.manifest
         let stories = (try? packStore.stories()) ?? []
         let lexicon = (try? packStore.lexicon()) ?? []
         self.stories = stories
         self.lexicon = lexicon
+        self.foundationsCards = (try? packStore.foundationsCards()) ?? []
+        self.images = (try? packStore.images()) ?? []
+        let snapshot = placementStore?.load()
         self.learner = LearnerModel(
             stories: stories, lexicon: lexicon,
+            seed: snapshot?.seed ?? .empty,
             events: events, sink: eventSink,
             questions: { [weak packStore] id in (try? packStore?.questions(for: id)) ?? [] })
         self.store = commerce ?? StoreModel()
         self.sync = sync ?? SyncModel()
         self.packManager = packManager ?? PackManagerModel()
         self.settings = settings
+        self.onboardingRoute = forceRoute ?? AppModel.route(for: snapshot, cards: self.foundationsCards,
+                                                            lexicon: lexicon, learner: self.learner)
     }
 
     /// Convenience: verify + open a pack from disk, then load it.
@@ -75,10 +98,70 @@ public final class AppModel: ObservableObject {
         PlacementFlowModel(lexicon: lexicon)
     }
 
-    /// The settings screen (M13), wired to the shared commerce/sync/pack/learner state.
+    // MARK: - Foundations (FR-11) + onboarding routing
+
+    /// The ordered Foundations program built from the pack's `foundations_card` rows.
+    public var foundationsProgram: FoundationsProgram {
+        FoundationsProgram(cards: foundationsCards, lexicon: LexiconStore(lexicon))
+    }
+
+    /// The A1 story lattice the F3 handoff gate measures against (I1 coverage of ≥20 A1 stories).
+    public var a1Lattice: [LatticeStory] {
+        let maxWordID = lexicon.map(\.id).max() ?? 0
+        return stories
+            .filter { $0.hsk3Level <= 1 || $0.band.uppercased().contains("A1") }
+            .map { LatticeStory(record: $0, maxWordID: maxWordID) }
+    }
+
+    /// The Foundations course model, seeded to resume a partial beginner at their first
+    /// unmastered set (FR-11.6).
+    public func makeFoundationsModel() -> FoundationsModel {
+        let seed = PlacementSeed(learner.model.states.compactMapValues { $0.pKnown > 0 ? $0.pKnown : nil })
+        return FoundationsModel(
+            program: foundationsProgram,
+            learner: learner,
+            images: images,
+            imageData: { [weak packStore] rec in packStore?.imageData(for: rec) },
+            a1Stories: a1Lattice,
+            startAt: seed)
+    }
+
+    /// Persist a completed placement (FR-1.2/1.4), re-seed the model (FR-1.5 merge), and route the
+    /// learner: absolute/partial beginners → Foundations; otherwise the regular loop.
+    public func completePlacement(_ result: PlacementResult) {
+        learner.applyPlacement(result.seed)
+        placementStore?.save(PlacementSnapshot(result: result))
+        onboardingRoute = (result.route == .foundations) ? .foundations : .loop
+        advancePastFoundationsIfReady()
+    }
+
+    /// Called when the F3 handoff fires (FR-11.5): the regular Today/lattice loop activates.
+    public func finishHandoff() { onboardingRoute = .loop }
+
+    /// If the learner already gates enough A1 stories (e.g. after a re-placement), skip Foundations.
+    private func advancePastFoundationsIfReady() {
+        guard onboardingRoute == .foundations else { return }
+        if HandoffGate().isReady(known: learner.model.effectiveKnownSet(), a1Stories: a1Lattice) {
+            onboardingRoute = .loop
+        }
+    }
+
+    private static func route(for snapshot: PlacementSnapshot?, cards: [FoundationsCardRecord],
+                              lexicon: [WordRecord], learner: LearnerModel) -> OnboardingRoute {
+        guard let snapshot else { return .needsPlacement }
+        if snapshot.placementRoute == .foundations && !cards.isEmpty { return .foundations }
+        return .loop
+    }
+
+    /// The settings screen (M13), wired to the shared commerce/sync/pack/learner state. Also
+    /// exposes the manual re-run placement affordance (FR-1.5), the methodology page (I4), and the
+    /// image credits (FR-11.2).
     public func makeSettingsView() -> SettingsView {
         SettingsView(learner: learner, store: store, sync: sync,
-                     packs: packManager, settings: settingsBinding)
+                     packs: packManager, settings: settingsBinding,
+                     placementFlow: { [weak self] in self?.makePlacementFlow() ?? PlacementFlowModel(lexicon: []) },
+                     onPlacementComplete: { [weak self] result in self?.completePlacement(result) },
+                     creditsImages: images)
     }
 
     private var settingsBinding: Binding<LearnerSettings> {

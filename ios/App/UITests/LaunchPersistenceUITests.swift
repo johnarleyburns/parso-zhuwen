@@ -11,9 +11,10 @@ final class LaunchPersistenceUITests: XCTestCase {
     }
 
     func testLookupsSurviveRelaunch() {
-        // 1. Fresh launch with a clean store.
+        // 1. Fresh launch with a clean store. Skip onboarding so this focuses on the story loop
+        //    (the placement→Foundations onboarding path is covered by FoundationsOnboardingUITests).
         let app = XCUIApplication()
-        app.launchArguments = ["-uiTestReset"]
+        app.launchArguments = ["-uiTestReset", "-uiTestSkipOnboarding"]
         app.launch()
 
         let probe = app.staticTexts["persistenceProbe"]
@@ -37,6 +38,7 @@ final class LaunchPersistenceUITests: XCTestCase {
         // 4. Relaunch (no reset) — state must be reloaded from the persistent store.
         app.terminate()
         let relaunched = XCUIApplication()
+        relaunched.launchArguments = ["-uiTestSkipOnboarding"]
         relaunched.launch()
 
         let probe2 = relaunched.staticTexts["persistenceProbe"]
