@@ -45,8 +45,7 @@ public final class LearnerModel: ObservableObject {
     }
 
     /// Append one event and re-project (I5: state is a pure function of the log).
-    public func record(_ event: Event) {
-        events.append(event)
+    public func record(_ event: Event) {        events.append(event)
         sink?.append(event)
         model.apply(event)
         if let sid = event.storyID { readStoryIDs.insert(sid) }
@@ -56,8 +55,15 @@ public final class LearnerModel: ObservableObject {
     private func record(_ newEvents: [Event]) {
         for e in newEvents { record(e) }
     }
+    // MARK: - Placement seeding (FR-1.2 / FR-1.5)
 
-    // MARK: - Reading (feeds the loop)
+    /// Apply a placement seed and re-project over the existing log (I5). Re-running placement
+    /// **merges** seeds (`PlacementSeed.merged`) so a re-run never destroys prior knowledge
+    /// (FR-1.5); the append-only log is never mutated.
+    public func applyPlacement(_ newSeed: PlacementSeed) {
+        seed = PlacementSeed(seed).merged(with: newSeed).priors
+        model = KnownWordModel.project(events, seed: seed)
+    }    // MARK: - Reading (feeds the loop)
 
     /// Log a word exposure (word read, not tapped — weak positive evidence, FR-2.2).
     public func exposure(_ wordID: Int, storyID: String, at now: Date = Date()) {

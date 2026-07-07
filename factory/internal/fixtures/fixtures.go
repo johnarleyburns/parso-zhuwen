@@ -20,6 +20,7 @@ import (
 	"github.com/parso/zhuwen-factory/internal/gate"
 	"github.com/parso/zhuwen-factory/internal/gatevec"
 	"github.com/parso/zhuwen-factory/internal/gen"
+	"github.com/parso/zhuwen-factory/internal/lexicon"
 	"github.com/parso/zhuwen-factory/internal/minisign"
 	"github.com/parso/zhuwen-factory/internal/pack"
 	"github.com/parso/zhuwen-factory/internal/pipeline"
@@ -70,7 +71,45 @@ func BuildFixturePack() (*pack.Pack, int, error) {
 		Questions:      res.Questions,
 		Images:         res.Images,
 	}
+	p.FoundationsCards = fixtureFoundationsCards(lex, res.Images)
 	return p, len(res.Rejected), nil
+}
+
+// fixtureFoundationsCards synthesizes a small, deterministic set of F0 cards so the
+// vendored pack exercises the Foundations reader + engine (CP-08a Part C). It reuses an
+// existing provenanced image (satisfying I6) and draws distractors from same-set
+// predecessors only (FR-11.3). Hermetic: no network, no Commons fetch.
+func fixtureFoundationsCards(lex *lexicon.Lexicon, images []pack.Image) []pack.FoundationsCard {
+	if len(images) == 0 {
+		return nil
+	}
+	imageID := images[0].ID
+	var singles []lexicon.Word
+	for _, w := range lex.Words() {
+		if len([]rune(w.Simp)) == 1 {
+			singles = append(singles, w)
+		}
+		if len(singles) == 6 {
+			break
+		}
+	}
+	var cards []pack.FoundationsCard
+	var taught []int
+	for _, w := range singles {
+		distractors := append([]int(nil), taught...)
+		if len(distractors) > 3 {
+			distractors = distractors[len(distractors)-3:]
+		}
+		cards = append(cards, pack.FoundationsCard{
+			WordID:        w.ID,
+			ImageID:       imageID,
+			SetID:         "foundations-demo",
+			Stage:         "F0",
+			DistractorIDs: distractors,
+		})
+		taught = append(taught, w.ID)
+	}
+	return cards
 }
 
 // WriteAll writes the positive pack, its pubkey, and the three golden negatives into dir.

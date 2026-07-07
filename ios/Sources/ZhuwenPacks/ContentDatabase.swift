@@ -108,6 +108,44 @@ public final class ContentDatabase {
         return out
     }
 
+    /// Every image row with its §8A provenance (FR-11.2 attribution / Credits screen).
+    public func images() throws -> [ImageRecord] {
+        var out: [ImageRecord] = []
+        try run("""
+            SELECT id,word_id,canon_id,file,w,h,license,license_url,author,source_url,retrieved_at
+            FROM image ORDER BY id
+            """) { stmt in
+            let wid = sqlite3_column_type(stmt, 1) == SQLITE_NULL ? nil : Int(sqlite3_column_int64(stmt, 1))
+            out.append(ImageRecord(
+                id: column(stmt, 0) ?? "",
+                wordID: wid,
+                canonID: column(stmt, 2) ?? "",
+                file: column(stmt, 3) ?? "",
+                width: Int(sqlite3_column_int64(stmt, 4)),
+                height: Int(sqlite3_column_int64(stmt, 5)),
+                license: column(stmt, 6) ?? "",
+                licenseURL: column(stmt, 7) ?? "",
+                author: column(stmt, 8) ?? "",
+                sourceURL: column(stmt, 9) ?? "",
+                retrievedAt: column(stmt, 10) ?? ""))
+        }
+        return out
+    }
+
+    /// The Foundations F0 cards, ordered by word_id (FR-11). Empty if the pack ships none.
+    public func foundationsCards() throws -> [FoundationsCardRecord] {
+        var out: [FoundationsCardRecord] = []
+        try run("SELECT word_id,image_id,set_id,stage,distractor_ids FROM foundations_card ORDER BY word_id") { stmt in
+            out.append(FoundationsCardRecord(
+                wordID: Int(sqlite3_column_int64(stmt, 0)),
+                imageID: column(stmt, 1) ?? "",
+                setID: column(stmt, 2) ?? "",
+                stage: column(stmt, 3) ?? "",
+                distractorIDs: decodeIntArray(column(stmt, 4) ?? "[]")))
+        }
+        return out
+    }
+
     /// Content-level I6: every story's cover_image_id must be non-empty and resolve to an
     /// image row with a complete provenance record (mirrors factory `verifyI6`).
     public func verifyI6() throws {
@@ -129,6 +167,31 @@ public final class ContentDatabase {
             }
             if !ok { throw DBError.i6("story \(story) references missing image \(image)") }
             if !complete { throw DBError.i6("image \(image) missing provenance record") }
+        }
+    }
+
+    /// Content-level I6 for Foundations (FR-11 / plan Part C): every `foundations_card` must
+    /// carry a non-empty `image_id` that resolves to an image row with complete provenance
+    /// (mirrors factory `validateI6`'s foundations_card branch). No-op for packs without cards.
+    public func verifyFoundationsI6() throws {
+        var refs: [(Int, String)] = []
+        try run("SELECT word_id, image_id FROM foundations_card") { stmt in
+            refs.append((Int(sqlite3_column_int64(stmt, 0)), column(stmt, 1) ?? ""))
+        }
+        for (word, image) in refs {
+            if image.isEmpty { throw DBError.i6("foundations_card word \(word) has empty image_id") }
+            var ok = false
+            var complete = false
+            try run("SELECT license,license_url,author,source_url,retrieved_at FROM image WHERE id = ?", binds: [image]) { stmt in
+                ok = true
+                complete = !(column(stmt, 0) ?? "").isEmpty
+                    && !(column(stmt, 1) ?? "").isEmpty
+                    && !(column(stmt, 2) ?? "").isEmpty
+                    && !(column(stmt, 3) ?? "").isEmpty
+                    && !(column(stmt, 4) ?? "").isEmpty
+            }
+            if !ok { throw DBError.i6("foundations_card word \(word) references missing image \(image)") }
+            if !complete { throw DBError.i6("foundations_card image \(image) missing provenance record") }
         }
     }
 

@@ -48,6 +48,20 @@ public final class PackStore {
     public func stories() throws -> [StoryRecord] { try database.stories() }
     public func lexicon() throws -> [WordRecord] { try database.lexicon() }
 
+    /// The Foundations F0 cards shipped in this pack (FR-11). Empty if none.
+    public func foundationsCards() throws -> [FoundationsCardRecord] {
+        try database.foundationsCards()
+    }
+
+    /// Every provenanced image row (FR-11.2 attribution / Credits screen).
+    public func images() throws -> [ImageRecord] { try database.images() }
+
+    /// Raw bytes of an image file inside the pack (the HEIC/stub the UI decodes), or nil if the
+    /// entry is absent. Foundations cards + story covers resolve their art through this.
+    public func imageData(for image: ImageRecord) -> Data? {
+        image.file.isEmpty ? nil : archive.data(for: image.file)
+    }
+
     /// The comprehension questions for a story (FR-6.1).
     public func questions(for storyID: String) throws -> [QuestionRecord] {
         try database.questions(storyID: storyID)

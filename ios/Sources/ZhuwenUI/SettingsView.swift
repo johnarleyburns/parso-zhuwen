@@ -12,19 +12,31 @@ public struct SettingsView: View {
     @ObservedObject private var sync: SyncModel
     @ObservedObject private var packs: PackManagerModel
     @Binding private var settings: LearnerSettings
+    private let placementFlow: (() -> PlacementFlowModel)?
+    private let onPlacementComplete: ((PlacementResult) -> Void)?
+    private let creditsImages: [ImageRecord]
 
     @State private var showPaywall = false
     @State private var showEraseConfirm = false
+    @State private var showPlacement = false
+    @State private var showMethodology = false
+    @State private var showCredits = false
     @State private var exportDocument: JSONDocument?
     @State private var showExporter = false
 
     public init(learner: LearnerModel, store: StoreModel, sync: SyncModel,
-                packs: PackManagerModel, settings: Binding<LearnerSettings>) {
+                packs: PackManagerModel, settings: Binding<LearnerSettings>,
+                placementFlow: (() -> PlacementFlowModel)? = nil,
+                onPlacementComplete: ((PlacementResult) -> Void)? = nil,
+                creditsImages: [ImageRecord] = []) {
         self.learner = learner
         self.store = store
         self.sync = sync
         self.packs = packs
         _settings = settings
+        self.placementFlow = placementFlow
+        self.onPlacementComplete = onPlacementComplete
+        self.creditsImages = creditsImages
     }
 
     public var body: some View {
@@ -33,6 +45,7 @@ public struct SettingsView: View {
                 subscriptionSection
                 readingSection
                 audioReviewSection
+                learningSection
                 packsSection
                 syncSection
                 dataSection
@@ -40,6 +53,16 @@ public struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .sheet(isPresented: $showPaywall) { PaywallView(store: store) }
+            .sheet(isPresented: $showMethodology) { MethodologyView() }
+            .sheet(isPresented: $showCredits) { CreditsView(images: creditsImages) }
+            .sheet(isPresented: $showPlacement) {
+                if let placementFlow {
+                    PlacementView(model: placementFlow()) { result in
+                        showPlacement = false
+                        if let result { onPlacementComplete?(result) }
+                    }
+                }
+            }
             .fileExporter(isPresented: $showExporter,
                           document: exportDocument,
                           contentType: .json,
@@ -98,6 +121,18 @@ public struct SettingsView: View {
             }
             Stepper("Daily review cap: \(settings.dailyReviewCap)",
                     value: $settings.dailyReviewCap, in: 5...50, step: 5)
+        }
+    }
+
+    private var learningSection: some View {
+        Section("Learning") {
+            if placementFlow != nil {
+                Button("Re-run placement") { showPlacement = true }
+            }
+            Button("Method & limits") { showMethodology = true }
+            if !creditsImages.isEmpty {
+                Button("Image credits") { showCredits = true }
+            }
         }
     }
 

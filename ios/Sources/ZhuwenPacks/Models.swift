@@ -110,3 +110,50 @@ public struct WordRecord: Equatable {
         self.hsk3Level = hsk3Level; self.freqRank = freqRank
     }
 }
+
+/// A Commons image record with full §8A provenance (mirrors factory `pack.Image` /
+/// schema `image`). Provenance fields are all non-empty for a shipped image (I6); the app
+/// renders `author`/`license` in the attribution sheet and Credits screen (FR-11.2).
+public struct ImageRecord: Codable, Equatable, Identifiable {
+    public let id: String
+    public let wordID: Int?
+    public let canonID: String
+    public let file: String
+    public let width: Int
+    public let height: Int
+    public let license: String
+    public let licenseURL: String
+    public let author: String
+    public let sourceURL: String
+    public let retrievedAt: String
+
+    public init(id: String, wordID: Int?, canonID: String, file: String, width: Int, height: Int,
+                license: String, licenseURL: String, author: String, sourceURL: String, retrievedAt: String) {
+        self.id = id; self.wordID = wordID; self.canonID = canonID; self.file = file
+        self.width = width; self.height = height; self.license = license; self.licenseURL = licenseURL
+        self.author = author; self.sourceURL = sourceURL; self.retrievedAt = retrievedAt
+    }
+
+    /// One-line attribution string in Commons/CC house style (author · license).
+    public var attribution: String {
+        author.isEmpty ? license : "\(author) · \(license)"
+    }
+}
+
+/// One Foundations F0 card row (mirrors factory `pack.FoundationsCard` / schema
+/// `foundations_card`). `distractorIDs` are already-taught word IDs for the recognition grid
+/// (FR-11.3); `imageID` references an `ImageRecord`.
+public struct FoundationsCardRecord: Codable, Equatable, Identifiable {
+    public let wordID: Int
+    public let imageID: String
+    public let setID: String
+    public let stage: String
+    public let distractorIDs: [Int]
+
+    public var id: Int { wordID }
+
+    public init(wordID: Int, imageID: String, setID: String, stage: String, distractorIDs: [Int]) {
+        self.wordID = wordID; self.imageID = imageID; self.setID = setID
+        self.stage = stage; self.distractorIDs = distractorIDs
+    }
+}
