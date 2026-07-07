@@ -97,14 +97,24 @@ type Story struct {
 
 // Pack is the full set of pack inputs.
 type Pack struct {
-	ID             string
-	Semver         string
-	LexiconVersion string
-	CreatedAt      string
-	Lexicon        *lexicon.Lexicon
-	Stories        []Story
-	Questions      []Question
-	Images         []Image
+	ID               string
+	Semver           string
+	LexiconVersion   string
+	CreatedAt        string
+	Lexicon          *lexicon.Lexicon
+	Stories          []Story
+	Questions        []Question
+	Images           []Image
+	FoundationsCards []FoundationsCard
+}
+
+// FoundationsCard is one F0 card row (matches schema.sql foundations_card).
+type FoundationsCard struct {
+	WordID        int    // lexicon word_id (PK)
+	ImageID       string // references image.id
+	SetID         string // semantic set e.g. "animals"
+	Stage         string // "F0"
+	DistractorIDs []int  // JSON array of word_ids for multiple-choice
 }
 
 // Manifest is the signed pack manifest.
@@ -136,6 +146,21 @@ func (p *Pack) validateI6() error {
 		}
 		if im.License == "" || im.LicenseURL == "" || im.Author == "" || im.SourceURL == "" || im.RetrievedAt == "" {
 			return fmt.Errorf("I6: image %q missing provenance record", im.ID)
+		}
+	}
+	for _, fc := range p.FoundationsCards {
+		if fc.ImageID == "" {
+			return fmt.Errorf("I6: foundations_card word_id=%d has no image_id", fc.WordID)
+		}
+		im, ok := imgByID[fc.ImageID]
+		if !ok {
+			return fmt.Errorf("I6: foundations_card word_id=%d references missing image %q", fc.WordID, fc.ImageID)
+		}
+		if im.AICategorized {
+			return fmt.Errorf("I6: foundations_card image %q is AI-categorized", im.ID)
+		}
+		if im.License == "" || im.LicenseURL == "" || im.Author == "" || im.SourceURL == "" || im.RetrievedAt == "" {
+			return fmt.Errorf("I6: foundations_card image %q missing provenance record", im.ID)
 		}
 	}
 	return nil
@@ -355,6 +380,16 @@ func (p *Pack) insertRows(db *sql.DB) error {
 		if _, err := tx.Exec(`INSERT INTO question(id,story_id,prompt_zh,options,answer_idx,band) VALUES(?,?,?,?,?,?)`,
 			q.ID, q.StoryID, q.PromptZH, string(opts), q.AnswerIdx, q.Band); err != nil {
 			return fmt.Errorf("insert question %s: %w", q.ID, err)
+		}
+	}
+	for _, fc := range p.FoundationsCards {
+		dids, _ := json.Marshal(fc.DistractorIDs)
+		if len(fc.DistractorIDs) == 0 {
+			dids = []byte("[]")
+		}
+		if _, err := tx.Exec(`INSERT INTO foundations_card(word_id,image_id,set_id,stage,distractor_ids) VALUES(?,?,?,?,?)`,
+			fc.WordID, fc.ImageID, fc.SetID, fc.Stage, string(dids)); err != nil {
+			return fmt.Errorf("insert foundations_card %d: %w", fc.WordID, err)
 		}
 	}
 	return tx.Commit()
