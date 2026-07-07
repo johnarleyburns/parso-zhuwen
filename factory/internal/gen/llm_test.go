@@ -91,3 +91,56 @@ func TestRetellRefusesWithoutKey(t *testing.T) {
 		t.Fatal("expected refusal without API key")
 	}
 }
+
+func TestBuildMessagesCoverageContractPlanNewTypes(t *testing.T) {
+	lex := testLexicon(t)
+	p := NewLLMProvider(LLMConfig{Model: "deepseek-chat"}, lex)
+	b := brief.Brief{
+		CanonID: "c1", TitleZH: "守株待兔", TitleEN: "Waiting by a Tree",
+		Band: "A2", HSK3Level: 2, Register: "narrative",
+		Beats:         []string{"农夫看见兔子撞树"},
+		Frontier:      map[int]bool{1: true, 2: true, 3: true, 4: true, 5: true},
+		PlanNewTypes:  []int{3},
+		MinRecurrence: 3,
+		LengthMin:     120, LengthMax: 400,
+	}
+	user := p.BuildMessages(b)[1].Content
+	if !strings.Contains(user, "精确地使用以下 1 个词") {
+		t.Errorf("PlanNewTypes should produce '精确地使用以下 1 个词' in prompt:\n%s", user)
+	}
+	if !strings.Contains(user, "坚持") {
+		t.Errorf("PlanNewTypes ID 3 (坚持) should appear in prompt:\n%s", user)
+	}
+	if strings.Contains(user, "山") || strings.Contains(user, "水") {
+		t.Errorf("prompt should NOT list non-plan frontier words (山=1, 水=2):\n%s", user)
+	}
+}
+
+func TestBuildMessagesPlanNewTypesWithRecurrence(t *testing.T) {
+	lex := testLexicon(t)
+	p := NewLLMProvider(LLMConfig{}, lex)
+	b := brief.Brief{
+		TitleZH: "t", Beats: []string{"x"},
+		Frontier:      map[int]bool{3: true},
+		PlanNewTypes:  []int{3},
+		MinRecurrence: 5,
+	}
+	user := p.BuildMessages(b)[1].Content
+	if !strings.Contains(user, "至少出现 5 次") {
+		t.Errorf("prompt should use MinRecurrence from brief (5):\n%s", user)
+	}
+}
+
+func TestBuildMessagesWithoutPlanNewTypesUsesFullFrontier(t *testing.T) {
+	lex := testLexicon(t)
+	p := NewLLMProvider(LLMConfig{}, lex)
+	b := brief.Brief{
+		TitleZH: "t", Beats: []string{"x"},
+		Frontier:  map[int]bool{1: true, 2: true, 3: true},
+		LengthMin: 120, LengthMax: 400,
+	}
+	user := p.BuildMessages(b)[1].Content
+	if !strings.Contains(user, "山") || !strings.Contains(user, "水") || !strings.Contains(user, "坚持") {
+		t.Errorf("without PlanNewTypes, full frontier should appear:\n%s", user)
+	}
+}

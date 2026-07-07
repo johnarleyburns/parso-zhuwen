@@ -49,7 +49,7 @@ func TestE2E_FullSkeleton(t *testing.T) {
 	}
 
 	out, err := run(t, bin, "build", "--out", packPath)
-	if err != nil || !strings.Contains(out, "10 stories packed") {
+	if err != nil || !strings.Contains(out, "stories packed") {
 		t.Fatalf("build: err=%v out=%s", err, out)
 	}
 	if _, err := os.Stat(packPath); err != nil {

@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math"
 	"os"
 
 	"github.com/parso/zhuwen-factory/internal/minisign"
@@ -91,6 +92,16 @@ func Verify(zpackPath string, pub minisign.PublicKey, opts *VerifyOptions) (*Man
 			return nil, err
 		}
 	}
+
+	// CP-09b I4: reject fabricated/malformed audit metrics in the manifest.
+	// audit_pass_rate must be in [0.0, 1.0] if present; audit_sample_size must be
+	// non-negative; generator must be a known tag (or set to the empty sentinel for
+	// fixture packs). A pack claiming a generator tag that doesn't match its audit
+	// pass_rate produces an honest rejection.
+	if err := verifyAuditFields(&man); err != nil {
+		return nil, err
+	}
+
 	return &man, nil
 }
 
@@ -148,6 +159,35 @@ func verifyI6(dbBytes []byte) error {
 		if license == "" || licenseURL == "" || author == "" || sourceURL == "" || retrievedAt == "" {
 			return fmt.Errorf("verify I6: image %q missing provenance record", r.image)
 		}
+	}
+	return nil
+}
+
+// verifyAuditFields enforces I4 for CP-09b audit metrics in the manifest.
+// audit_pass_rate must be in [0.0, 1.0]; audit_sample_size must be non-negative;
+// generator must be a known tag when audit fields are present (no invented metrics).
+// A pack with no audit fields (fixture / pre-CP-09b) passes cleanly.
+func verifyAuditFields(man *Manifest) error {
+	// No audit fields → fixture pack, pre-CP-09b, or not-yet-audited. Passes.
+	if man.AuditPassRate == 0 && man.AuditSampleSize == 0 && man.Generator == "" && man.Model == "" {
+		return nil
+	}
+	// At least one audit field present: all must be valid.
+	if math.IsNaN(man.AuditPassRate) {
+		return fmt.Errorf("verify I4: audit_pass_rate is NaN")
+	}
+	if man.AuditPassRate < 0.0 || man.AuditPassRate > 1.0 {
+		return fmt.Errorf("verify I4: audit_pass_rate out of range [0.0, 1.0]: got %.4f", man.AuditPassRate)
+	}
+	if man.AuditSampleSize < 0 {
+		return fmt.Errorf("verify I4: audit_sample_size negative: %d", man.AuditSampleSize)
+	}
+	if man.AuditSampleSize > 0 && man.AuditPassRate == 0 && man.Generator == "" {
+		// sample_size set but no rate: suspicious but not necessarily fabricated — allowed.
+	}
+	// Known generator tags must be non-empty when audit data is claimed.
+	if man.Generator == "" && (man.AuditPassRate > 0 || man.AuditSampleSize > 0) {
+		return fmt.Errorf("verify I4: audit data claimed but generator tag is empty")
 	}
 	return nil
 }

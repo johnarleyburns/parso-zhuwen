@@ -15,6 +15,7 @@ import (
 	"github.com/parso/zhuwen-factory/internal/grammar"
 	"github.com/parso/zhuwen-factory/internal/lexicon"
 	"github.com/parso/zhuwen-factory/internal/pack"
+	"github.com/parso/zhuwen-factory/internal/repair"
 	"github.com/parso/zhuwen-factory/internal/segment"
 )
 
@@ -30,6 +31,19 @@ type Result struct {
 	Questions []pack.Question
 	Images    []pack.Image
 	Rejected  []Rejected
+
+	// CP-09b: per-story repair metrics for audit/measurement.
+	Fates []StoryFate
+}
+
+// StoryFate records the repair-loop outcome for one story (CP-09b traceability).
+type StoryFate struct {
+	CanonID    string
+	Passed     bool
+	Iterations int
+	Candidates int
+	Tokens     int
+	FailCodes  []string
 }
 
 // Config bundles everything a run needs.
@@ -41,6 +55,10 @@ type Config struct {
 	GateCfg  gate.Config
 	Detector grammar.Detector
 	Propers  map[string]string // proper-noun glosses for the segmenter
+
+	// CP-09b: use the repair loop with constrained provider for production generation.
+	UseRepairLoop bool
+	RepairLex     *lexicon.Lexicon // lexicon for token-level name-and-replace repair
 }
 
 // Run executes the pipeline over every canon entry.
@@ -54,6 +72,12 @@ func Run(cfg Config) (Result, error) {
 
 	var res Result
 	imgSeen := map[string]bool{}
+
+	if cfg.UseRepairLoop {
+		return runRepairLoop(cfg, seg, band, maxID, imgSeen)
+	}
+
+	// Simple single-pass (fixture mode).
 	for _, e := range cfg.Registry.All() {
 		b := brief.Compile(e, cfg.Band)
 		story, err := cfg.Provider.Retell(b)
@@ -71,12 +95,9 @@ func Run(cfg Config) (Result, error) {
 		storyID := fmt.Sprintf("%s-%s", e.CanonID, cfg.Band.Band)
 		imageID := "img-" + e.CanonID
 
-		// Forced-alignment stage (§4.7): word-level timings for karaoke (FR-5.1). Audio
-		// bytes are rendered in pack.Build (stub at fixture tiers; CosyVoice at CP-09).
 		alignRows, _ := align.Align(tokens, align.DefaultConfig())
 		audioFile := fmt.Sprintf("audio/%s.opus", storyID)
 
-		// Reuse rule §8A.1(a): all band-retellings of a canon entry share one image.
 		if !imgSeen[imageID] {
 			imgSeen[imageID] = true
 			src := ""
@@ -116,6 +137,124 @@ func Run(cfg Config) (Result, error) {
 			PDRationale:    e.PDRationale,
 			CoverImageID:   imageID,
 			Fixture:        story.Fixture,
+			AudioFile:      audioFile,
+			Alignment:      alignRows,
+		})
+		res.Questions = append(res.Questions, stubQuestions(storyID, cfg.Band.Band)...)
+	}
+	return res, nil
+}
+
+// runRepairLoop runs the pipeline through the repair loop (constrained provider +
+// name-and-replace) for production generation (CP-09b Part A).
+func runRepairLoop(cfg Config, seg *segment.Segmenter, band gate.Band, maxID int, imgSeen map[string]bool) (Result, error) {
+	rp := repair.NewReprocessor(cfg.Provider)
+	repairLex := cfg.RepairLex
+	if repairLex == nil {
+		repairLex = cfg.Lexicon
+	}
+	rp.Lex = repairLex
+	rp.Band = band
+
+	checker := repair.PipelineChecker{
+		Dict:     cfg.Lexicon.DictEntries(),
+		Band:     band,
+		Detector: cfg.Detector,
+		MaxID:    maxID,
+		Cfg:      cfg.GateCfg,
+	}
+
+	var res Result
+
+	for _, e := range cfg.Registry.All() {
+		b := brief.Compile(e, cfg.Band)
+
+		// Run through the repair loop (same path as spike.Run).
+		fate := rp.Run(b, checker.ForBrief(b.Propers))
+
+		res.Fates = append(res.Fates, StoryFate{
+			CanonID:    b.CanonID,
+			Passed:     fate.Passed,
+			Iterations: fate.Iterations,
+			Candidates: len(fate.Candidates),
+			Tokens:     fate.TotalTokens,
+		})
+		for _, codes := range fate.FailCodes {
+			// Record first non-empty failure codes for traceability.
+			if len(codes) > 0 {
+				res.Fates[len(res.Fates)-1].FailCodes = codes
+				break
+			}
+		}
+
+		if !fate.Passed {
+			reasons := []string{"repair loop exhausted"}
+			if len(fate.FailCodes) > 0 && len(fate.FailCodes[len(fate.FailCodes)-1]) > 0 {
+				reasons = fate.FailCodes[len(fate.FailCodes)-1]
+			}
+			res.Rejected = append(res.Rejected, Rejected{CanonID: e.CanonID, Reasons: reasons})
+			continue
+		}
+
+		// Use the last (passing) candidate.
+		lastCandidate := fate.Candidates[len(fate.Candidates)-1]
+
+		// Re-segment with brief's proper nouns for accurate pack data.
+		perSeg := segment.New(cfg.Lexicon.DictEntries(), b.Propers)
+		tokens := perSeg.Segment(lastCandidate.Text)
+		gr := gate.Evaluate(tokens, band, cfg.Detector, maxID, cfg.GateCfg)
+		if !gr.Pass {
+			res.Rejected = append(res.Rejected, Rejected{CanonID: e.CanonID,
+				Reasons: append([]string{}, gr.Reasons...)})
+			continue
+		}
+		cand := gr.Candidate
+
+		storyID := fmt.Sprintf("%s-%s", e.CanonID, cfg.Band.Band)
+		imageID := "img-" + e.CanonID
+
+		alignRows, _ := align.Align(tokens, align.DefaultConfig())
+		audioFile := fmt.Sprintf("audio/%s.opus", storyID)
+
+		if !imgSeen[imageID] {
+			imgSeen[imageID] = true
+			src := ""
+			if len(e.SourceURLs) > 0 {
+				src = e.SourceURLs[0]
+			}
+			res.Images = append(res.Images, pack.Image{
+				ID:      imageID,
+				CanonID: e.CanonID,
+				File:    fmt.Sprintf("images/%s@480.heic", imageID),
+				W:       480, H: 480,
+				License:     "PD",
+				LicenseURL:  "https://creativecommons.org/publicdomain/mark/1.0/",
+				Author:      "Wikimedia Commons contributors",
+				SourceURL:   src,
+				RetrievedAt: "2026-07-04",
+			})
+		}
+
+		res.Stories = append(res.Stories, pack.Story{
+			ID:             storyID,
+			TitleZH:        lastCandidate.TitleZH,
+			TitleEN:        lastCandidate.TitleEN,
+			Band:           cfg.Band.Band,
+			HSK3Level:      cfg.Band.HSK3Level,
+			TokenCount:     cand.TokenCount(),
+			TypeCount:      cand.TypeCount(),
+			CoverageBitmap: cand.CoverageBitmap(),
+			NewTypeIDs:     cand.NewTypeIDs(),
+			Topics:         []string{},
+			GrammarIDs:     cfg.Detector.Detect(tokens),
+			Body:           bodyFromTokens(tokens),
+			CanonID:        e.CanonID,
+			Tier:           e.Tier,
+			Origin:         e.Origin,
+			SourceURLs:     e.SourceURLs,
+			PDRationale:    e.PDRationale,
+			CoverImageID:   imageID,
+			Fixture:        lastCandidate.Fixture,
 			AudioFile:      audioFile,
 			Alignment:      alignRows,
 		})
@@ -211,7 +350,7 @@ func BuildHSKBand(lex *lexicon.Lexicon, band string, knownMaxLevel, frontierLeve
 	}
 	return brief.BandSpec{
 		Band: band, Known: known, Frontier: frontier, Grammar: grammarWhitelist,
-		LengthMin: 120, LengthMax: 400, Register: "narrative", HSK3Level: hsk3Level,
+		LengthMin: 500, LengthMax: 900, Register: "narrative", HSK3Level: hsk3Level,
 	}
 }
 

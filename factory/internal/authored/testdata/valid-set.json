@@ -1,0 +1,13 @@
+{
+  "origin": "fixture",
+  "stories": [
+    {
+      "canon_id": "test-auth-1",
+      "title_zh": "测试故事一",
+      "title_en": "Test Story One",
+      "band": "A1",
+      "register": "narrative",
+      "text": "我是人。你是人。他是人。我是一个人。你是一个人。他是一个人。"
+    }
+  ]
+}

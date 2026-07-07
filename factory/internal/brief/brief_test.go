@@ -67,3 +67,80 @@ func TestCompileIsDeterministic(t *testing.T) {
 		t.Error("Compile is not deterministic")
 	}
 }
+
+func TestCompileWithPlan(t *testing.T) {
+	e := testEntry()
+	spec := testSpec()
+	plan := []int{42}
+	b := CompileWithPlan(e, spec, plan, 4)
+	if !reflect.DeepEqual(b.PlanNewTypes, plan) {
+		t.Errorf("PlanNewTypes = %v, want %v", b.PlanNewTypes, plan)
+	}
+	if b.MinRecurrence != 4 {
+		t.Errorf("MinRecurrence = %d, want 4", b.MinRecurrence)
+	}
+}
+
+func TestPickFrontierWordsTruncates(t *testing.T) {
+	frontier := map[int]bool{10: true, 3: true, 7: true, 1: true, 5: true}
+	picked := PickFrontierWords(frontier, 3)
+	if len(picked) != 3 {
+		t.Fatalf("expected 3 picked, got %d: %v", len(picked), picked)
+	}
+	if picked[0] != 1 || picked[1] != 3 || picked[2] != 5 {
+		t.Errorf("PickFrontierWords not sorted by ID: %v", picked)
+	}
+}
+
+func TestPickFrontierWordsSmallerThanK(t *testing.T) {
+	frontier := map[int]bool{7: true, 3: true}
+	picked := PickFrontierWords(frontier, 5)
+	if len(picked) != 2 {
+		t.Errorf("expected 2 picked, got %d", len(picked))
+	}
+}
+
+func TestPickFrontierWordsEmpty(t *testing.T) {
+	if picked := PickFrontierWords(nil, 4); picked != nil {
+		t.Errorf("expected nil from nil frontier, got %v", picked)
+	}
+	if picked := PickFrontierWords(map[int]bool{}, 4); picked != nil {
+		t.Errorf("expected nil from empty frontier, got %v", picked)
+	}
+}
+
+func TestCompilePlanNewTypesDefault(t *testing.T) {
+	b := Compile(testEntry(), testSpec())
+	if b.PlanNewTypes != nil {
+		t.Errorf("default PlanNewTypes should be nil, got %v", b.PlanNewTypes)
+	}
+	if b.MinRecurrence != 3 {
+		t.Errorf("default MinRecurrence should be 3, got %d", b.MinRecurrence)
+	}
+}
+
+func TestSimpsForIDs(t *testing.T) {
+	lookup := func(id int) (string, bool) {
+		m := map[int]string{1: "一", 42: "水", 100: "火"}
+		s, ok := m[id]
+		return s, ok
+	}
+	got := SimpsForIDs([]int{1, 42, 99}, lookup)
+	want := []string{"一", "水"}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("SimpsForIDs = %v, want %v", got, want)
+	}
+}
+
+func TestFrontierSimps(t *testing.T) {
+	lookup := func(id int) (string, bool) {
+		m := map[int]string{10: "日", 3: "月", 7: "山"}
+		s, ok := m[id]
+		return s, ok
+	}
+	got := FrontierSimps(map[int]bool{10: true, 7: true, 3: true}, lookup)
+	want := []string{"月", "山", "日"}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("FrontierSimps = %v, want %v", got, want)
+	}
+}

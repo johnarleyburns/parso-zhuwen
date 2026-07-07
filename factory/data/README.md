@@ -62,3 +62,19 @@ unclear, **stop** and file/append to `plans/blockers.md` rather than committing 
 The pipeline's automated tests run against the vendored fixture lexicon
 (`internal/assets/lexicon.tsv`, `fixture-hsk3.0-v0`), so the factory builds and tests with no
 external data present. The real `hsk3.0-v1` lexicon ships as a distinct `lexicon_version`.
+
+## Authored stories (`authored/a1-spine.json`)
+Hand-authored A1 backbone stories (CP-09b Part B). These are operator-written stories that
+pass through the same I1 gate as LLM-generated content. Each story carries:
+- `canon_id` — links to a canon registry entry
+- `band`/`register` — target proficiency level
+- `text` — the Chinese story body
+
+Gate check: `zhuwenctl authored check --file data/authored/a1-spine.json`.
+
+## License re-verification
+Every canon source's PD status and every shipped image license is re-verified in
+`plans/cp-09-license-memo.md`. The canon registry (`internal/assets/canon.seed.json`) carries
+a `pd_rationale` field for every entry (FR-12.2). Image licensing is gated through the §8A
+Commons pipeline (`internal/images`). See the license memo for per-source PD rationale and
+per-image license attribution records.

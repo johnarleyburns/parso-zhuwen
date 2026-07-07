@@ -1,0 +1,53 @@
+{
+  "origin": "hand-authored",
+  "stories": [
+    {
+      "canon_id": "C1-shouzhudaitu",
+      "title_zh": "守株待兔",
+      "title_en": "Waiting by a Tree for a Rabbit",
+      "band": "A1",
+      "register": "narrative",
+      "text": "有一个农夫。他每天在田里工作。一天，他看见一只兔子。兔子跑得很快。兔子撞在一棵树上，死了。农夫很高兴。他把兔子带回家。那天晚上，他吃了很多。第二天，农夫不工作了。他坐在那棵树下。他在等兔子。一天又一天，他在树下等。没有兔子来。他的田里长满了草。他没有东西吃了。"
+    },
+    {
+      "canon_id": "C1-bamiaozhuzhang",
+      "title_zh": "拔苗助长",
+      "title_en": "Pulling Up Sprouts to Help Them Grow",
+      "band": "A1",
+      "register": "narrative",
+      "text": "有一个农夫。他种了很多禾苗。他每天都去看他的禾苗。禾苗长得很慢。农夫心里很着急。他想让禾苗长得快一点。他想了一个办法。他把每一棵禾苗都拔高了一点。他工作了一整天，很累。他回家对家里人说，我今天帮禾苗长大了。他家里人很高兴。第二天，他们去看禾苗。禾苗都死了。"
+    },
+    {
+      "canon_id": "C1-huashetianzu",
+      "title_zh": "画蛇添足",
+      "title_en": "Drawing a Snake and Adding Feet",
+      "band": "A1",
+      "register": "narrative",
+      "text": "有几个人在一起。他们有一壶酒。他们要比赛画蛇。谁先画完，谁就喝酒。一个人画得很快。他先画完了蛇。他看别人还没有画完。他说，我还能给蛇画上脚。他开始画脚。这时，另一个人也画完了。那个人说，蛇没有脚！第一个人画的不是蛇。第二个人喝了酒。"
+    },
+    {
+      "canon_id": "C5-guitusaipao",
+      "title_zh": "龟兔赛跑",
+      "title_en": "The Tortoise and the Hare",
+      "band": "A1",
+      "register": "narrative",
+      "text": "兔子和乌龟要比赛跑步。兔子跑得很快。乌龟走得很慢。兔子说，你太慢了！比赛开始了。兔子跑得很快，一会儿就到了前面。它回头看，乌龟还在很远的地方。兔子说，我睡一觉也没关系。它在一棵树下睡着了。乌龟一直走，没有停。乌龟走到了终点。兔子醒过来，乌龟已经赢了。"
+    },
+    {
+      "canon_id": "C5-langlaile",
+      "title_zh": "狼来了",
+      "title_en": "The Boy Who Cried Wolf",
+      "band": "A1",
+      "register": "narrative",
+      "text": "有一个小孩子。他在山上放羊。他觉得很好玩，就大声喊：狼来了！狼来了！山下的人听到了。他们跑上山来帮他。可是没有狼。小孩子笑了。山下的人很生气。过了几天，小孩子又喊：狼来了！山下的人又来了。还是没有狼。人们不再相信他了。有一天，狼真的来了。小孩子大声喊，可是没有人来帮他。"
+    },
+    {
+      "canon_id": "C5-beifengyutaiyang",
+      "title_zh": "北风与太阳",
+      "title_en": "The North Wind and the Sun",
+      "band": "A1",
+      "register": "narrative",
+      "text": "北风和太阳在说话。他们在比谁更厉害。这时，有一个人在路上走。北风说，我能让那个人脱掉衣服。北风吹了起来。风吹得很大。那个人觉得很冷。他把衣服拉得更紧了。北风吹了很多次，都没有用。太阳出来了，光照在人的身上。那个人觉得热了。他脱掉了衣服。太阳说，我赢了。"
+    }
+  ]
+}

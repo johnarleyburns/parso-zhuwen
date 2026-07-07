@@ -35,7 +35,7 @@ func TestFixtureHarnessAllPass(t *testing.T) {
 	}
 	provider := gen.NewFixtureProvider(lex, assets.FillerSimps())
 
-	sum := Run(reg, spec, provider, checker, 5)
+	sum := Run(lex, reg, spec, provider, checker, 5)
 	if sum.Entries != 5 {
 		t.Fatalf("entries = %d, want 5", sum.Entries)
 	}

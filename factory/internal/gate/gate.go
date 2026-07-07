@@ -78,6 +78,16 @@ const (
 	CodeProperNounGloss     = "proper_noun_gloss"
 )
 
+// NewTypeStat describes one out-of-known word type present in the text: its stable word ID,
+// how many times it occurred, and whether it is an allowed frontier candidate. These are
+// OUTPUT-ONLY diagnostics consumed by the token-level repair loop (§4.4); they do not affect
+// the pass/fail decision or any I1 budget.
+type NewTypeStat struct {
+	ID         int
+	Count      int
+	InFrontier bool
+}
+
 // Result is the outcome of a gate evaluation.
 type Result struct {
 	Pass      bool
@@ -91,6 +101,11 @@ type Result struct {
 	// vector suite language-neutral integers to compare (avoids float drift).
 	DenomTokens int
 	NewTokens   int
+	// NewTypeCounts and Literals are output-only diagnostics for the repair loop: every
+	// out-of-known type present (with occurrence count + frontier membership) and every
+	// out-of-lexicon literal text. Always populated; never gate the decision (I1 unchanged).
+	NewTypeCounts []NewTypeStat
+	Literals      []string
 }
 
 // Evaluate runs the I1 gate over a segmented token stream (handoff §4.3).
@@ -162,6 +177,12 @@ func Evaluate(tokens []segment.Token, band Band, det grammar.Detector, maxWordID
 		}
 	}
 
+	// Output-only diagnostics for token-level repair (do not affect the decision).
+	newTypeCounts := make([]NewTypeStat, 0, len(newTypes))
+	for _, id := range newTypes {
+		newTypeCounts = append(newTypeCounts, NewTypeStat{ID: id, Count: occ[id], InFrontier: band.Frontier[id]})
+	}
+
 	// Frontier discipline: every new type must be a frontier candidate.
 	for _, id := range newTypes {
 		if !band.Frontier[id] {
@@ -184,7 +205,7 @@ func Evaluate(tokens []segment.Token, band Band, det grammar.Detector, maxWordID
 	}
 
 	if len(reasons) > 0 {
-		return Result{Pass: false, Reasons: reasons, Codes: sortedCodes(codeSet), Coverage: coverage, DenomTokens: denom, NewTokens: newTokenCount}
+		return Result{Pass: false, Reasons: reasons, Codes: sortedCodes(codeSet), Coverage: coverage, DenomTokens: denom, NewTokens: newTokenCount, NewTypeCounts: newTypeCounts, Literals: literals}
 	}
 
 	// Build the coverage bitmap over all in-lexicon word types present.
@@ -200,7 +221,7 @@ func Evaluate(tokens []segment.Token, band Band, det grammar.Detector, maxWordID
 		tokenCount:     denom,
 		typeCount:      len(typesSet),
 	}
-	return Result{Pass: true, Candidate: cand, Coverage: coverage, DenomTokens: denom, NewTokens: newTokenCount}
+	return Result{Pass: true, Candidate: cand, Coverage: coverage, DenomTokens: denom, NewTokens: newTokenCount, NewTypeCounts: newTypeCounts, Literals: literals}
 }
 
 // sortedCodes returns the deduplicated failure codes in a stable order.

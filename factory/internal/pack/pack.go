@@ -106,6 +106,12 @@ type Pack struct {
 	Questions        []Question
 	Images           []Image
 	FoundationsCards []FoundationsCard
+
+	// CP-09b audit fields (recorded in manifest.json, no SQLite change).
+	AuditPassRate   float64
+	AuditSampleSize int
+	Generator       string
+	Model           string
 }
 
 // FoundationsCard is one F0 card row (matches schema.sql foundations_card).
@@ -125,6 +131,21 @@ type Manifest struct {
 	CreatedAt      string            `json:"created_at"`
 	SchemaVersion  int               `json:"schema_version"`
 	Files          map[string]string `json:"files"` // path -> sha256 hex
+
+	// CP-09b audit fields (handoff §6). Recorded by the audit stage and written into
+	// manifest.json (no content.sqlite DDL change). The verifier rejects malformed/
+	// out-of-range values (I4: a fabricated audit metric must not ship).
+	AuditPassRate   float64 `json:"audit_pass_rate,omitempty"`
+	AuditSampleSize int     `json:"audit_sample_size,omitempty"`
+	Generator       string  `json:"generator,omitempty"` // e.g. "deepseek-rerank", "hand-authored"
+	Model           string  `json:"model,omitempty"`     // e.g. "deepseek-chat", "none"
+}
+
+// StoryRef is a lightweight reference to a story in a pack, used for audit sampling.
+type StoryRef struct {
+	ID      string `json:"id"`
+	TitleZH string `json:"title_zh"`
+	Band    string `json:"band"`
 }
 
 // validateI6 enforces invariant I6 before any bytes are written.
@@ -216,6 +237,11 @@ func manifestFor(p *Pack, files map[string][]byte) Manifest {
 		CreatedAt:      p.CreatedAt,
 		SchemaVersion:  SchemaVersion,
 		Files:          map[string]string{},
+		// CP-09b audit fields.
+		AuditPassRate:   p.AuditPassRate,
+		AuditSampleSize: p.AuditSampleSize,
+		Generator:       p.Generator,
+		Model:           p.Model,
 	}
 	for name, data := range files {
 		sum := sha256.Sum256(data)

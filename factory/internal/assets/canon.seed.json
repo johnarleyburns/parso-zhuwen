@@ -4,7 +4,9 @@
     "tier": "C1",
     "title_zh": "守株待兔",
     "title_en": "Waiting by a Tree for a Rabbit",
-    "source_urls": ["https://zh.wikipedia.org/wiki/守株待兔"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/守株待兔"
+    ],
     "pd_rationale": "Originates in the Han Feizi (3rd c. BCE); classical Chinese text long in the public domain worldwide.",
     "beats": [
       "A farmer sees a rabbit run into a tree stump and die.",
@@ -12,17 +14,26 @@
       "He abandons his farming to wait by the stump for more rabbits.",
       "No more rabbits come and his field goes to ruin."
     ],
-    "characters": [{ "name_zh": "农夫", "gloss": "farmer" }],
-    "cultural_notes": ["Idiom warns against expecting windfalls without effort."],
-    "chengyu": "守株待兔",
-    "origin": "canon"
+    "characters": [
+      {
+        "name_zh": "农夫",
+        "gloss": "farmer"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom warns against expecting windfalls without effort."
+    ],
+    "origin": "canon",
+    "chengyu": "守株待兔"
   },
   {
     "canon_id": "C1-bamiaozhuzhang",
     "tier": "C1",
     "title_zh": "拔苗助长",
     "title_en": "Pulling Up Sprouts to Help Them Grow",
-    "source_urls": ["https://zh.wikipedia.org/wiki/揠苗助长"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/揠苗助长"
+    ],
     "pd_rationale": "From Mencius (4th c. BCE); classical text in the public domain worldwide.",
     "beats": [
       "A farmer is impatient that his rice sprouts grow slowly.",
@@ -30,17 +41,26 @@
       "He returns home exhausted and boasts of his help.",
       "The next day every sprout has withered and died."
     ],
-    "characters": [{ "name_zh": "农夫", "gloss": "farmer" }],
-    "cultural_notes": ["Idiom warns against forcing progress against natural pace."],
-    "chengyu": "拔苗助长",
-    "origin": "canon"
+    "characters": [
+      {
+        "name_zh": "农夫",
+        "gloss": "farmer"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom warns against forcing progress against natural pace."
+    ],
+    "origin": "canon",
+    "chengyu": "拔苗助长"
   },
   {
     "canon_id": "C1-huashetianzu",
     "tier": "C1",
     "title_zh": "画蛇添足",
     "title_en": "Drawing a Snake and Adding Feet",
-    "source_urls": ["https://zh.wikipedia.org/wiki/画蛇添足"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/画蛇添足"
+    ],
     "pd_rationale": "From the Zhan Guo Ce (Warring States, compiled Han); classical text, public domain.",
     "beats": [
       "Several men compete to draw a snake fastest to win a jug of wine.",
@@ -49,16 +69,20 @@
       "The show-off loses the wine."
     ],
     "characters": [],
-    "cultural_notes": ["Idiom warns against ruining a good thing with needless additions."],
-    "chengyu": "画蛇添足",
-    "origin": "canon"
+    "cultural_notes": [
+      "Idiom warns against ruining a good thing with needless additions."
+    ],
+    "origin": "canon",
+    "chengyu": "画蛇添足"
   },
   {
     "canon_id": "C2-change",
     "tier": "C2",
     "title_zh": "嫦娥奔月",
     "title_en": "Chang'e Flies to the Moon",
-    "source_urls": ["https://zh.wikipedia.org/wiki/嫦娥"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/嫦娥"
+    ],
     "pd_rationale": "Ancient Chinese mythology attested in Han-era texts; traditional plot in the public domain.",
     "beats": [
       "Hou Yi obtains an elixir of immortality.",
@@ -67,10 +91,18 @@
       "Hou Yi lays out her favorite foods to honor her."
     ],
     "characters": [
-      { "name_zh": "嫦娥", "gloss": "Chang'e, the moon goddess" },
-      { "name_zh": "后羿", "gloss": "Hou Yi, the archer" }
+      {
+        "name_zh": "嫦娥",
+        "gloss": "Chang'e, the moon goddess"
+      },
+      {
+        "name_zh": "后羿",
+        "gloss": "Hou Yi, the archer"
+      }
     ],
-    "cultural_notes": ["Associated with the Mid-Autumn Festival."],
+    "cultural_notes": [
+      "Associated with the Mid-Autumn Festival."
+    ],
     "origin": "canon"
   },
   {
@@ -78,7 +110,9 @@
     "tier": "C2",
     "title_zh": "后羿射日",
     "title_en": "Hou Yi Shoots the Suns",
-    "source_urls": ["https://zh.wikipedia.org/wiki/后羿"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/后羿"
+    ],
     "pd_rationale": "Ancient Chinese mythology (Huainanzi and earlier); traditional plot in the public domain.",
     "beats": [
       "Ten suns rise together and scorch the earth.",
@@ -86,8 +120,15 @@
       "The archer Hou Yi shoots down nine of the suns.",
       "One sun remains and the world is saved."
     ],
-    "characters": [{ "name_zh": "后羿", "gloss": "Hou Yi, the archer" }],
-    "cultural_notes": ["Explains why there is a single sun."],
+    "characters": [
+      {
+        "name_zh": "后羿",
+        "gloss": "Hou Yi, the archer"
+      }
+    ],
+    "cultural_notes": [
+      "Explains why there is a single sun."
+    ],
     "origin": "canon"
   },
   {
@@ -95,7 +136,9 @@
     "tier": "C4",
     "title_zh": "司马光砸缸",
     "title_en": "Sima Guang Breaks the Vat",
-    "source_urls": ["https://zh.wikipedia.org/wiki/司马光"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/司马光"
+    ],
     "pd_rationale": "Historical anecdote from the History of Song; classical record in the public domain.",
     "beats": [
       "Children play beside a large water vat.",
@@ -103,8 +146,15 @@
       "Young Sima Guang smashes the vat with a rock.",
       "The water flows out and the child is saved."
     ],
-    "characters": [{ "name_zh": "司马光", "gloss": "Sima Guang, a clever boy" }],
-    "cultural_notes": ["Celebrates quick, unconventional thinking."],
+    "characters": [
+      {
+        "name_zh": "司马光",
+        "gloss": "Sima Guang, a clever boy"
+      }
+    ],
+    "cultural_notes": [
+      "Celebrates quick, unconventional thinking."
+    ],
     "origin": "canon"
   },
   {
@@ -112,7 +162,9 @@
     "tier": "C4",
     "title_zh": "曹冲称象",
     "title_en": "Cao Chong Weighs the Elephant",
-    "source_urls": ["https://zh.wikipedia.org/wiki/曹冲"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/曹冲"
+    ],
     "pd_rationale": "Historical anecdote from the Records of the Three Kingdoms; classical record, public domain.",
     "beats": [
       "A huge elephant arrives and everyone wonders its weight.",
@@ -120,8 +172,15 @@
       "Young Cao Chong loads the elephant onto a boat and marks the waterline.",
       "He then loads stones to the same line and weighs the stones instead."
     ],
-    "characters": [{ "name_zh": "曹冲", "gloss": "Cao Chong, a clever boy" }],
-    "cultural_notes": ["Celebrates displacement reasoning."],
+    "characters": [
+      {
+        "name_zh": "曹冲",
+        "gloss": "Cao Chong, a clever boy"
+      }
+    ],
+    "cultural_notes": [
+      "Celebrates displacement reasoning."
+    ],
     "origin": "canon"
   },
   {
@@ -129,7 +188,9 @@
     "tier": "C5",
     "title_zh": "龟兔赛跑",
     "title_en": "The Tortoise and the Hare",
-    "source_urls": ["https://zh.wikipedia.org/wiki/龟兔赛跑"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/龟兔赛跑"
+    ],
     "pd_rationale": "Aesop's fable (Perry Index 226), antiquity; public-domain plot and PD translations only.",
     "beats": [
       "A hare mocks a slow tortoise.",
@@ -138,7 +199,9 @@
       "The tortoise keeps going steadily and wins while the hare sleeps."
     ],
     "characters": [],
-    "cultural_notes": ["Moral: steady persistence beats careless speed."],
+    "cultural_notes": [
+      "Moral: steady persistence beats careless speed."
+    ],
     "origin": "canon"
   },
   {
@@ -146,7 +209,9 @@
     "tier": "C5",
     "title_zh": "狼来了",
     "title_en": "The Boy Who Cried Wolf",
-    "source_urls": ["https://zh.wikipedia.org/wiki/狼来了"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/狼来了"
+    ],
     "pd_rationale": "Aesop's fable (Perry Index 210), antiquity; public-domain plot and PD translations only.",
     "beats": [
       "A shepherd boy lies that a wolf is coming to draw the villagers.",
@@ -155,7 +220,9 @@
       "When a real wolf comes no one believes him."
     ],
     "characters": [],
-    "cultural_notes": ["Moral: liars are not believed even when truthful."],
+    "cultural_notes": [
+      "Moral: liars are not believed even when truthful."
+    ],
     "origin": "canon"
   },
   {
@@ -163,7 +230,9 @@
     "tier": "C5",
     "title_zh": "北风与太阳",
     "title_en": "The North Wind and the Sun",
-    "source_urls": ["https://zh.wikipedia.org/wiki/北风与太阳"],
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/北风与太阳"
+    ],
     "pd_rationale": "Aesop's fable (Perry Index 46), antiquity; public-domain plot and PD translations only.",
     "beats": [
       "The North Wind and the Sun argue who is stronger.",
@@ -172,7 +241,2083 @@
       "The Sun shines warmly and the traveler removes the coat; the Sun wins."
     ],
     "characters": [],
-    "cultural_notes": ["Moral: gentleness succeeds where force fails."],
+    "cultural_notes": [
+      "Moral: gentleness succeeds where force fails."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C1-yaneidaoling",
+    "tier": "C1",
+    "title_zh": "掩耳盗铃",
+    "title_en": "Covering One's Ears While Stealing a Bell",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/掩耳盗铃"
+    ],
+    "pd_rationale": "From the Lüshi Chunqiu (3rd c. BCE); classical Chinese text long in the public domain worldwide.",
+    "beats": [
+      "A thief wants to steal a large bell but cannot carry it.",
+      "He decides to smash it into pieces to transport it.",
+      "Afraid the noise will alert others, he covers his own ears while smashing.",
+      "He is caught, having fooled only himself."
+    ],
+    "characters": [
+      {
+        "name_zh": "小偷",
+        "gloss": "thief"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom condemns self-deception and ignoring obvious facts."
+    ],
+    "origin": "canon",
+    "chengyu": "掩耳盗铃"
+  },
+  {
+    "canon_id": "C1-wangyangbulao",
+    "tier": "C1",
+    "title_zh": "亡羊补牢",
+    "title_en": "Mending the Pen After Losing Sheep",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/亡羊补牢"
+    ],
+    "pd_rationale": "From the Zhan Guo Ce (Warring States period); classical text, public domain worldwide.",
+    "beats": [
+      "A farmer's sheep pen has a gap in the fence.",
+      "A wolf enters at night and takes a sheep.",
+      "Neighbors urge the farmer to repair the fence but he delays.",
+      "More sheep are taken before he finally fixes the pen."
+    ],
+    "characters": [
+      {
+        "name_zh": "农夫",
+        "gloss": "farmer"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means it is never too late to correct a mistake."
+    ],
+    "origin": "canon",
+    "chengyu": "亡羊补牢"
+  },
+  {
+    "canon_id": "C1-jingdizhiwa",
+    "tier": "C1",
+    "title_zh": "井底之蛙",
+    "title_en": "The Frog at the Bottom of the Well",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/井底之蛙"
+    ],
+    "pd_rationale": "From the Zhuangzi (4th c. BCE); classical Daoist text in the public domain worldwide.",
+    "beats": [
+      "A frog lives contentedly at the bottom of a shallow well.",
+      "A sea turtle visits and describes the vastness of the ocean.",
+      "The frog is stunned to learn how small his world truly is.",
+      "The frog realizes his perspective was narrow and limited."
+    ],
+    "characters": [
+      {
+        "name_zh": "井蛙",
+        "gloss": "frog in the well"
+      },
+      {
+        "name_zh": "海龟",
+        "gloss": "sea turtle"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes a person with a narrow outlook."
+    ],
+    "origin": "canon",
+    "chengyu": "井底之蛙"
+  },
+  {
+    "canon_id": "C1-kezhouqiujian",
+    "tier": "C1",
+    "title_zh": "刻舟求剑",
+    "title_en": "Marking the Boat to Find a Lost Sword",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/刻舟求剑"
+    ],
+    "pd_rationale": "From the Lüshi Chunqiu (3rd c. BCE); classical Chinese text in the public domain worldwide.",
+    "beats": [
+      "A man on a moving boat drops his sword into the river.",
+      "He calmly carves a mark on the side of the boat.",
+      "When the boat reaches shore, he dives at the mark to retrieve the sword.",
+      "The sword is long gone; the boat has moved far downstream."
+    ],
+    "characters": [
+      {
+        "name_zh": "乘船人",
+        "gloss": "boat passenger"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom mocks rigid thinking that ignores changing circumstances."
+    ],
+    "origin": "canon",
+    "chengyu": "刻舟求剑"
+  },
+  {
+    "canon_id": "C1-yegonghaolong",
+    "tier": "C1",
+    "title_zh": "叶公好龙",
+    "title_en": "Lord Ye Loves Dragons",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/叶公好龙"
+    ],
+    "pd_rationale": "From the Xin Xu (Han dynasty, 1st c. BCE); classical text, public domain worldwide.",
+    "beats": [
+      "Lord Ye fills his home with dragon carvings and paintings.",
+      "A real dragon in heaven hears of Lord Ye's devotion.",
+      "The dragon descends to visit, peering through the window.",
+      "Lord Ye flees in terror, revealing his love was only superficial."
+    ],
+    "characters": [
+      {
+        "name_zh": "叶公",
+        "gloss": "Lord Ye"
+      },
+      {
+        "name_zh": "龙",
+        "gloss": "dragon"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes someone who professes love for something they actually fear."
+    ],
+    "origin": "canon",
+    "chengyu": "叶公好龙"
+  },
+  {
+    "canon_id": "C1-hujiahuwei",
+    "tier": "C1",
+    "title_zh": "狐假虎威",
+    "title_en": "The Fox Borrows the Tiger's Might",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/狐假虎威"
+    ],
+    "pd_rationale": "From the Zhan Guo Ce (Warring States period); classical text in the public domain worldwide.",
+    "beats": [
+      "A tiger catches a fox and is about to eat it.",
+      "The fox claims to be the king of beasts, sent by heaven.",
+      "The fox walks ahead with the tiger following; all animals flee in terror.",
+      "The tiger thinks they fear the fox, not realizing they fear the tiger behind it."
+    ],
+    "characters": [
+      {
+        "name_zh": "狐狸",
+        "gloss": "fox"
+      },
+      {
+        "name_zh": "老虎",
+        "gloss": "tiger"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes someone using a powerful patron to intimidate others."
+    ],
+    "origin": "canon",
+    "chengyu": "狐假虎威"
+  },
+  {
+    "canon_id": "C1-saiwengshima",
+    "tier": "C1",
+    "title_zh": "塞翁失马",
+    "title_en": "The Old Man at the Frontier Lost His Horse",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/塞翁失马"
+    ],
+    "pd_rationale": "From the Huainanzi (2nd c. BCE); classical Chinese text in the public domain worldwide.",
+    "beats": [
+      "An old man's horse runs away; neighbors come to console him.",
+      "He says it may be a blessing. The horse returns with several wild horses.",
+      "His son breaks a leg riding; the old man says it may be a blessing.",
+      "War comes and the son avoids conscription because of the injury."
+    ],
+    "characters": [
+      {
+        "name_zh": "塞翁",
+        "gloss": "old man at the frontier"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom teaches that fortune and misfortune are intertwined and unpredictable."
+    ],
+    "origin": "canon",
+    "chengyu": "塞翁失马"
+  },
+  {
+    "canon_id": "C1-beigongsheying",
+    "tier": "C1",
+    "title_zh": "杯弓蛇影",
+    "title_en": "Mistaking a Bow's Reflection for a Snake",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/杯弓蛇影"
+    ],
+    "pd_rationale": "From the Jin Shu (7th c. CE) and earlier anecdotes; classical Chinese text in the public domain.",
+    "beats": [
+      "A man sees what appears to be a snake swimming in his wine cup.",
+      "He drinks it anyway and becomes severely ill from fear.",
+      "His friend discovers the snake was the reflection of a bow hanging on the wall.",
+      "The man's illness vanishes instantly upon learning the truth."
+    ],
+    "characters": [
+      {
+        "name_zh": "乐广",
+        "gloss": "Yue Guang, the host"
+      },
+      {
+        "name_zh": "客人",
+        "gloss": "the guest"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom warns against groundless fears and self-inflicted anxiety."
+    ],
+    "origin": "canon",
+    "chengyu": "杯弓蛇影"
+  },
+  {
+    "canon_id": "C1-duiniutanqin",
+    "tier": "C1",
+    "title_zh": "对牛弹琴",
+    "title_en": "Playing the Lute to a Cow",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/对牛弹琴"
+    ],
+    "pd_rationale": "From the Mouzi Lihuo Lun (Han dynasty, 2nd c. CE); classical Buddhist-apologetic text, public domain.",
+    "beats": [
+      "A musician plays an elegant melody before a cow.",
+      "The cow continues eating grass, showing no reaction.",
+      "The musician changes to sounds imitating insects and a calf.",
+      "The cow pricks up its ears, understanding only sounds relevant to it."
+    ],
+    "characters": [
+      {
+        "name_zh": "音乐家",
+        "gloss": "musician"
+      },
+      {
+        "name_zh": "牛",
+        "gloss": "cow"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means speaking to the wrong audience or reasoning with an uncomprehending listener."
+    ],
+    "origin": "canon",
+    "chengyu": "对牛弹琴"
+  },
+  {
+    "canon_id": "C1-hualongdianjing",
+    "tier": "C1",
+    "title_zh": "画龙点睛",
+    "title_en": "Adding Pupils to a Painted Dragon",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/画龙点睛"
+    ],
+    "pd_rationale": "Tang dynasty anecdote about the painter Zhang Sengyao; classical record in the public domain.",
+    "beats": [
+      "A famous painter paints four dragons on a temple wall without pupils.",
+      "He explains that adding pupils would make them fly away.",
+      "People insist and he dots the pupils of two dragons.",
+      "Thunder roars and the two dragons come alive, flying into the sky."
+    ],
+    "characters": [
+      {
+        "name_zh": "张僧繇",
+        "gloss": "Zhang Sengyao, the painter"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means adding the finishing touch that brings a work to life."
+    ],
+    "origin": "canon",
+    "chengyu": "画龙点睛"
+  },
+  {
+    "canon_id": "C1-qirenyoutian",
+    "tier": "C1",
+    "title_zh": "杞人忧天",
+    "title_en": "The Man of Qi Who Worried About the Sky",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/杞人忧天"
+    ],
+    "pd_rationale": "From the Liezi (4th c. BCE); classical Daoist text in the public domain worldwide.",
+    "beats": [
+      "A man from the state of Qi constantly fears the sky will fall down.",
+      "He cannot eat or sleep because of his anxiety.",
+      "A friend explains the sky is just accumulated air and cannot fall.",
+      "The man finally understands and stops worrying."
+    ],
+    "characters": [
+      {
+        "name_zh": "杞人",
+        "gloss": "man from the state of Qi"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom mocks unnecessary and groundless worrying."
+    ],
+    "origin": "canon",
+    "chengyu": "杞人忧天"
+  },
+  {
+    "canon_id": "C1-zixiangmaodun",
+    "tier": "C1",
+    "title_zh": "自相矛盾",
+    "title_en": "Self-Contradiction",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/自相矛盾"
+    ],
+    "pd_rationale": "From the Han Feizi (3rd c. BCE); classical Legalist text in the public domain worldwide.",
+    "beats": [
+      "A merchant boasts his shields can block any weapon.",
+      "He also claims his spears can pierce any shield.",
+      "A bystander asks what happens when his spear strikes his shield.",
+      "The merchant is speechless and cannot answer."
+    ],
+    "characters": [
+      {
+        "name_zh": "商人",
+        "gloss": "merchant"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes a logical contradiction or inconsistency."
+    ],
+    "origin": "canon",
+    "chengyu": "自相矛盾"
+  },
+  {
+    "canon_id": "C1-dongshixiaopin",
+    "tier": "C1",
+    "title_zh": "东施效颦",
+    "title_en": "Dong Shi Imitates a Frown",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/东施效颦"
+    ],
+    "pd_rationale": "From the Zhuangzi (4th c. BCE); classical Daoist text in the public domain worldwide.",
+    "beats": [
+      "The beauty Xi Shi frowns due to chest pain and still looks lovely.",
+      "An ugly woman named Dong Shi tries to copy the frown.",
+      "Dong Shi's imitated expression makes her look even more grotesque.",
+      "People flee at the sight of her, and she is ridiculed."
+    ],
+    "characters": [
+      {
+        "name_zh": "西施",
+        "gloss": "Xi Shi, a legendary beauty"
+      },
+      {
+        "name_zh": "东施",
+        "gloss": "Dong Shi, an ugly woman"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom warns against blind imitation without understanding."
+    ],
+    "origin": "canon",
+    "chengyu": "东施效颦"
+  },
+  {
+    "canon_id": "C1-zhaosanmusi",
+    "tier": "C1",
+    "title_zh": "朝三暮四",
+    "title_en": "Three in the Morning, Four in the Evening",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/朝三暮四"
+    ],
+    "pd_rationale": "From the Zhuangzi (4th c. BCE); classical Daoist text in the public domain worldwide.",
+    "beats": [
+      "A monkey keeper tells his monkeys they will get three nuts in the morning and four at night.",
+      "The monkeys are furious at the morning ration.",
+      "He changes the plan to four in the morning and three at night.",
+      "The monkeys are delighted, not realizing the total is unchanged."
+    ],
+    "characters": [
+      {
+        "name_zh": "狙公",
+        "gloss": "monkey keeper"
+      },
+      {
+        "name_zh": "猴子",
+        "gloss": "monkeys"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes someone who is fickle or changes their mind frequently; also a lesson about being fooled by appearances."
+    ],
+    "origin": "canon",
+    "chengyu": "朝三暮四"
+  },
+  {
+    "canon_id": "C1-nanyuanbeizhe",
+    "tier": "C1",
+    "title_zh": "南辕北辙",
+    "title_en": "Going South While Driving North",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/南辕北辙"
+    ],
+    "pd_rationale": "From the Zhan Guo Ce (Warring States period); classical text in the public domain worldwide.",
+    "beats": [
+      "A man wants to travel south to the state of Chu.",
+      "He drives his carriage north and insists he will still reach Chu.",
+      "Passersby tell him he is heading the wrong way.",
+      "The further he travels, the further from Chu he gets."
+    ],
+    "characters": [
+      {
+        "name_zh": "驾车人",
+        "gloss": "carriage driver"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means acting contrary to one's stated goal."
+    ],
+    "origin": "canon",
+    "chengyu": "南辕北辙"
+  },
+  {
+    "canon_id": "C1-yubangxiangzheng",
+    "tier": "C1",
+    "title_zh": "鹬蚌相争",
+    "title_en": "The Snipe and the Clam Fight",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/鹬蚌相争"
+    ],
+    "pd_rationale": "From the Zhan Guo Ce (Warring States period); classical text in the public domain worldwide.",
+    "beats": [
+      "A clam opens its shell to bask in the sun on a riverbank.",
+      "A snipe pecks at the clam's flesh; the clam snaps shut on the snipe's beak.",
+      "Neither will let go, locked in a stalemate.",
+      "A fisherman comes along and catches them both easily."
+    ],
+    "characters": [
+      {
+        "name_zh": "鹬",
+        "gloss": "snipe"
+      },
+      {
+        "name_zh": "蚌",
+        "gloss": "clam"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom warns that quarrels between two parties can allow a third party to benefit."
+    ],
+    "origin": "canon",
+    "chengyu": "鹬蚌相争"
+  },
+  {
+    "canon_id": "C1-zhengrenmailv",
+    "tier": "C1",
+    "title_zh": "郑人买履",
+    "title_en": "The Man from Zheng Buys Shoes",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/郑人买履"
+    ],
+    "pd_rationale": "From the Han Feizi (3rd c. BCE); classical Legalist text in the public domain worldwide.",
+    "beats": [
+      "A man from Zheng measures his foot for new shoes and writes down the size.",
+      "At the market, he realizes he left the measurement at home.",
+      "He rushes home to get the paper instead of trying the shoes on.",
+      "By the time he returns, the market has closed."
+    ],
+    "characters": [
+      {
+        "name_zh": "郑人",
+        "gloss": "man from the state of Zheng"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom mocks rigid adherence to rules over practical sense."
+    ],
+    "origin": "canon",
+    "chengyu": "郑人买履"
+  },
+  {
+    "canon_id": "C2-niulangzhinv",
+    "tier": "C2",
+    "title_zh": "牛郎织女",
+    "title_en": "The Cowherd and the Weaver Girl",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/牛郎织女"
+    ],
+    "pd_rationale": "Ancient Chinese folk myth dating to the Han dynasty; traditional story in the public domain worldwide.",
+    "beats": [
+      "A cowherd falls in love with Zhinü, a heavenly weaver fairy.",
+      "They marry but the Queen Mother of the West separates them with the Milky Way.",
+      "Magpies form a bridge across the Milky Way once a year.",
+      "They reunite on the seventh day of the seventh lunar month."
+    ],
+    "characters": [
+      {
+        "name_zh": "牛郎",
+        "gloss": "the cowherd"
+      },
+      {
+        "name_zh": "织女",
+        "gloss": "Zhinü, the weaver fairy"
+      }
+    ],
+    "cultural_notes": [
+      "Associated with the Qixi Festival (Chinese Valentine's Day)."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-nvwabutian",
+    "tier": "C2",
+    "title_zh": "女娲补天",
+    "title_en": "Nüwa Mends the Sky",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/女娲"
+    ],
+    "pd_rationale": "Ancient Chinese creation myth recorded in texts such as Huainanzi and Liezi; traditional story in the public domain.",
+    "beats": [
+      "A great battle breaks one of the pillars holding up the sky, causing chaos.",
+      "Fires, floods, and wild beasts torment humanity.",
+      "The goddess Nüwa melts five-colored stones to patch the holes in the sky.",
+      "She severs a giant turtle's legs to support the four corners of heaven."
+    ],
+    "characters": [
+      {
+        "name_zh": "女娲",
+        "gloss": "Nüwa, the creator goddess"
+      }
+    ],
+    "cultural_notes": [
+      "Explains the origin of the sky's colors and earth's stability."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-pangukaitian",
+    "tier": "C2",
+    "title_zh": "盘古开天",
+    "title_en": "Pangu Creates the World",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/盘古"
+    ],
+    "pd_rationale": "Ancient Chinese creation myth recorded in texts from the Three Kingdoms period; traditional story in the public domain.",
+    "beats": [
+      "In the beginning, the universe is a cosmic egg containing chaos.",
+      "Pangu sleeps inside for 18,000 years and then awakens.",
+      "He separates heaven and earth with his axe and holds them apart.",
+      "Upon his death, his body becomes mountains, rivers, the sun, the moon, and all life."
+    ],
+    "characters": [
+      {
+        "name_zh": "盘古",
+        "gloss": "Pangu, the primordial giant"
+      }
+    ],
+    "cultural_notes": [
+      "Foundational Chinese creation myth explaining the origin of the world."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-kuafuzhuri",
+    "tier": "C2",
+    "title_zh": "夸父逐日",
+    "title_en": "Kuafu Chases the Sun",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/夸父逐日"
+    ],
+    "pd_rationale": "From the Shan Hai Jing (Classic of Mountains and Seas); ancient text in the public domain worldwide.",
+    "beats": [
+      "The giant Kuafu decides to chase and catch the sun.",
+      "He runs across the land but grows desperately thirsty.",
+      "He drinks the Yellow River and Wei River dry but it is not enough.",
+      "He dies of thirst and his staff transforms into a peach forest."
+    ],
+    "characters": [
+      {
+        "name_zh": "夸父",
+        "gloss": "Kuafu, a giant"
+      }
+    ],
+    "cultural_notes": [
+      "Symbolizes heroic ambition, perseverance, and the value of striving."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-dayuzhishui",
+    "tier": "C2",
+    "title_zh": "大禹治水",
+    "title_en": "Yu the Great Controls the Floods",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/大禹"
+    ],
+    "pd_rationale": "Ancient Chinese legend recorded in the Shiji and other classical texts; traditional story in the public domain.",
+    "beats": [
+      "Ancient China suffers from devastating floods; Gun tries to dam them but fails.",
+      "His son Yu changes strategy, digging channels to guide water to the sea.",
+      "Yu works for 13 years, passing his own home three times without entering.",
+      "He succeeds in controlling the floods and becomes the founder of the Xia dynasty."
+    ],
+    "characters": [
+      {
+        "name_zh": "大禹",
+        "gloss": "Yu the Great"
+      },
+      {
+        "name_zh": "鲧",
+        "gloss": "Gun, Yu's father"
+      }
+    ],
+    "cultural_notes": [
+      "Represents selfless dedication to the greater good."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-liangshanbozhuyingtai",
+    "tier": "C2",
+    "title_zh": "梁山伯与祝英台",
+    "title_en": "The Butterfly Lovers",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/梁山伯与祝英台"
+    ],
+    "pd_rationale": "Ancient Chinese legend dating to the Eastern Jin dynasty; traditional story in the public domain worldwide.",
+    "beats": [
+      "Zhu Yingtai disguises herself as a boy to attend school.",
+      "She becomes close friends with classmate Liang Shanbo and falls in love.",
+      "Liang learns her true identity too late; her family has already arranged her marriage.",
+      "Liang dies of grief; at his grave, Zhu leaps in and both souls transform into butterflies."
+    ],
+    "characters": [
+      {
+        "name_zh": "梁山伯",
+        "gloss": "Liang Shanbo, a scholar"
+      },
+      {
+        "name_zh": "祝英台",
+        "gloss": "Zhu Yingtai, a young woman"
+      }
+    ],
+    "cultural_notes": [
+      "Known as the Chinese Romeo and Juliet; symbol of eternal love."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-mengjiangnvkuchangcheng",
+    "tier": "C2",
+    "title_zh": "孟姜女哭长城",
+    "title_en": "Meng Jiangnü Weeps at the Great Wall",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/孟姜女"
+    ],
+    "pd_rationale": "Ancient Chinese legend dating to the Spring and Autumn period; traditional story in the public domain.",
+    "beats": [
+      "Meng Jiangnü's husband is conscripted to build the Great Wall.",
+      "She journeys far to bring him winter clothing.",
+      "She learns he has died and his body is buried within the wall.",
+      "Her grieving is so intense that a section of the wall collapses, revealing his remains."
+    ],
+    "characters": [
+      {
+        "name_zh": "孟姜女",
+        "gloss": "Meng Jiangnü, a devoted wife"
+      },
+      {
+        "name_zh": "范喜良",
+        "gloss": "Fan Xiliang, her husband"
+      }
+    ],
+    "cultural_notes": [
+      "One of China's Four Great Folktales; symbol of wifely devotion and tragedy of forced labor."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-baxianguohai",
+    "tier": "C2",
+    "title_zh": "八仙过海",
+    "title_en": "The Eight Immortals Cross the Sea",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/八仙"
+    ],
+    "pd_rationale": "Traditional Taoist legend dating to the Tang/Song dynasties; folklore in the public domain worldwide.",
+    "beats": [
+      "Eight immortals need to cross the sea to attend a celestial banquet.",
+      "Each immortal uses their unique magical item as a vessel to cross.",
+      "A dragon prince steals one immortal, sparking a battle.",
+      "The immortals unite their powers, defeat the dragon, and continue on."
+    ],
+    "characters": [
+      {
+        "name_zh": "铁拐李",
+        "gloss": "Iron-Crutch Li"
+      },
+      {
+        "name_zh": "汉钟离",
+        "gloss": "Han Zhongli"
+      },
+      {
+        "name_zh": "张果老",
+        "gloss": "Zhang Guolao"
+      },
+      {
+        "name_zh": "蓝采和",
+        "gloss": "Lan Caihe"
+      },
+      {
+        "name_zh": "何仙姑",
+        "gloss": "He Xiangu"
+      },
+      {
+        "name_zh": "吕洞宾",
+        "gloss": "Lü Dongbin"
+      },
+      {
+        "name_zh": "韩湘子",
+        "gloss": "Han Xiangzi"
+      },
+      {
+        "name_zh": "曹国舅",
+        "gloss": "Cao Guojiu"
+      }
+    ],
+    "cultural_notes": [
+      "Proverbial expression meaning each person shows their unique skill."
+    ],
+    "origin": "canon",
+    "chengyu": "八仙过海"
+  },
+  {
+    "canon_id": "C2-nezhanohai",
+    "tier": "C2",
+    "title_zh": "哪吒闹海",
+    "title_en": "Nezha Stirs Up the Sea",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/哪吒"
+    ],
+    "pd_rationale": "Mythological story from the Fengshen Yanyi (16th c. CE); classical Chinese novel in the public domain.",
+    "beats": [
+      "Nezha is born as a miraculous child with supernatural powers.",
+      "He fights and slays a dragon king's son who had been terrorizing villagers.",
+      "The dragon kings demand his life in revenge.",
+      "Nezha sacrifices himself but is reborn from a lotus flower."
+    ],
+    "characters": [
+      {
+        "name_zh": "哪吒",
+        "gloss": "Nezha, a divine child warrior"
+      },
+      {
+        "name_zh": "龙王",
+        "gloss": "Dragon King"
+      }
+    ],
+    "cultural_notes": [
+      "Popular protective deity figure in Chinese folk religion; symbolizes rebellion against tyranny."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-baishezhuan",
+    "tier": "C2",
+    "title_zh": "白蛇传",
+    "title_en": "Legend of the White Snake",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/白蛇传"
+    ],
+    "pd_rationale": "Traditional Chinese folk legend dating to the Tang/Song dynasties; folklore in the public domain worldwide.",
+    "beats": [
+      "A white snake spirit transforms into a beautiful woman named Bai Suzhen.",
+      "She falls in love with and marries the scholar Xu Xian.",
+      "A Buddhist monk named Fahai exposes her true identity.",
+      "Fahai imprisons Bai Suzhen under the Leifeng Pagoda."
+    ],
+    "characters": [
+      {
+        "name_zh": "白素贞",
+        "gloss": "Bai Suzhen, the white snake spirit"
+      },
+      {
+        "name_zh": "许仙",
+        "gloss": "Xu Xian, a scholar"
+      },
+      {
+        "name_zh": "法海",
+        "gloss": "Fahai, a Buddhist monk"
+      }
+    ],
+    "cultural_notes": [
+      "One of China's Four Great Folktales; explores themes of love transcending nature."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C2-jingweitianhai",
+    "tier": "C2",
+    "title_zh": "精卫填海",
+    "title_en": "Jingwei Fills the Sea",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/精卫"
+    ],
+    "pd_rationale": "From the Shan Hai Jing (Classic of Mountains and Seas); ancient text in the public domain worldwide.",
+    "beats": [
+      "The daughter of Emperor Yan drowns while playing in the Eastern Sea.",
+      "Her spirit transforms into the Jingwei bird.",
+      "The bird carries twigs and pebbles from the mountains to drop into the sea.",
+      "Vowing to fill the sea so no one else will drown, she persists endlessly."
+    ],
+    "characters": [
+      {
+        "name_zh": "女娃",
+        "gloss": "Nüwa, the emperor's daughter"
+      },
+      {
+        "name_zh": "精卫",
+        "gloss": "Jingwei bird"
+      }
+    ],
+    "cultural_notes": [
+      "Symbol of dogged determination against impossible odds."
+    ],
+    "origin": "canon",
+    "chengyu": "精卫填海"
+  },
+  {
+    "canon_id": "C2-zhongkuizhuogui",
+    "tier": "C2",
+    "title_zh": "钟馗捉鬼",
+    "title_en": "Zhong Kui Captures Ghosts",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/钟馗"
+    ],
+    "pd_rationale": "Traditional Chinese legend dating to the Tang dynasty; folklore in the public domain worldwide.",
+    "beats": [
+      "A scholar named Zhong Kui takes the imperial exam but is cheated of first place.",
+      "In shame, he kills himself but the emperor honors him posthumously.",
+      "His spirit becomes the king of ghosts, tasked with subduing evil spirits.",
+      "His image is hung on doors to ward off demons."
+    ],
+    "characters": [
+      {
+        "name_zh": "钟馗",
+        "gloss": "Zhong Kui, the ghost catcher"
+      }
+    ],
+    "cultural_notes": [
+      "Protective folk deity; his image is a traditional New Year talisman against evil."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C3-yugongyishan",
+    "tier": "C3",
+    "title_zh": "愚公移山",
+    "title_en": "The Foolish Old Man Removes the Mountains",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/愚公移山"
+    ],
+    "pd_rationale": "From the Liezi (4th c. BCE); classical Daoist text in the public domain worldwide.",
+    "beats": [
+      "Two great mountains block the entrance to Old Fool's home.",
+      "He decides to dig them away with his family using only hoes.",
+      "A wise man mocks him, but Old Fool says his descendants will continue the work.",
+      "The gods are moved by his determination and move the mountains for him."
+    ],
+    "characters": [
+      {
+        "name_zh": "愚公",
+        "gloss": "Old Fool"
+      },
+      {
+        "name_zh": "智叟",
+        "gloss": "Wise Old Man"
+      }
+    ],
+    "cultural_notes": [
+      "Teaches that perseverance can overcome any obstacle."
+    ],
+    "origin": "canon",
+    "chengyu": "愚公移山"
+  },
+  {
+    "canon_id": "C3-mangrenmoxiang",
+    "tier": "C3",
+    "title_zh": "盲人摸象",
+    "title_en": "The Blind Men and the Elephant",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/盲人摸象"
+    ],
+    "pd_rationale": "Originally from the Mahaparinirvana Sutra (Buddhist scripture, ancient India); translated into Chinese, public domain.",
+    "beats": [
+      "Several blind men each touch a different part of an elephant.",
+      "One feels the trunk and says it is like a snake.",
+      "Another feels the leg and says it is like a tree trunk.",
+      "They argue fiercely, each convinced only their description is correct."
+    ],
+    "characters": [
+      {
+        "name_zh": "盲人",
+        "gloss": "blind men"
+      }
+    ],
+    "cultural_notes": [
+      "Teaches the danger of drawing conclusions from limited experience."
+    ],
+    "origin": "canon",
+    "chengyu": "盲人摸象"
+  },
+  {
+    "canon_id": "C3-laomashitu",
+    "tier": "C3",
+    "title_zh": "老马识途",
+    "title_en": "An Old Horse Knows the Way",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/老马识途"
+    ],
+    "pd_rationale": "From the Han Feizi (3rd c. BCE); classical Legalist text in the public domain worldwide.",
+    "beats": [
+      "An army returning from a campaign gets lost in unfamiliar terrain.",
+      "The minister Guan Zhong suggests releasing the old warhorses.",
+      "The old horses find the path back to the camp on their own.",
+      "The army follows the horses and returns safely."
+    ],
+    "characters": [
+      {
+        "name_zh": "管仲",
+        "gloss": "Guan Zhong, a minister"
+      },
+      {
+        "name_zh": "齐桓公",
+        "gloss": "Duke Huan of Qi"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means experience brings wisdom; old hands know the ropes."
+    ],
+    "origin": "canon",
+    "chengyu": "老马识途"
+  },
+  {
+    "canon_id": "C3-tangbidangche",
+    "tier": "C3",
+    "title_zh": "螳臂当车",
+    "title_en": "A Mantis Tries to Stop a Carriage",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/螳臂当车"
+    ],
+    "pd_rationale": "From the Zhuangzi (4th c. BCE); classical Daoist text in the public domain worldwide.",
+    "beats": [
+      "A praying mantis stands on a road, raising its forelegs defiantly.",
+      "A heavy carriage approaches but the mantis refuses to move aside.",
+      "The mantis is crushed under the wheels.",
+      "The story warns against overestimating one's limited strength."
+    ],
+    "characters": [
+      {
+        "name_zh": "螳螂",
+        "gloss": "praying mantis"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom warns against arrogantly opposing overwhelming force."
+    ],
+    "origin": "canon",
+    "chengyu": "螳臂当车"
+  },
+  {
+    "canon_id": "C3-qianlvjiqiong",
+    "tier": "C3",
+    "title_zh": "黔驴技穷",
+    "title_en": "The Donkey of Guizhou Has Exhausted Its Tricks",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/黔驴技穷"
+    ],
+    "pd_rationale": "Fable by Liu Zongyuan (Tang dynasty, 9th c. CE); classical Chinese literary work in the public domain.",
+    "beats": [
+      "A tiger in Guizhou encounters a donkey for the first time and is frightened.",
+      "The donkey brays loudly; the tiger retreats in alarm.",
+      "After observing the donkey over time, the tiger realizes it can only bray and kick.",
+      "The tiger attacks and devours the donkey."
+    ],
+    "characters": [
+      {
+        "name_zh": "老虎",
+        "gloss": "tiger"
+      },
+      {
+        "name_zh": "驴",
+        "gloss": "donkey"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means someone has exhausted all their tricks and is now powerless."
+    ],
+    "origin": "canon",
+    "chengyu": "黔驴技穷"
+  },
+  {
+    "canon_id": "C4-fujingqingzui",
+    "tier": "C4",
+    "title_zh": "负荆请罪",
+    "title_en": "Carrying Thorns to Beg Forgiveness",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/负荆请罪"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "General Lian Po resents minister Lin Xiangru for outranking him.",
+      "Lin avoids confrontation publicly to preserve unity for the state.",
+      "Lian Po realizes his pettiness and strips to his bare shoulders.",
+      "He carries thorny branches on his back and kneels before Lin to apologize."
+    ],
+    "characters": [
+      {
+        "name_zh": "廉颇",
+        "gloss": "Lian Po, a general"
+      },
+      {
+        "name_zh": "蔺相如",
+        "gloss": "Lin Xiangru, a minister"
+      }
+    ],
+    "cultural_notes": [
+      "Model for genuine repentance and putting state interests above personal pride."
+    ],
+    "origin": "canon",
+    "chengyu": "负荆请罪"
+  },
+  {
+    "canon_id": "C4-wanbiguizhao",
+    "tier": "C4",
+    "title_zh": "完璧归赵",
+    "title_en": "Returning the Jade Intact to Zhao",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/完璧归赵"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "The King of Qin offers 15 cities to Zhao for their priceless jade disk.",
+      "Minister Lin Xiangru is sent to deliver it, suspecting a trick.",
+      "The Qin king handles the jade but shows no intention of giving cities.",
+      "Lin threatens to smash the jade and secretly returns it intact to Zhao."
+    ],
+    "characters": [
+      {
+        "name_zh": "蔺相如",
+        "gloss": "Lin Xiangru, a minister of Zhao"
+      },
+      {
+        "name_zh": "秦王",
+        "gloss": "King of Qin"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means returning something to its owner in perfect condition."
+    ],
+    "origin": "canon",
+    "chengyu": "完璧归赵"
+  },
+  {
+    "canon_id": "C4-zhiluweima",
+    "tier": "C4",
+    "title_zh": "指鹿为马",
+    "title_en": "Calling a Deer a Horse",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/指鹿为马"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "Chancellor Zhao Gao presents a deer to the young emperor and calls it a horse.",
+      "The emperor says it is clearly a deer.",
+      "Zhao Gao asks the ministers for their opinion to test their loyalty.",
+      "Those who contradict Zhao Gao are later executed; those who agree survive."
+    ],
+    "characters": [
+      {
+        "name_zh": "赵高",
+        "gloss": "Zhao Gao, the chancellor"
+      },
+      {
+        "name_zh": "秦二世",
+        "gloss": "Second Emperor of Qin"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes deliberately distorting the truth and abusing power."
+    ],
+    "origin": "canon",
+    "chengyu": "指鹿为马"
+  },
+  {
+    "canon_id": "C4-zhishangtanbing",
+    "tier": "C4",
+    "title_zh": "纸上谈兵",
+    "title_en": "Discussing Warfare on Paper",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/纸上谈兵"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "Zhao Kuo is a brilliant military theorist who can recite every strategy.",
+      "He is appointed general despite having no actual combat experience.",
+      "He ignores the advice of seasoned officers and changes battle plans on theory alone.",
+      "His army is annihilated at Changping and he is killed in battle."
+    ],
+    "characters": [
+      {
+        "name_zh": "赵括",
+        "gloss": "Zhao Kuo, an armchair general"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom criticizes empty theorizing without practical experience."
+    ],
+    "origin": "canon",
+    "chengyu": "纸上谈兵"
+  },
+  {
+    "canon_id": "C4-woxinchangdan",
+    "tier": "C4",
+    "title_zh": "卧薪尝胆",
+    "title_en": "Sleeping on Brushwood and Tasting Gall",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/卧薪尝胆"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "King Goujian of Yue is defeated and forced to serve as the enemy king's servant.",
+      "After being released, he sleeps on brushwood and tastes bitter gall daily.",
+      "He endures hardship to remember his humiliation and rebuild his strength.",
+      "After years of preparation, he defeats his enemy and reclaims his kingdom."
+    ],
+    "characters": [
+      {
+        "name_zh": "勾践",
+        "gloss": "King Goujian of Yue"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom celebrates enduring hardship to achieve a great goal."
+    ],
+    "origin": "canon",
+    "chengyu": "卧薪尝胆"
+  },
+  {
+    "canon_id": "C4-sangumaolu",
+    "tier": "C4",
+    "title_zh": "三顾茅庐",
+    "title_en": "Three Visits to the Thatched Hut",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/三顾茅庐"
+    ],
+    "pd_rationale": "From the Records of the Three Kingdoms (3rd c. CE); classical historical text in the public domain worldwide.",
+    "beats": [
+      "Warlord Liu Bei seeks to recruit the brilliant strategist Zhuge Liang.",
+      "Twice he travels to Zhuge's thatched hut but misses him.",
+      "On the third visit, Zhuge Liang is home and impressed by Liu Bei's sincerity.",
+      "Zhuge Liang agrees to serve and helps establish the Shu Han kingdom."
+    ],
+    "characters": [
+      {
+        "name_zh": "刘备",
+        "gloss": "Liu Bei, a warlord"
+      },
+      {
+        "name_zh": "诸葛亮",
+        "gloss": "Zhuge Liang, a strategist"
+      }
+    ],
+    "cultural_notes": [
+      "Symbol of sincere effort to recruit talent."
+    ],
+    "origin": "canon",
+    "chengyu": "三顾茅庐"
+  },
+  {
+    "canon_id": "C4-wangmeizhike",
+    "tier": "C4",
+    "title_zh": "望梅止渴",
+    "title_en": "Quenching Thirst by Gazing at Plums",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/望梅止渴"
+    ],
+    "pd_rationale": "From the Shishuo Xinyu (5th c. CE); classical anecdote collection in the public domain worldwide.",
+    "beats": [
+      "Cao Cao's army is marching under scorching heat with no water source.",
+      "Soldiers are collapsing from thirst and morale is plummeting.",
+      "Cao Cao announces there is a plum forest ahead with sour fruit.",
+      "The mere thought makes the soldiers salivate and they find strength to continue."
+    ],
+    "characters": [
+      {
+        "name_zh": "曹操",
+        "gloss": "Cao Cao, a warlord"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means using wishful thinking to comfort oneself."
+    ],
+    "origin": "canon",
+    "chengyu": "望梅止渴"
+  },
+  {
+    "canon_id": "C4-pofuchenzhou",
+    "tier": "C4",
+    "title_zh": "破釜沉舟",
+    "title_en": "Breaking the Cauldrons and Sinking the Boats",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/破釜沉舟"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "Xiang Yu leads his army across a river to fight a much larger Qin force.",
+      "After crossing, he orders all cooking cauldrons smashed and boats sunk.",
+      "His army has no way to retreat and must win or die.",
+      "They fight with desperate courage and win a decisive victory."
+    ],
+    "characters": [
+      {
+        "name_zh": "项羽",
+        "gloss": "Xiang Yu, a warlord"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means to burn bridges and commit absolutely with no retreat."
+    ],
+    "origin": "canon",
+    "chengyu": "破釜沉舟"
+  },
+  {
+    "canon_id": "C4-simianchuge",
+    "tier": "C4",
+    "title_zh": "四面楚歌",
+    "title_en": "Chu Songs on All Sides",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/四面楚歌"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "Xiang Yu's army is surrounded by Liu Bang's forces.",
+      "At night, Liu Bang's soldiers sing folk songs from the Chu region.",
+      "Xiang Yu's soldiers hear the songs and believe their homeland has fallen.",
+      "Morale collapses, many desert, and Xiang Yu faces his final defeat."
+    ],
+    "characters": [
+      {
+        "name_zh": "项羽",
+        "gloss": "Xiang Yu, King of Chu"
+      },
+      {
+        "name_zh": "刘邦",
+        "gloss": "Liu Bang, future Han emperor"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom means being surrounded by enemies on all sides with no escape."
+    ],
+    "origin": "canon",
+    "chengyu": "四面楚歌"
+  },
+  {
+    "canon_id": "C4-kongrongrangli",
+    "tier": "C4",
+    "title_zh": "孔融让梨",
+    "title_en": "Kong Rong Gives Away the Bigger Pears",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/孔融"
+    ],
+    "pd_rationale": "Historical anecdote from the Later Han; recorded in classical texts in the public domain worldwide.",
+    "beats": [
+      "Young Kong Rong is offered a plate of pears with his brothers.",
+      "He deliberately chooses the smallest pear.",
+      "When asked why, he says he is the youngest and should defer to his elders.",
+      "His humility at age four becomes a model of filial virtue for generations."
+    ],
+    "characters": [
+      {
+        "name_zh": "孔融",
+        "gloss": "Kong Rong, a young boy"
+      }
+    ],
+    "cultural_notes": [
+      "Classic lesson in humility, filial piety, and consideration for others."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C4-yimingjingren",
+    "tier": "C4",
+    "title_zh": "一鸣惊人",
+    "title_en": "Amaze the World with a Single Cry",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/一鸣惊人"
+    ],
+    "pd_rationale": "From the Shiji (Records of the Grand Historian, 1st c. BCE); classical historical text in the public domain.",
+    "beats": [
+      "King Zhuang of Chu neglects state affairs for three years, spending time in pleasure.",
+      "A minister tells him a riddle about a bird that never sings.",
+      "The king replies that the bird will soar and amaze all when it chooses to cry.",
+      "King Zhuang reforms, becomes a great ruler, and makes Chu a dominant power."
+    ],
+    "characters": [
+      {
+        "name_zh": "楚庄王",
+        "gloss": "King Zhuang of Chu"
+      },
+      {
+        "name_zh": "伍举",
+        "gloss": "Wu Ju, a minister"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes someone who surprises others with a brilliant achievement after obscurity."
+    ],
+    "origin": "canon",
+    "chengyu": "一鸣惊人"
+  },
+  {
+    "canon_id": "C4-xuanliangcigu",
+    "tier": "C4",
+    "title_zh": "悬梁刺股",
+    "title_en": "Tying Hair to a Beam and Stabbing a Thigh",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/悬梁刺股"
+    ],
+    "pd_rationale": "Historical anecdotes from the Zhan Guo Ce and Han dynasty records; classical texts in the public domain worldwide.",
+    "beats": [
+      "Sun Jing ties his hair to a roof beam so that if he dozes off while studying, the jerk wakes him.",
+      "Su Qin pricks his own thigh with an awl whenever he feels drowsy.",
+      "Both men endure pain to stay awake and continue studying.",
+      "Their extreme dedication leads them to become great scholars and statesmen."
+    ],
+    "characters": [
+      {
+        "name_zh": "孙敬",
+        "gloss": "Sun Jing, a scholar"
+      },
+      {
+        "name_zh": "苏秦",
+        "gloss": "Su Qin, a scholar"
+      }
+    ],
+    "cultural_notes": [
+      "Idiom describes extreme dedication to study and self-discipline."
+    ],
+    "origin": "canon",
+    "chengyu": "悬梁刺股"
+  },
+  {
+    "canon_id": "C5-huliheputao",
+    "tier": "C5",
+    "title_zh": "狐狸和葡萄",
+    "title_en": "The Fox and the Grapes",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/狐狸和葡萄"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 15), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A hungry fox spots a bunch of ripe grapes hanging from a vine.",
+      "He jumps repeatedly but cannot reach the grapes.",
+      "Exhausted and frustrated, he gives up.",
+      "He walks away saying the grapes are probably sour anyway."
+    ],
+    "characters": [
+      {
+        "name_zh": "狐狸",
+        "gloss": "fox"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: people often disparage what they cannot obtain; origin of the phrase 'sour grapes.'"
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-wuyaheshui",
+    "tier": "C5",
+    "title_zh": "乌鸦喝水",
+    "title_en": "The Crow and the Pitcher",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/乌鸦喝水"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 390), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A thirsty crow finds a pitcher with a small amount of water at the bottom.",
+      "The water level is too low for the crow to reach with its beak.",
+      "The crow drops pebbles into the pitcher one by one.",
+      "The water level rises and the crow drinks."
+    ],
+    "characters": [
+      {
+        "name_zh": "乌鸦",
+        "gloss": "crow"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: clever thinking and persistence can solve difficult problems."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-mayihezhame",
+    "tier": "C5",
+    "title_zh": "蚂蚁和蚱蜢",
+    "title_en": "The Ant and the Grasshopper",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/蚂蚁和蚱蜢"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 373), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "An ant works hard all summer storing food for winter.",
+      "A grasshopper sings and plays in the sun, mocking the ant for working.",
+      "When winter arrives, the grasshopper has no food and is starving.",
+      "The ant survives comfortably on its stored provisions."
+    ],
+    "characters": [
+      {
+        "name_zh": "蚂蚁",
+        "gloss": "ant"
+      },
+      {
+        "name_zh": "蚱蜢",
+        "gloss": "grasshopper"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: hard work and planning prepare one for hard times."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-shizihelaoshu",
+    "tier": "C5",
+    "title_zh": "狮子和老鼠",
+    "title_en": "The Lion and the Mouse",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/狮子和老鼠"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 150), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A lion catches a mouse but spares its life when the mouse begs for mercy.",
+      "The mouse promises to repay the lion one day; the lion laughs.",
+      "Later, hunters trap the lion in a net.",
+      "The mouse gnaws through the ropes and frees the lion."
+    ],
+    "characters": [
+      {
+        "name_zh": "狮子",
+        "gloss": "lion"
+      },
+      {
+        "name_zh": "老鼠",
+        "gloss": "mouse"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: even the small and weak can help the strong; kindness is never wasted."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-hulihewuyu",
+    "tier": "C5",
+    "title_zh": "狐狸和乌鸦",
+    "title_en": "The Fox and the Crow",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/狐狸和乌鸦"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 124), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A crow sits on a branch with a piece of cheese in its beak.",
+      "A fox approaches and praises the crow, calling it the king of birds.",
+      "The fox asks the crow to sing so it can prove its beautiful voice.",
+      "The crow opens its beak to sing, dropping the cheese for the fox to snatch."
+    ],
+    "characters": [
+      {
+        "name_zh": "狐狸",
+        "gloss": "fox"
+      },
+      {
+        "name_zh": "乌鸦",
+        "gloss": "crow"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: beware of flattery; it often conceals a selfish motive."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-pizheyangpidelang",
+    "tier": "C5",
+    "title_zh": "披着羊皮的狼",
+    "title_en": "The Wolf in Sheep's Clothing",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/披着羊皮的狼"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 451), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A wolf finds a discarded sheepskin and puts it on.",
+      "Disguised as a sheep, it infiltrates the flock unnoticed.",
+      "The wolf kills and eats several sheep before the shepherd discovers it.",
+      "The shepherd hangs the wolf as a warning to all deceivers."
+    ],
+    "characters": [
+      {
+        "name_zh": "狼",
+        "gloss": "wolf"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: appearances can be deceiving; evil often wears a mask of innocence."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-xiajindandee",
+    "tier": "C5",
+    "title_zh": "下金蛋的鹅",
+    "title_en": "The Goose That Laid the Golden Eggs",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/下金蛋的鹅"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 87), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A farmer discovers his goose lays a solid golden egg each day.",
+      "He grows rich but becomes impatient waiting for one egg at a time.",
+      "He kills the goose hoping to extract all the gold inside at once.",
+      "He finds nothing inside and loses his daily golden egg forever."
+    ],
+    "characters": [
+      {
+        "name_zh": "农夫",
+        "gloss": "farmer"
+      },
+      {
+        "name_zh": "鹅",
+        "gloss": "goose"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: greed can destroy a steady source of prosperity."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-nongfuyushe",
+    "tier": "C5",
+    "title_zh": "农夫与蛇",
+    "title_en": "The Farmer and the Viper",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/农夫与蛇"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 176), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A farmer finds a snake frozen in the winter snow.",
+      "He takes pity on the snake and warms it against his chest.",
+      "The snake revives and immediately bites the farmer.",
+      "The dying farmer realizes that evil nature cannot be changed by kindness."
+    ],
+    "characters": [
+      {
+        "name_zh": "农夫",
+        "gloss": "farmer"
+      },
+      {
+        "name_zh": "蛇",
+        "gloss": "snake"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: some people are inherently malicious; kindness will not change them."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-laoshukaihui",
+    "tier": "C5",
+    "title_zh": "老鼠开会",
+    "title_en": "Belling the Cat",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/老鼠开会"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 613), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A colony of mice holds a meeting to solve the cat problem.",
+      "A young mouse suggests tying a bell around the cat's neck as a warning.",
+      "All the mice cheer at the brilliant plan.",
+      "An old mouse asks who will bell the cat; no one volunteers."
+    ],
+    "characters": [
+      {
+        "name_zh": "老鼠",
+        "gloss": "mice"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: it is easier to propose a dangerous plan than to execute it."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C5-gouheyingzi",
+    "tier": "C5",
+    "title_zh": "狗和影子",
+    "title_en": "The Dog and Its Reflection",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/狗和影子"
+    ],
+    "pd_rationale": "Aesop's fable (Perry Index 133), antiquity; public-domain plot and PD translations only.",
+    "beats": [
+      "A dog with a bone in its mouth crosses a bridge over a stream.",
+      "It sees its own reflection in the water below.",
+      "Mistaking the reflection for another dog with a bigger bone, it barks.",
+      "The bone falls from its mouth into the stream and is lost."
+    ],
+    "characters": [
+      {
+        "name_zh": "狗",
+        "gloss": "dog"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: greed can cause one to lose what one already has."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-shenbimaliang",
+    "tier": "C6",
+    "title_zh": "神笔马良",
+    "title_en": "Ma Liang and the Magic Brush",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/神笔马良"
+    ],
+    "pd_rationale": "Chinese folk tale written by Hong Xuntao, mid-20th century; widely circulated as public domain children's literature in China.",
+    "beats": [
+      "A poor boy named Ma Liang loves to draw but cannot afford a brush.",
+      "In a dream, an old man gives him a magic brush that brings drawings to life.",
+      "He uses it to help the poor but refuses to serve a greedy official.",
+      "He draws a door to escape and continues using his brush for good."
+    ],
+    "characters": [
+      {
+        "name_zh": "马良",
+        "gloss": "Ma Liang, a boy with a magic brush"
+      }
+    ],
+    "cultural_notes": [
+      "Beloved classic of Chinese children's literature; celebrates creativity and justice."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-tianluoguniang",
+    "tier": "C6",
+    "title_zh": "田螺姑娘",
+    "title_en": "The Snail Maiden",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/田螺姑娘"
+    ],
+    "pd_rationale": "Traditional Chinese folk tale with variants across East Asia; ancient folklore in the public domain worldwide.",
+    "beats": [
+      "A poor farmer finds a large snail and places it in his water jar.",
+      "Each day he returns from the fields to find a hot meal mysteriously prepared.",
+      "He hides and discovers the snail transforms into a beautiful maiden.",
+      "They marry and live happily together."
+    ],
+    "characters": [
+      {
+        "name_zh": "农夫",
+        "gloss": "farmer"
+      },
+      {
+        "name_zh": "田螺姑娘",
+        "gloss": "snail maiden"
+      }
+    ],
+    "cultural_notes": [
+      "Representative Chinese folk tale about kindness being rewarded."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-afantidegushi",
+    "tier": "C6",
+    "title_zh": "阿凡提的故事",
+    "title_en": "The Stories of Afanti",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/阿凡提"
+    ],
+    "pd_rationale": "Nasreddin Hodja folk tales from Turkic/Uyghur tradition, transmitted orally for centuries; traditional folklore in the public domain.",
+    "beats": [
+      "Afanti is a witty sage who travels on his donkey across the land.",
+      "He uses clever wordplay and reverse logic to solve disputes.",
+      "Greedy kings and officials try to trap him with impossible demands.",
+      "Each time Afanti outsmarts them, often turning their logic against them."
+    ],
+    "characters": [
+      {
+        "name_zh": "阿凡提",
+        "gloss": "Afanti (Nasreddin), a wise and witty man"
+      }
+    ],
+    "cultural_notes": [
+      "Beloved folk figure across Central Asia and western China; symbol of folk wisdom."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-lierenhailibu",
+    "tier": "C6",
+    "title_zh": "猎人海力布",
+    "title_en": "The Hunter Hailibu",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/猎人海力布"
+    ],
+    "pd_rationale": "Traditional Mongolian/Chinese folk tale transmitted orally; public domain folklore.",
+    "beats": [
+      "The hunter Hailibu saves a small white snake from a predator.",
+      "The snake's father, the Dragon King, gives Hailibu a gem to understand animal speech.",
+      "He overhears animals discussing an impending flood but cannot reveal the secret or he will turn to stone.",
+      "He chooses to warn the villagers and is petrified as a result."
+    ],
+    "characters": [
+      {
+        "name_zh": "海力布",
+        "gloss": "Hailibu, a hunter"
+      },
+      {
+        "name_zh": "龙王",
+        "gloss": "Dragon King"
+      }
+    ],
+    "cultural_notes": [
+      "Teaches the value of self-sacrifice for the greater good."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-shiershengxiao",
+    "tier": "C6",
+    "title_zh": "十二生肖",
+    "title_en": "The Twelve Zodiac Animals",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/生肖"
+    ],
+    "pd_rationale": "Traditional Chinese folklore dating to the Han dynasty; cultural tradition in the public domain worldwide.",
+    "beats": [
+      "The Jade Emperor holds a race across a river to select the zodiac animals.",
+      "The rat tricks the cat and rides on the ox's back to win first place.",
+      "Each animal uses its unique skills to cross the river.",
+      "The order is set: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, Pig."
+    ],
+    "characters": [
+      {
+        "name_zh": "玉帝",
+        "gloss": "Jade Emperor"
+      }
+    ],
+    "cultural_notes": [
+      "Explains the origin of the Chinese zodiac and why the cat is not included."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-baoliandeng",
+    "tier": "C6",
+    "title_zh": "宝莲灯",
+    "title_en": "The Magic Lotus Lantern",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/宝莲灯"
+    ],
+    "pd_rationale": "Traditional Chinese folk legend dating to the Tang dynasty; folklore in the public domain worldwide.",
+    "beats": [
+      "A goddess descends to earth and marries a mortal, bearing a son named Chen Xiang.",
+      "Her brother, a god, imprisons her under Mount Hua for breaking celestial law.",
+      "Chen Xiang obtains the magical Lotus Lantern and trains to confront the gods.",
+      "He splits the mountain with a divine axe and rescues his mother."
+    ],
+    "characters": [
+      {
+        "name_zh": "沉香",
+        "gloss": "Chen Xiang, the son"
+      },
+      {
+        "name_zh": "三圣母",
+        "gloss": "Third Holy Mother, the goddess"
+      }
+    ],
+    "cultural_notes": [
+      "Tale of filial devotion overcoming even divine authority."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-jigong",
+    "tier": "C6",
+    "title_zh": "济公",
+    "title_en": "The Legend of Ji Gong",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/济公"
+    ],
+    "pd_rationale": "Traditional Chinese folklore based on the historical monk Daoji (12th c. CE); folk legend in the public domain.",
+    "beats": [
+      "Ji Gong is a Buddhist monk with a dirty, ragged appearance and eccentric behavior.",
+      "He breaks monastic rules openly, eating meat and drinking wine.",
+      "Despite appearances, he helps the poor, heals the sick, and battles injustice.",
+      "His catchphrase is, 'Wine and meat pass through the body; the Buddha stays in the heart.'"
+    ],
+    "characters": [
+      {
+        "name_zh": "济公",
+        "gloss": "Ji Gong, an eccentric monk"
+      },
+      {
+        "name_zh": "道济",
+        "gloss": "Daoji, his ordained name"
+      }
+    ],
+    "cultural_notes": [
+      "Beloved folk hero embodying the idea that true virtue transcends appearances."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-mengmusanqian",
+    "tier": "C6",
+    "title_zh": "孟母三迁",
+    "title_en": "Mencius's Mother Moves Three Times",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/孟母三迁"
+    ],
+    "pd_rationale": "From the Lienü Zhuan (Han dynasty, 1st c. BCE); classical text in the public domain worldwide.",
+    "beats": [
+      "Mencius's mother lives near a cemetery; young Mencius imitates funeral rites.",
+      "She moves near a marketplace; Mencius starts imitating merchants and butchers.",
+      "She moves near a school; Mencius begins imitating scholars and studying.",
+      "She stays there, and Mencius grows up to become a great Confucian philosopher."
+    ],
+    "characters": [
+      {
+        "name_zh": "孟母",
+        "gloss": "mother of Mencius"
+      },
+      {
+        "name_zh": "孟子",
+        "gloss": "Mencius, a young boy"
+      }
+    ],
+    "cultural_notes": [
+      "Classic lesson about the importance of environment in a child's upbringing."
+    ],
+    "origin": "canon",
+    "chengyu": "孟母三迁"
+  },
+  {
+    "canon_id": "C6-niandechuanshuo",
+    "tier": "C6",
+    "title_zh": "年的传说",
+    "title_en": "The Legend of the Nian Beast",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/年"
+    ],
+    "pd_rationale": "Traditional Chinese folklore explaining Spring Festival customs; public domain folklore.",
+    "beats": [
+      "A terrifying monster named Nian emerges each New Year's Eve to devour villagers and livestock.",
+      "Every year, villagers flee to the mountains to survive.",
+      "An old man discovers that Nian fears the color red, bright lights, and loud noises.",
+      "People use red couplets, lanterns, and firecrackers to drive Nian away; these become Spring Festival traditions."
+    ],
+    "characters": [
+      {
+        "name_zh": "年兽",
+        "gloss": "Nian, the monster"
+      }
+    ],
+    "cultural_notes": [
+      "Explains the origins of Chinese New Year customs including firecrackers and red decorations."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C6-laohubaishi",
+    "tier": "C6",
+    "title_zh": "老虎拜师",
+    "title_en": "The Tiger Learns from the Cat",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/猫"
+    ],
+    "pd_rationale": "Traditional Chinese folk tale transmitted orally for centuries; public domain folklore.",
+    "beats": [
+      "A tiger asks a cat to teach it all the skills of hunting.",
+      "The cat teaches the tiger everything except how to climb trees.",
+      "One day, the tiger turns on the cat, trying to eat its master.",
+      "The cat escapes by climbing a tree; the tiger never learns to climb."
+    ],
+    "characters": [
+      {
+        "name_zh": "老虎",
+        "gloss": "tiger"
+      },
+      {
+        "name_zh": "猫",
+        "gloss": "cat"
+      }
+    ],
+    "cultural_notes": [
+      "Folk tale about keeping a secret advantage and the danger of teaching everything to the ungrateful."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C7-chouxiaoya",
+    "tier": "C7",
+    "title_zh": "丑小鸭",
+    "title_en": "The Ugly Duckling",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/丑小鸭"
+    ],
+    "pd_rationale": "Fairy tale by Hans Christian Andersen (1843); author died 1875, work in the public domain worldwide.",
+    "beats": [
+      "A duckling is mocked and rejected for its ugly appearance.",
+      "It wanders alone, enduring harsh treatment and a brutal winter.",
+      "In spring, it sees its reflection in the water.",
+      "It has transformed into a beautiful swan."
+    ],
+    "characters": [
+      {
+        "name_zh": "丑小鸭",
+        "gloss": "the ugly duckling"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: true beauty develops from within; endurance through hardship leads to transformation."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C7-huangdidexinzhuang",
+    "tier": "C7",
+    "title_zh": "皇帝的新装",
+    "title_en": "The Emperor's New Clothes",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/皇帝的新装"
+    ],
+    "pd_rationale": "Fairy tale by Hans Christian Andersen (1837); author died 1875, work in the public domain worldwide.",
+    "beats": [
+      "Two swindlers promise to weave clothes invisible to anyone unfit for their position.",
+      "The emperor and his ministers pretend to see the nonexistent fabric.",
+      "The emperor parades naked through the city.",
+      "A child shouts that the emperor has no clothes, exposing the truth."
+    ],
+    "characters": [
+      {
+        "name_zh": "皇帝",
+        "gloss": "the emperor"
+      }
+    ],
+    "cultural_notes": [
+      "Moral: vanity and fear of appearing inadequate can lead to self-deception; truth often comes from the innocent."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C7-maihuochaidexiaonvhai",
+    "tier": "C7",
+    "title_zh": "卖火柴的小女孩",
+    "title_en": "The Little Match Girl",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/卖火柴的小女孩"
+    ],
+    "pd_rationale": "Fairy tale by Hans Christian Andersen (1845); author died 1875, work in the public domain worldwide.",
+    "beats": [
+      "A poor girl sells matches on a freezing New Year's Eve.",
+      "She lights matches one by one for warmth and sees visions of comfort.",
+      "In the final vision, her deceased grandmother appears and takes her.",
+      "She is found frozen the next morning with a peaceful smile."
+    ],
+    "characters": [
+      {
+        "name_zh": "小女孩",
+        "gloss": "the little match girl"
+      }
+    ],
+    "cultural_notes": [
+      "Poignant tale about poverty, compassion, and the power of hope in desperate circumstances."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C7-baixuegongzhu",
+    "tier": "C7",
+    "title_zh": "白雪公主",
+    "title_en": "Snow White",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/白雪公主"
+    ],
+    "pd_rationale": "Fairy tale collected by the Brothers Grimm (1812); both authors died before 1865, work in the public domain worldwide.",
+    "beats": [
+      "A jealous queen orders Snow White killed because of her beauty.",
+      "Seven dwarfs take her in and protect her in the forest.",
+      "The queen poisons Snow White with a cursed apple.",
+      "A prince's kiss awakens her and they live happily ever after."
+    ],
+    "characters": [
+      {
+        "name_zh": "白雪公主",
+        "gloss": "Snow White"
+      },
+      {
+        "name_zh": "皇后",
+        "gloss": "the Queen"
+      },
+      {
+        "name_zh": "小矮人",
+        "gloss": "the seven dwarfs"
+      }
+    ],
+    "cultural_notes": [
+      "Classic fairy tale about jealousy, kindness, and true love."
+    ],
+    "origin": "canon"
+  },
+  {
+    "canon_id": "C7-xiaohongmao",
+    "tier": "C7",
+    "title_zh": "小红帽",
+    "title_en": "Little Red Riding Hood",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/小红帽"
+    ],
+    "pd_rationale": "Fairy tale collected by the Brothers Grimm (1812); both authors died before 1865, work in the public domain worldwide.",
+    "beats": [
+      "A girl in a red hood visits her grandmother through the forest.",
+      "A wolf learns her destination and arrives at the grandmother's house first.",
+      "The wolf swallows the grandmother and impersonates her.",
+      "A huntsman cuts open the wolf and rescues both."
+    ],
+    "characters": [
+      {
+        "name_zh": "小红帽",
+        "gloss": "Little Red Riding Hood"
+      },
+      {
+        "name_zh": "大灰狼",
+        "gloss": "the big bad wolf"
+      },
+      {
+        "name_zh": "猎人",
+        "gloss": "the huntsman"
+      }
+    ],
+    "cultural_notes": [
+      "Classic cautionary tale about the dangers of talking to strangers."
+    ],
     "origin": "canon"
   }
 ]

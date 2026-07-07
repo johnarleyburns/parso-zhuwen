@@ -46,6 +46,10 @@ func main() {
 		err = cmdImages(os.Args[2:])
 	case "keygen":
 		err = cmdKeygen(os.Args[2:])
+	case "authored":
+		err = cmdAuthored(os.Args[2:])
+	case "audit":
+		err = cmdAudit(os.Args[2:])
 	default:
 		usage()
 		os.Exit(2)
@@ -66,11 +70,18 @@ usage:
                                     (real lists are license-gated; see plans/blockers.md B-1)
   zhuwenctl segment eval            report FMM token/type coverage + ambiguity over the canon
   zhuwenctl spike [--n <k>] [--live]
-                                    run canon->brief->gen->segment->gate->repair (MC-2);
+                                    run canon->brief->gen->segment->gate->repair (MC-2/CP-09a);
                                     --live uses the LLM (needs ZHUWEN_LLM_API_KEY), else fixtures
+    [--lexicon <sqlite>]            use the real HSK band (else the fixture band)
+    [--known-max <lvl>] [--frontier-level <lvl>]   band definition (e.g. A2 = 2/3, B1 = 4/5)
+    [--oversample <N>]              CP-09a candidate-rerank: N candidates/story (default 6)
+    [--max-tokens <T>]              CP-09a per-story token ceiling (default 80000; 0 = unlimited)
+    [--naive]                       single-candidate MC-2 baseline (no rerank), for comparison
+    [--verbose]                     per-brief candidates, fail reasons, and convergence trace
   zhuwenctl run --db <path> [--stage gen] [--resume]
                                     run the resumable SQLite work queue over the canon (MC-3);
                                     --resume recovers a crashed run without double-charging
+                                    --live uses the LLM (needs ZHUWEN_LLM_API_KEY)
   zhuwenctl build --out <pack>      run the pipeline and emit a signed .zpack
                     [--pub <file>]  also write the verify pubkey (default <pack>.pub)
                     [--key <file>]  sign with a minisign secret key
@@ -83,6 +94,14 @@ usage:
     --candidates <json> --out <json>
   zhuwenctl images curate           load decisions + lexicon → curated image records
     --decisions <json> --lexicon <sqlite> --out <json>
+  zhuwenctl authored check --file <json> [--lexicon <sqlite>] [--band <name>]
+                                    gate hand-authored stories through I1 (CP-09b)
+    [--known-max <lvl>] [--frontier-level <lvl>] [--verbose]
+  zhuwenctl audit [--pack <zpack>] [--pub <file>]
+                                    audit a built pack: sample stories, record verdicts,
+                                    compute pack audit_pass_rate (CP-09b)
+    [--decisions <json>]            fixture decisions file for CI (headless mode)
+    [--sample-size <N>]             stories to sample (default 20)
 `)
 }
 
@@ -196,14 +215,27 @@ func cmdSegment(args []string) error {
 	return nil
 }
 
-// cmdSpike implements `spike`: run the content-reality harness and print the metrics.
+// cmdSpike implements `spike`: run the constrained content-reality harness and print metrics.
+// CP-09a: the generator is candidate-rerank (gen.ConstrainedProvider) over DeepSeek — which
+// exposes no logit_bias — layered under token-level name-and-replace repair, with per-story
+// proper-noun glosses threaded into the segmenter. --naive restores the MC-2 single-candidate
+// path for baseline comparison. Gate budgets (I1) are never touched here.
 func cmdSpike(args []string) error {
 	n := 5
 	if v := flagValue(args, "--n"); v != "" {
 		fmt.Sscanf(v, "%d", &n)
 	}
 	live := hasFlag(args, "--live")
+	naive := hasFlag(args, "--naive")
 	lexPath := flagValue(args, "--lexicon")
+	oversample := 6
+	if v := flagValue(args, "--oversample"); v != "" {
+		fmt.Sscanf(v, "%d", &oversample)
+	}
+	maxTokens := 80000
+	if v := flagValue(args, "--max-tokens"); v != "" {
+		fmt.Sscanf(v, "%d", &maxTokens)
+	}
 
 	// Band: default fixture harness, or the real HSK band when --lexicon is given.
 	var lex *lexicon.Lexicon
@@ -226,9 +258,8 @@ func cmdSpike(args []string) error {
 			fmt.Sscanf(v, "%d", &frontier)
 		}
 		spec = pipeline.BuildHSKBand(lex, "A2", knownMax, frontier, knownMax)
-		seg := segment.New(lex.DictEntries(), nil)
 		checker = repair.PipelineChecker{
-			Seg:      seg,
+			Dict:     lex.DictEntries(),
 			Band:     gate.Band{Known: spec.Known, Frontier: spec.Frontier, Grammar: spec.Grammar},
 			Detector: grammar.MarkerDetector{},
 			MaxID:    lex.MaxID(),
@@ -241,34 +272,58 @@ func cmdSpike(args []string) error {
 		if lex, reg, spec, _, checker, err = buildHarness(); err != nil {
 			return err
 		}
+		checker.Dict = lex.DictEntries()
 	}
 
-	var provider gen.Provider
+	// Inner provider: live LLM or the deterministic band-aware fixture.
+	var inner gen.Provider
 	var llm *gen.LLMProvider
 	if live {
 		cfg, ok := gen.LLMConfigFromEnv()
 		if !ok {
 			return fmt.Errorf("spike --live: no API key (set ZHUWEN_LLM_API_KEY or ~/.deepseek-api-key)")
 		}
+		if !naive {
+			cfg.Temperature = 0.9 // diversity for candidate-rerank
+		}
 		llm = gen.NewLLMProvider(cfg, lex)
-		provider = llm
-		fmt.Printf("spike: LIVE run (model %s @ %s)\n", cfg.Model, cfg.BaseURL)
+		inner = llm
+		fmt.Printf("spike: LIVE run (model %s @ %s, temp %.1f)\n", cfg.Model, cfg.BaseURL, cfg.Temperature)
 	} else {
-		provider = gen.NewFixtureProvider(lex, assets.FillerSimps())
-		fmt.Println("spike: fixture provider (deterministic; harness/mechanics only)")
+		inner = gen.NewBandFixtureProvider(func(id int) (string, bool) {
+			if w, ok := lex.LookupID(id); ok {
+				return w.Simp, true
+			}
+			return "", false
+		})
+		fmt.Println("spike: deterministic band-fixture provider (offline; harness/mechanics only)")
 	}
 
-	sum := spike.Run(reg, spec, provider, checker, n)
-	fmt.Printf("entries=%d  pass@0=%d (%.0f%%)  passed=%d  discarded=%d (%.0f%%)  mean-repair-iters=%.2f\n",
+	// Constrained (candidate-rerank) unless --naive.
+	provider := inner
+	var cp *gen.ConstrainedProvider
+	if !naive {
+		cp = gen.NewConstrainedProvider(inner, gen.GateConstraint{
+			Dict:     lex.DictEntries(),
+			Band:     gate.Band{Known: spec.Known, Frontier: spec.Frontier, Grammar: spec.Grammar},
+			Detector: grammar.MarkerDetector{},
+			MaxID:    lex.MaxID(),
+			Cfg:      gate.DefaultConfig(),
+		}, oversample, maxTokens)
+		provider = cp
+		fmt.Printf("spike: constrained candidate-rerank (oversample N=%d, per-story ceiling %d tok)\n", oversample, maxTokens)
+	} else {
+		fmt.Println("spike: NAIVE single-candidate (MC-2 baseline comparison)")
+	}
+
+	sum := spike.Run(lex, reg, spec, provider, checker, n)
+	fmt.Printf("entries=%d  pass@0=%d (%.0f%%)  passed=%d  discarded=%d (%.0f%%)  mean-repair-iters=%.2f  mean-candidates=%.2f\n",
 		sum.Entries, sum.PassAtIter0, 100*sum.PassRateAtIter0(),
 		sum.Passed, sum.Discarded, 100*sum.DiscardRate(),
-		sum.MeanRepairIterations())
+		sum.MeanRepairIterations(), sum.MeanCandidates())
 	if llm != nil {
-		perStory := 0
-		if sum.Passed > 0 {
-			perStory = llm.TokensUsed() / sum.Passed
-		}
-		fmt.Printf("tokens: %d total, ~%d per shipped story\n", llm.TokensUsed(), perStory)
+		fmt.Printf("tokens: %d total (%d prompt + %d completion), ~%.0f per accepted story\n",
+			sum.TotalTokens, llm.PromptTokens(), llm.CompletionTokens(), sum.TokensPerAccepted())
 	}
 	if len(sum.FailureCodeHist) > 0 {
 		fmt.Println("failure-code histogram:")
@@ -282,11 +337,11 @@ func cmdSpike(args []string) error {
 			if f.Passed {
 				status = "PASSED"
 			}
-			fmt.Printf("\n--- %s [%s] iters=%d ---\n", f.Brief.CanonID, status, f.Iterations)
+			fmt.Printf("\n--- %s [%s] iters=%d new-token-trace=%v ---\n", f.Brief.CanonID, status, f.Iterations, f.NewTokenTrace)
 			if len(f.Candidates) > 0 {
 				last := f.Candidates[len(f.Candidates)-1].Text
-				if len(last) > 220 {
-					last = last[:220] + "…"
+				if len([]rune(last)) > 220 {
+					last = string([]rune(last)[:220]) + "…"
 				}
 				fmt.Printf("last candidate: %s\n", last)
 			}

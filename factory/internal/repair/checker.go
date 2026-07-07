@@ -14,6 +14,19 @@ type PipelineChecker struct {
 	Detector grammar.Detector
 	MaxID    int
 	Cfg      gate.Config
+	// Dict, when set, lets callers rebuild the segmenter per brief with that brief's
+	// proper-noun dictionary (see ForBrief). Seg is used as-is when Dict is nil.
+	Dict map[string]int
+}
+
+// ForBrief returns a copy of the checker whose segmenter is rebuilt with the brief's
+// proper-noun dictionary, so declared names segment as ProperNoun and are excluded from the
+// coverage denominator. Requires Dict to be set; otherwise returns the checker unchanged.
+func (c PipelineChecker) ForBrief(propers map[string]string) PipelineChecker {
+	if c.Dict != nil {
+		c.Seg = segment.New(c.Dict, propers)
+	}
+	return c
 }
 
 // Check segments and gates the text, returning the gate Result (with stable failure codes).
