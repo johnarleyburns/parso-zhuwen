@@ -52,15 +52,24 @@ Batches are grouped so each `imagespike` run + review sheet is one sitting. Stat
 > machine-checkable record; the human verification lives on each Commons page.
 
 ### Canon covers (81 entries)
-| Batch | Tier | Count | Status |
-|-------|------|-------|--------|
-| CAN-C1 | C1 | 20 | todo |
-| CAN-C2 | C2 | 14 | todo |
-| CAN-C3 | C3 | 5 | todo |
-| CAN-C4 | C4 | 14 | todo |
-| CAN-C5 | C5 | 13 | todo |
-| CAN-C6 | C6 | 10 | todo |
-| CAN-C7 | C7 | 5 | todo |
+Reviewed via `imagespike` against `data/canon/canon-cover-inventory.tsv`; decisions in
+`data/canon/canon-cover-decisions.json`. `reviewed` = a cover picked in the sheet;
+`signed-off` = license verified on the Commons page + `Provenance.SignedOff` recorded.
+
+| Batch | Tier | Count | Reviewed | Status |
+|-------|------|-------|----------|--------|
+| CAN-C1 | C1 | 20 | 20/20 | reviewed |
+| CAN-C2 | C2 | 14 | 14/14 | reviewed |
+| CAN-C3 | C3 | 5 | 5/5 | reviewed |
+| CAN-C4 | C4 | 14 | 13/14 | reviewed (司马光砸缸 open) |
+| CAN-C5 | C5 | 13 | 13/13 | reviewed |
+| CAN-C6 | C6 | 10 | 10/10 | reviewed |
+| CAN-C7 | C7 | 5 | 5/5 | reviewed |
+
+> 80/81 canon covers picked. Remaining: **司马光砸缸** (C4) — re-run `imagespike` with
+> `--decided data/canon/canon-cover-decisions.json` to review only the open cover. Chinese-title
+> search (added CP-09c) now surfaces on-concept legend imagery filed under the Chinese name.
+> Next: per-image license sign-off, then `zhuwenctl images curate` into the packs.
 
 ### Authored spine + B1 packs
 | Batch | Scope | Count | Status |
