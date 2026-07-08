@@ -276,7 +276,11 @@ func loadInventory(path string) ([]Seed, error) {
 	return seeds, nil
 }
 
-// gather queries Commons for the English term, then falls-back to the Chinese character.
+// gather queries Commons for both the English search term AND the Chinese title directly,
+// merging the results (deduped by title). Chinese-title search is always run — for Chinese
+// legends/idioms Commons often holds strong, on-concept images filed under the Chinese name
+// (e.g. 守株待兔, 嫦娥奔月), which an English-term search misses. Results from both queries
+// appear in the review sheet so the reviewer can pick from either.
 func gather(s Seed, n int) []*Candidate {
 	seen := map[string]*Candidate{}
 	var order []*Candidate
@@ -293,9 +297,8 @@ func gather(s Seed, n int) []*Candidate {
 	for _, c := range commonsSearch(s.En, n) {
 		add(c)
 	}
-	// Only fall back to the Chinese character when the English term was thin — halves
-	// request volume for the ~220-word inventory.
-	if len(order) < 3 {
+	// Always also search the Chinese title/word directly (dedup handles overlap).
+	if s.Simp != "" && s.Simp != s.En {
 		for _, c := range commonsSearch(s.Simp, n) {
 			add(c)
 		}
