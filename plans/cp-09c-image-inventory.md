@@ -59,17 +59,17 @@ Reviewed via `imagespike` against `data/canon/canon-cover-inventory.tsv`; decisi
 | Batch | Tier | Count | Reviewed | Status |
 |-------|------|-------|----------|--------|
 | CAN-C1 | C1 | 20 | 20/20 | reviewed |
-| CAN-C2 | C2 | 14 | 14/14 | reviewed |
-| CAN-C3 | C3 | 5 | 5/5 | reviewed |
-| CAN-C4 | C4 | 14 | 13/14 | reviewed (司马光砸缸 open) |
-| CAN-C5 | C5 | 13 | 13/13 | reviewed |
-| CAN-C6 | C6 | 10 | 10/10 | reviewed |
-| CAN-C7 | C7 | 5 | 5/5 | reviewed |
+| CAN-C2 | C2 | 14 | 6/14 | in progress (through 夸父逐日) |
+| CAN-C3 | C3 | 5 | 0/5 | todo |
+| CAN-C4 | C4 | 14 | 0/14 | todo |
+| CAN-C5 | C5 | 13 | 0/13 | todo |
+| CAN-C6 | C6 | 10 | 0/10 | todo |
+| CAN-C7 | C7 | 5 | 0/5 | todo |
 
-> 80/81 canon covers picked. Remaining: **司马光砸缸** (C4) — re-run `imagespike` with
-> `--decided data/canon/canon-cover-decisions.json` to review only the open cover. Chinese-title
-> search (added CP-09c) now surfaces on-concept legend imagery filed under the Chinese name.
-> Next: per-image license sign-off, then `zhuwenctl images curate` into the packs.
+> 26/81 canon covers reviewed (all C1 + C2 through 夸父逐日). Resume with
+> `--decided data/canon/canon-cover-decisions.json` to review only the remaining 55, starting
+> at the next C2 legend (大禹治水). Chinese-title search (added CP-09c) now surfaces on-concept
+> legend imagery filed under the Chinese name. Next: license sign-off + `zhuwenctl images curate`.
 
 ### Authored spine + B1 packs
 | Batch | Scope | Count | Status |
