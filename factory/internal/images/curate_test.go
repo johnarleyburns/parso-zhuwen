@@ -228,3 +228,36 @@ func TestJoinResultWithFoundations(t *testing.T) {
 }
 
 func intPtr(i int) *int { return &i }
+
+// --- CP-09c Part D: per-image license sign-off gate (I4/FR-11.2) ---
+
+func TestDecisionsToImagesSignedOffRequiresSignOff(t *testing.T) {
+	decisions := []ImageDecision{
+		{Word: "水", Simp: "水", Decision: "File:Water.jpg", Status: "commons"},
+	}
+	wordIDs := map[string]int{"水": 1}
+
+	// Unsigned provenance → rejected on the ship-readiness path.
+	unsigned := ProvenanceStore{
+		"File:Water.jpg": {File: "File:Water.jpg", License: "CC0", LicenseURL: "https://creativecommons.org/publicdomain/zero/1.0/", Author: "Alice", SourceURL: "https://commons.wikimedia.org/wiki/File:Water.jpg", RetrievedAt: "2026-07-01", W: 2000, H: 1500},
+	}
+	if _, err := DecisionsToImagesSignedOff(decisions, unsigned, wordIDs); err == nil {
+		t.Fatal("expected rejection: unsigned cover cannot graduate off fixture stand-in")
+	}
+	// Non-strict path still accepts (staging).
+	if _, err := DecisionsToImages(decisions, unsigned, wordIDs); err != nil {
+		t.Fatalf("non-strict path should accept staged decisions: %v", err)
+	}
+
+	// Signed-off provenance → accepted.
+	signed := ProvenanceStore{
+		"File:Water.jpg": {File: "File:Water.jpg", License: "CC0", LicenseURL: "https://creativecommons.org/publicdomain/zero/1.0/", Author: "Alice", SourceURL: "https://commons.wikimedia.org/wiki/File:Water.jpg", RetrievedAt: "2026-07-01", W: 2000, H: 1500, SignedOff: true, SignedBy: "owner", SignedAt: "2026-07-07"},
+	}
+	imgs, err := DecisionsToImagesSignedOff(decisions, signed, wordIDs)
+	if err != nil {
+		t.Fatalf("signed-off cover must be accepted: %v", err)
+	}
+	if len(imgs) != 1 || imgs[0].License != "CC0" {
+		t.Fatalf("images = %+v", imgs)
+	}
+}

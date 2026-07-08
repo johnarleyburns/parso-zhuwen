@@ -93,6 +93,13 @@ type Provenance struct {
 	SourceURL   string
 	RetrievedAt string
 	W, H        int
+	// SignedOff records the owner's per-image license verification on the Commons page
+	// (CC-BY/SA attribution is a legal obligation, FR-11.2). CP-09c Part D requires this be
+	// recorded, not assumed (I4): DecisionsToImagesSignedOff rejects an unsigned cover so a
+	// story cannot graduate off its fixture stand-in without a human sign-off.
+	SignedOff bool
+	SignedBy  string
+	SignedAt  string
 }
 
 // ProvenanceStore maps Commons File: titles to provenances. In production this is
@@ -111,12 +118,27 @@ func (ps ProvenanceStore) Lookup(title string) *Provenance {
 // DecisionsToImages converts curated decisions + provenances into pack.Image records
 // suitable for the pipeline join stage. wordIDMap maps word keys to lexicon word IDs.
 func DecisionsToImages(decisions []ImageDecision, prov ProvenanceStore, wordIDMap map[string]int) ([]pack.Image, error) {
+	return decisionsToImages(decisions, prov, wordIDMap, false)
+}
+
+// DecisionsToImagesSignedOff is the CP-09c Part D ship-readiness path: it additionally
+// requires that every chosen image carry a recorded per-image license sign-off (I4/FR-11.2).
+// An unsigned image is rejected, so a story/pack cannot graduate off its fixture stand-in
+// without a human having verified the license on the Commons page.
+func DecisionsToImagesSignedOff(decisions []ImageDecision, prov ProvenanceStore, wordIDMap map[string]int) ([]pack.Image, error) {
+	return decisionsToImages(decisions, prov, wordIDMap, true)
+}
+
+func decisionsToImages(decisions []ImageDecision, prov ProvenanceStore, wordIDMap map[string]int, requireSignOff bool) ([]pack.Image, error) {
 	var imgs []pack.Image
 	for _, d := range decisions {
 		title := d.CommonsTitle()
 		p := prov.Lookup(title)
 		if p == nil {
 			return nil, fmt.Errorf("image: provenance not found for decision %q (word %s)", title, d.WordKey())
+		}
+		if requireSignOff && !p.SignedOff {
+			return nil, fmt.Errorf("image: %q (word %s) has no recorded license sign-off (FR-11.2/I4)", title, d.WordKey())
 		}
 		wid := wordIDMap[d.WordKey()]
 		if wid == 0 {

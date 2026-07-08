@@ -42,6 +42,8 @@ func main() {
 		err = cmdBuild(os.Args[2:])
 	case "verify":
 		err = cmdVerify(os.Args[2:])
+	case "budget":
+		err = cmdBudget(os.Args[2:])
 	case "images":
 		err = cmdImages(os.Args[2:])
 	case "keygen":
@@ -87,6 +89,8 @@ usage:
                     [--key <file>]  sign with a minisign secret key
                     [--devkey]      sign with the reproducible DEV fixture key
   zhuwenctl verify <pack> --pub <f> verify signature + hashes + I6 + lexicon_version
+  zhuwenctl budget [--pack <zpack>] measure NFR-3 (download) / NFR-4 (on-disk) sizes (CP-09c)
+                                    (no --pack: measure the fixture pack)
   zhuwenctl keygen --out <prefix>   write <prefix>.pub / <prefix>.key (minisign)
   zhuwenctl images fetch            query Wikimedia Commons (--live required; network)
     --inventory <tsv> --out <dir> [--n <k>]
@@ -517,6 +521,41 @@ func cmdVerify(args []string) error {
 	fmt.Printf("OK: pack %s v%s, lexicon %s, schema %d, %d files\n",
 		man.ID, man.Semver, man.LexiconVersion, man.SchemaVersion, len(man.Files))
 	return nil
+}
+
+// cmdBudget measures a pack's NFR-3 (download) / NFR-4 (on-disk) size figures (CP-09c
+// Part B). With no --pack it measures the in-memory fixture pack; with --pack it measures a
+// built .zpack on disk from its extracted file set.
+func cmdBudget(args []string) error {
+	packPath := flagValue(args, "--pack")
+	if packPath == "" {
+		pk, err := runFixturePipeline()
+		if err != nil {
+			return err
+		}
+		b, err := pack.MeasureBudget(pk)
+		if err != nil {
+			return err
+		}
+		printBudget(b)
+		return pack.CheckBudget(b)
+	}
+	info, err := os.Stat(packPath)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("pack %s: %d B on disk (zip)\n", packPath, info.Size())
+	if int(info.Size()) > pack.MaxDownloadBytes {
+		return fmt.Errorf("NFR-3: pack %d B exceeds %d B download budget", info.Size(), pack.MaxDownloadBytes)
+	}
+	fmt.Printf("OK: within NFR-3 download budget (%d B)\n", pack.MaxDownloadBytes)
+	return nil
+}
+
+func printBudget(b pack.Budget) {
+	fmt.Printf("budget: download=%d B  on-disk=%d B  (audio=%d image=%d sqlite=%d other=%d)\n",
+		b.DownloadBytes, b.OnDiskBytes, b.AudioBytes, b.ImageBytes, b.SQLiteBytes, b.OtherBytes)
+	fmt.Printf("  NFR-3 download budget %d B; NFR-4 on-disk budget %d B\n", pack.MaxDownloadBytes, pack.MaxOnDiskBytes)
 }
 
 func cmdKeygen(args []string) error {
