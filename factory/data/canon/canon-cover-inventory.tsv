@@ -1,0 +1,85 @@
+# Canon story-cover image inventory (CP-09c Part D, B-4). One cover per canon story.
+# columns: title_zh<TAB>canon_id<TAB>search_term(en)<TAB>set(tier)<TAB>abstract
+# title_zh is the review key (--decided skips by it); search_term drives the Commons query.
+# abstract=1 -> fetch --n-abstract (default 20) candidates instead of --n (default 10).
+守株待兔	C1-shouzhudaitu	hare rabbit tree stump	C1	1
+拔苗助长	C1-bamiaozhuzhang	rice seedlings paddy field	C1	1
+画蛇添足	C1-huashetianzu	snake ink painting	C1
+嫦娥奔月	C2-change	full moon night sky	C2
+后羿射日	C2-houyishri	archer bow arrow	C2
+司马光砸缸	C4-simaguang	large ceramic water vat	C4
+曹冲称象	C4-caochong	elephant standing	C4
+龟兔赛跑	C5-guitusaipao	tortoise and hare	C5
+狼来了	C5-langlaile	shepherd boy sheep	C5
+北风与太阳	C5-beifengyutaiyang	sun and wind sky	C5
+掩耳盗铃	C1-yaneidaoling	bronze bell	C1	1
+亡羊补牢	C1-wangyangbulao	sheep pen fold	C1
+井底之蛙	C1-jingdizhiwa	frog in well	C1
+刻舟求剑	C1-kezhouqiujian	ancient chinese sword	C1
+叶公好龙	C1-yegonghaolong	chinese dragon carving	C1
+狐假虎威	C1-hujiahuwei	fox and tiger	C1	1
+塞翁失马	C1-saiwengshima	horse running free	C1	1
+杯弓蛇影	C1-beigongsheying	wine cup bronze	C1	1
+对牛弹琴	C1-duiniutanqin	ox water buffalo field	C1
+画龙点睛	C1-hualongdianjing	painted chinese dragon	C1	1
+杞人忧天	C1-qirenyoutian	sky clouds looking up	C1	1
+自相矛盾	C1-zixiangmaodun	spear and shield	C1	1
+东施效颦	C1-dongshixiaopin	woman frowning face	C1	1
+朝三暮四	C1-zhaosanmusi	monkey eating fruit	C1	1
+南辕北辙	C1-nanyuanbeizhe	horse cart carriage	C1	1
+鹬蚌相争	C1-yubangxiangzheng	snipe wading bird	C1
+郑人买履	C1-zhengrenmailv	straw sandals shoes	C1
+牛郎织女	C2-niulangzhinv	milky way stars night	C2
+女娲补天	C2-nvwabutian	colorful sky clouds	C2
+盘古开天	C2-pangukaitian	universe stars cosmos	C2	1
+夸父逐日	C2-kuafuzhuri	setting sun horizon	C2	1
+大禹治水	C2-dayuzhishui	river flood water	C2
+梁山伯与祝英台	C2-liangshanbozhuyingtai	two butterflies	C2
+孟姜女哭长城	C2-mengjiangnvkuchangcheng	great wall of china	C2
+八仙过海	C2-baxianguohai	sea waves ocean	C2
+哪吒闹海	C2-nezhanohai	sea dragon waves	C2
+白蛇传	C2-baishezhuan	white snake	C2
+精卫填海	C2-jingweitianhai	bird carrying stone	C2	1
+钟馗捉鬼	C2-zhongkuizhuogui	chinese deity mask	C2
+愚公移山	C3-yugongyishan	mountain range	C3
+盲人摸象	C3-mangrenmoxiang	elephant	C3
+老马识途	C3-laomashitu	horse walking path	C3
+螳臂当车	C3-tangbidangche	praying mantis	C3	1
+黔驴技穷	C3-qianlvjiqiong	donkey	C3	1
+负荆请罪	C4-fujingqingzui	thorn branches	C4	1
+完璧归赵	C4-wanbiguizhao	jade bi disc	C4
+指鹿为马	C4-zhiluweima	deer stag	C4	1
+纸上谈兵	C4-zhishangtanbing	ancient scroll map	C4	1
+卧薪尝胆	C4-woxinchangdan	firewood brushwood	C4	1
+三顾茅庐	C4-sangumaolu	thatched hut cottage	C4
+望梅止渴	C4-wangmeizhike	plum fruit tree	C4	1
+破釜沉舟	C4-pofuchenzhou	wooden boat river	C4	1
+四面楚歌	C4-simianchuge	ancient chinese soldiers	C4	1
+孔融让梨	C4-kongrongrangli	pears on plate	C4
+一鸣惊人	C4-yimingjingren	bird singing perched	C4	1
+悬梁刺股	C4-xuanliangcigu	oil lamp books night	C4	1
+狐狸和葡萄	C5-huliheputao	fox and grapes	C5
+乌鸦喝水	C5-wuyaheshui	crow and pitcher	C5
+蚂蚁和蚱蜢	C5-mayihezhame	ant and grasshopper	C5
+狮子和老鼠	C5-shizihelaoshu	lion and mouse	C5
+狐狸和乌鸦	C5-hulihewuyu	fox and crow	C5
+披着羊皮的狼	C5-pizheyangpidelang	wolf sheep	C5	1
+下金蛋的鹅	C5-xiajindandee	goose golden egg	C5
+农夫与蛇	C5-nongfuyushe	snake in snow	C5
+老鼠开会	C5-laoshukaihui	mice and cat	C5
+狗和影子	C5-gouheyingzi	dog with bone	C5
+神笔马良	C6-shenbimaliang	chinese calligraphy brush	C6
+田螺姑娘	C6-tianluoguniang	river snail	C6
+阿凡提的故事	C6-afantidegushi	man riding donkey	C6
+猎人海力布	C6-lierenhailibu	hunter mountain	C6
+十二生肖	C6-shiershengxiao	chinese zodiac animals	C6
+宝莲灯	C6-baoliandeng	lotus lantern	C6
+济公	C6-jigong	buddhist monk	C6
+孟母三迁	C6-mengmusanqian	mother child studying	C6	1
+年的传说	C6-niandechuanshuo	chinese new year firecrackers	C6
+老虎拜师	C6-laohubaishi	tiger and cat	C6
+丑小鸭	C7-chouxiaoya	ugly duckling swan	C7
+皇帝的新装	C7-huangdidexinzhuang	emperor procession	C7
+卖火柴的小女孩	C7-maihuochaidexiaonvhai	matches in snow	C7
+白雪公主	C7-baixuegongzhu	red apple forest	C7
+小红帽	C7-xiaohongmao	red hooded cloak forest	C7

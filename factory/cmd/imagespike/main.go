@@ -32,20 +32,23 @@ const userAgent = "Zhuwen-Factory-imagespike/0.1 (https://github.com/johnarleybu
 // this spike — Commons file search suffices — but kept so the field can age into
 // internal/images).
 var f0Seeds = []Seed{
-	{"水", "shuǐ", "water", "water", "seeds"},
-	{"狗", "gǒu", "dog", "dog", "seeds"},
-	{"猫", "māo", "cat", "cat", "seeds"},
-	{"宝宝", "bǎobao", "baby", "infant", "seeds"},
-	{"人", "rén", "person", "person", "seeds"},
-	{"山", "shān", "mountain", "mountain", "seeds"},
-	{"火", "huǒ", "fire", "fire", "seeds"},
-	{"鱼", "yú", "fish", "fish", "seeds"},
-	{"米饭", "mǐfàn", "cooked rice", "cooked rice", "seeds"},
-	{"茶", "chá", "tea", "tea", "seeds"},
-	{"车", "chē", "car", "car", "seeds"},
+	{Simp: "水", Pinyin: "shuǐ", En: "water", WD: "water", Set: "seeds"},
+	{Simp: "狗", Pinyin: "gǒu", En: "dog", WD: "dog", Set: "seeds"},
+	{Simp: "猫", Pinyin: "māo", En: "cat", WD: "cat", Set: "seeds"},
+	{Simp: "宝宝", Pinyin: "bǎobao", En: "baby", WD: "infant", Set: "seeds"},
+	{Simp: "人", Pinyin: "rén", En: "person", WD: "person", Set: "seeds"},
+	{Simp: "山", Pinyin: "shān", En: "mountain", WD: "mountain", Set: "seeds"},
+	{Simp: "火", Pinyin: "huǒ", En: "fire", WD: "fire", Set: "seeds"},
+	{Simp: "鱼", Pinyin: "yú", En: "fish", WD: "fish", Set: "seeds"},
+	{Simp: "米饭", Pinyin: "mǐfàn", En: "cooked rice", WD: "cooked rice", Set: "seeds"},
+	{Simp: "茶", Pinyin: "chá", En: "tea", WD: "tea", Set: "seeds"},
+	{Simp: "车", Pinyin: "chē", En: "car", WD: "car", Set: "seeds"},
 }
 
-type Seed struct{ Simp, Pinyin, En, WD, Set string }
+type Seed struct {
+	Simp, Pinyin, En, WD, Set string
+	Abstract                  bool // hard-to-photograph term: fetch more candidates for review
+}
 
 type Candidate struct {
 	rank       int
@@ -79,8 +82,9 @@ type SetGroup struct {
 
 func main() {
 	out := flag.String("out", "/tmp/opencode/zhuwen-image-review", "output dir for review sheet + picks.json")
-	n := flag.Int("n", 6, "candidates per word (pick-of-N)")
-	inv := flag.String("inventory", "", "TSV inventory (simp\\tpinyin\\ten\\tset\\tlevel); default = built-in F0 seeds")
+	n := flag.Int("n", 10, "candidates per word (pick-of-N)")
+	nAbstract := flag.Int("n-abstract", 20, "candidates for words flagged abstract in the inventory (5th column = 1/true/abstract)")
+	inv := flag.String("inventory", "", "TSV inventory (simp\\tpinyin\\ten\\tset[\\tabstract]); default = built-in F0 seeds")
 	decided := flag.String("decided", "", "comma-separated decisions JSON file(s); words already decided are skipped")
 	render := flag.String("render", "", "render HTML from an existing picks.json (no network) and exit")
 	flag.Parse()
@@ -134,8 +138,16 @@ func main() {
 
 	var results []WordResult
 	for i, s := range seeds {
-		fmt.Fprintf(os.Stderr, "· [%d/%d] %s (%s)…\n", i+1, len(seeds), s.Simp, s.En)
-		cands := gather(s, *n)
+		want := *n
+		if s.Abstract {
+			want = *nAbstract
+		}
+		tag := ""
+		if s.Abstract {
+			tag = " [abstract]"
+		}
+		fmt.Fprintf(os.Stderr, "· [%d/%d] %s (%s)%s…\n", i+1, len(seeds), s.Simp, s.En, tag)
+		cands := gather(s, want)
 		for j := range cands {
 			gate(cands[j])
 		}
@@ -189,8 +201,10 @@ func groupBySet(results []WordResult) []SetGroup {
 	return groups
 }
 
-// loadDecided reads decisions JSON file(s) ([{word, decision}]) and returns the set of
+// loadDecided reads decisions JSON file(s) ([{word|simp, decision}]) and returns the set of
 // words that already have a non-empty, non-reject decision — those are skipped on re-run.
+// Files may key the word as either "word" or "simp" (the two formats in-repo); both are
+// matched against the inventory's Simp field so either export skips correctly.
 func loadDecided(paths []string) (map[string]bool, error) {
 	done := map[string]bool{}
 	for _, p := range paths {
@@ -204,21 +218,28 @@ func loadDecided(paths []string) (map[string]bool, error) {
 		}
 		var recs []struct {
 			Word     string `json:"word"`
+			Simp     string `json:"simp"`
 			Decision string `json:"decision"`
 		}
 		if err := json.Unmarshal(b, &recs); err != nil {
 			return nil, fmt.Errorf("%s: %w", p, err)
 		}
 		for _, r := range recs {
-			if r.Word != "" && r.Decision != "" && r.Decision != "__reject__" {
-				done[r.Word] = true
+			key := r.Simp
+			if key == "" {
+				key = r.Word
+			}
+			if key != "" && r.Decision != "" && r.Decision != "__reject__" {
+				done[key] = true
 			}
 		}
 	}
 	return done, nil
 }
 
-// loadInventory reads a TSV: simp<TAB>pinyin<TAB>en<TAB>set[<TAB>level]. '#' lines ignored.
+// loadInventory reads a TSV: simp<TAB>pinyin<TAB>en<TAB>set[<TAB>abstract]. '#' lines
+// ignored. The optional 5th column marks a hard-to-photograph word (1/true/abstract/y) so
+// more candidates are fetched for it.
 func loadInventory(path string) ([]Seed, error) {
 	b, err := os.ReadFile(path)
 	if err != nil {
@@ -237,6 +258,12 @@ func loadInventory(path string) ([]Seed, error) {
 		s := Seed{Simp: f[0], Pinyin: f[1], En: f[2]}
 		if len(f) > 3 {
 			s.Set = f[3]
+		}
+		if len(f) > 4 {
+			switch strings.ToLower(strings.TrimSpace(f[4])) {
+			case "1", "true", "abstract", "y", "yes":
+				s.Abstract = true
+			}
 		}
 		seeds = append(seeds, s)
 	}
