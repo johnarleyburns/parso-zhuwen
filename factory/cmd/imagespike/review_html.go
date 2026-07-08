@@ -14,6 +14,8 @@ const reviewHTML = `<!doctype html>
  .word{background:#fff;margin:18px 22px;border:1px solid #e6e2dc;border-radius:10px;overflow:hidden}
  .word h2{margin:0;padding:12px 16px;background:#f3efe9;border-bottom:1px solid #e6e2dc;font-size:16px}
  .word h2 .hz{font-size:26px;margin-right:10px} .word h2 .py{color:#7a1f1f;margin-right:8px} .word h2 .en{color:#666;font-weight:400}
+ .word .desc{padding:10px 16px;background:#fffdf8;border-bottom:1px solid #efe8dc;color:#3a3a3a;font-size:14px;line-height:1.55}
+ .word .desc .q{color:#7a1f1f;font-weight:600} .word .desc .searched{color:#888;font-size:12px;display:block;margin-top:4px}
  .sethdr{margin:26px 22px 4px;font-size:20px;color:#7a1f1f;border-bottom:2px solid #e0b0b0;padding-bottom:4px;text-transform:capitalize}
  .grid{display:flex;flex-wrap:wrap;gap:14px;padding:16px}
  .cand{width:220px;border:2px solid #eee;border-radius:8px;padding:8px;cursor:pointer}
@@ -35,6 +37,7 @@ const reviewHTML = `<!doctype html>
 {{range $w := .Words}}
 <section class="word" data-word="{{.Simp}}">
  <h2><span class="hz">{{.Simp}}</span><span class="py">{{.Pinyin}}</span><span class="en">{{.En}}</span></h2>
+ {{if .Desc}}<div class="desc">{{.Desc}}<span class="searched">🔍 searched Commons for: <span class="q">{{.En}}</span> — pick the image that best represents this story, or paste your own below.</span></div>{{end}}
  {{if .Best}}
  <div class="grid">
    {{with .Best}}
