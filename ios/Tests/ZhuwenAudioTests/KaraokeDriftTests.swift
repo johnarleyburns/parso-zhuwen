@@ -92,4 +92,36 @@ final class KaraokeDriftTests: XCTestCase {
         let b = maxDrift(track: track, speed: 1.0, uiTickMs: 50)
         XCTAssertEqual(a, b)
     }
+
+    // MARK: - CP-09c: re-verify drift against a *real-render* alignment sample.
+
+    /// Loads the vendored real-render alignment fixture (`ios/Fixtures/real-render-alignment.json`)
+    /// — a ~3-minute story whose word timings come from the real CosyVoice + forced-aligner path
+    /// (non-uniform per-word durations and variable sentence pauses, unlike the synthesized track).
+    private func realRenderTrack() throws -> AlignmentTrack {
+        let url = Fixtures.dir.appendingPathComponent("real-render-alignment.json")
+        let data = try Data(contentsOf: url)
+        struct Row: Decodable { let i: Int; let t0: Int; let t1: Int }
+        let rows = try JSONDecoder().decode([Row].self, from: data)
+        return AlignmentTrack(rows.map { AlignmentToken(tokenIdx: $0.i, t0ms: $0.t0, t1ms: $0.t1) })
+    }
+
+    func testRealRenderTrackSpansThreeMinutes() throws {
+        let track = try realRenderTrack()
+        XCTAssertGreaterThanOrEqual(track.durationMillis, 180_000)
+        XCTAssertGreaterThan(track.tokenCount, 400)
+    }
+
+    /// CP-09c acceptance: with the *real* CosyVoice timings (not the synthesized track), highlight
+    /// drift stays under the 120 ms budget at every supported speed. This is the pre-push gate that
+    /// the karaoke feature still holds once real audio replaces the fixture stub.
+    func testHighlightDriftUnder120msWithRealRenderAudio() throws {
+        let track = try realRenderTrack()
+        let uiTickMs = 50.0 // conservative 20 Hz worst case
+        for speed in [0.6, 0.8, 1.0, 1.2] {
+            let drift = maxDrift(track: track, speed: speed, uiTickMs: uiTickMs)
+            XCTAssertGreaterThan(drift, 0, "no lag observed at \(speed)× — not exercising drift")
+            XCTAssertLessThan(drift, 120, "real-audio drift \(drift) ms at \(speed)× exceeds the 120 ms budget")
+        }
+    }
 }

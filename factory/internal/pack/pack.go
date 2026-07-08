@@ -192,12 +192,34 @@ func Build(p *Pack, outPath string, priv minisign.PrivateKey) error {
 	if err := p.validateI6(); err != nil {
 		return err
 	}
-	dbBytes, err := p.buildSQLite()
+	files, err := p.assembleFiles()
 	if err != nil {
 		return err
 	}
 
-	// Assemble file set: content.sqlite + image files.
+	man := manifestFor(p, files)
+	manBytes, err := json.MarshalIndent(man, "", "  ")
+	if err != nil {
+		return err
+	}
+	// NFR-3/NFR-4 (CP-09c): a pack that breaches the size budget must not build. The
+	// assertion is over the real assembled file set (audio + images + sqlite + manifest),
+	// so an over-weight pack fails here rather than shipping.
+	if err := CheckBudget(measureFiles(files, manBytes)); err != nil {
+		return err
+	}
+	sig := minisign.Sign(priv, manBytes, fmt.Sprintf("pack %s v%s lexicon %s", p.ID, p.Semver, p.LexiconVersion))
+	return writePack(outPath, files, manBytes, sig)
+}
+
+// assembleFiles builds the content file set (content.sqlite + image files + story audio) that
+// goes into the zip, generating stub bytes for any nil image/audio (fixture tiers). Shared by
+// Build and MeasureBudget so the size budget is measured over exactly what ships.
+func (p *Pack) assembleFiles() (map[string][]byte, error) {
+	dbBytes, err := p.buildSQLite()
+	if err != nil {
+		return nil, err
+	}
 	files := map[string][]byte{"content.sqlite": dbBytes}
 	for _, im := range p.Images {
 		data := im.Data
@@ -207,7 +229,7 @@ func Build(p *Pack, outPath string, priv minisign.PrivateKey) error {
 		files[im.File] = data
 	}
 	// Story audio (I3: pregenerated in the factory). Stub bytes at fixture tiers; real
-	// CosyVoice-rendered Opus replaces them at CP-09. Hashed into the signed manifest.
+	// CosyVoice-rendered Opus replaces them at CP-09c. Hashed into the signed manifest.
 	for _, s := range p.Stories {
 		if s.AudioFile == "" {
 			continue
@@ -218,14 +240,7 @@ func Build(p *Pack, outPath string, priv minisign.PrivateKey) error {
 		}
 		files[s.AudioFile] = data
 	}
-
-	man := manifestFor(p, files)
-	manBytes, err := json.MarshalIndent(man, "", "  ")
-	if err != nil {
-		return err
-	}
-	sig := minisign.Sign(priv, manBytes, fmt.Sprintf("pack %s v%s lexicon %s", p.ID, p.Semver, p.LexiconVersion))
-	return writePack(outPath, files, manBytes, sig)
+	return files, nil
 }
 
 // manifestFor computes the manifest (content-file hashes) for a pack.

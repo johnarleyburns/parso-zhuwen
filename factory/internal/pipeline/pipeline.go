@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/parso/zhuwen-factory/internal/align"
 	"github.com/parso/zhuwen-factory/internal/brief"
 	"github.com/parso/zhuwen-factory/internal/canon"
 	"github.com/parso/zhuwen-factory/internal/gate"
@@ -17,6 +16,7 @@ import (
 	"github.com/parso/zhuwen-factory/internal/pack"
 	"github.com/parso/zhuwen-factory/internal/repair"
 	"github.com/parso/zhuwen-factory/internal/segment"
+	"github.com/parso/zhuwen-factory/internal/tts"
 )
 
 // Rejected records a brief that failed the gate, with reasons (repair-loop input, §4.4).
@@ -59,12 +59,19 @@ type Config struct {
 	// CP-09b: use the repair loop with constrained provider for production generation.
 	UseRepairLoop bool
 	RepairLex     *lexicon.Lexicon // lexicon for token-level name-and-replace repair
+
+	// CP-09c: TTS render stage config. Zero value = deterministic stub (hermetic, CI).
+	// Set Mode=tts.ModeReal (with PythonBin/Script) to shell out to local CosyVoice.
+	TTS tts.Config
 }
 
 // Run executes the pipeline over every canon entry.
 func Run(cfg Config) (Result, error) {
 	if cfg.Detector == nil {
 		cfg.Detector = grammar.MarkerDetector{}
+	}
+	if cfg.TTS.SampleRateHz == 0 {
+		cfg.TTS = tts.DefaultConfig()
 	}
 	seg := segment.New(cfg.Lexicon.DictEntries(), cfg.Propers)
 	band := gate.Band{Known: cfg.Band.Known, Frontier: cfg.Band.Frontier, Grammar: cfg.Band.Grammar}
@@ -95,7 +102,10 @@ func Run(cfg Config) (Result, error) {
 		storyID := fmt.Sprintf("%s-%s", e.CanonID, cfg.Band.Band)
 		imageID := "img-" + e.CanonID
 
-		alignRows, _ := align.Align(tokens, align.DefaultConfig())
+		rendered, err := tts.Render(tokens, storyID, cfg.TTS)
+		if err != nil {
+			return Result{}, fmt.Errorf("tts render %s: %w", storyID, err)
+		}
 		audioFile := fmt.Sprintf("audio/%s.opus", storyID)
 
 		if !imgSeen[imageID] {
@@ -138,7 +148,8 @@ func Run(cfg Config) (Result, error) {
 			CoverImageID:   imageID,
 			Fixture:        story.Fixture,
 			AudioFile:      audioFile,
-			Alignment:      alignRows,
+			AudioData:      rendered.OpusBytes,
+			Alignment:      rendered.Timings,
 		})
 		res.Questions = append(res.Questions, stubQuestions(storyID, cfg.Band.Band)...)
 	}
@@ -213,7 +224,10 @@ func runRepairLoop(cfg Config, seg *segment.Segmenter, band gate.Band, maxID int
 		storyID := fmt.Sprintf("%s-%s", e.CanonID, cfg.Band.Band)
 		imageID := "img-" + e.CanonID
 
-		alignRows, _ := align.Align(tokens, align.DefaultConfig())
+		rendered, err := tts.Render(tokens, storyID, cfg.TTS)
+		if err != nil {
+			return Result{}, fmt.Errorf("tts render %s: %w", storyID, err)
+		}
 		audioFile := fmt.Sprintf("audio/%s.opus", storyID)
 
 		if !imgSeen[imageID] {
@@ -256,7 +270,8 @@ func runRepairLoop(cfg Config, seg *segment.Segmenter, band gate.Band, maxID int
 			CoverImageID:   imageID,
 			Fixture:        lastCandidate.Fixture,
 			AudioFile:      audioFile,
-			Alignment:      alignRows,
+			AudioData:      rendered.OpusBytes,
+			Alignment:      rendered.Timings,
 		})
 		res.Questions = append(res.Questions, stubQuestions(storyID, cfg.Band.Band)...)
 	}

@@ -78,3 +78,42 @@ Every canon source's PD status and every shipped image license is re-verified in
 a `pd_rationale` field for every entry (FR-12.2). Image licensing is gated through the §8A
 Commons pipeline (`internal/images`). See the license memo for per-source PD rationale and
 per-image license attribution records.
+
+## CosyVoice TTS render (CP-09c, `internal/tts`) — BUILD-TIME ONLY
+
+Story narration audio + word-level alignment are produced at build time by `internal/tts`.
+The stage is **never linked into the app** (I2/I3): audio + timings are pregenerated and
+shipped in the `.zpack`; the app only plays and highlights.
+
+### Two modes
+- **Stub (default, hermetic):** deterministic, no network, no venv — the CI/dev path. Timings
+  come from the `internal/align` character-rate model; audio bytes are a deterministic
+  keystream. This is what `make ci` and `make fixtures` use.
+- **Real (`tts.ModeReal`):** shells out to a local **CosyVoice 3.0** render + forced aligner
+  on Apple Silicon (MPS), build-time only, **$0** (no hosted API). Emits **24 kbps mono Opus**
+  (the NFR-4 budget basis) and real word timings that replace the stub under the identical
+  `pack.AlignToken` contract.
+
+```sh
+# Real render (owner machine; requires the CosyVoice venv + a licensed voice model — B-5):
+#   the pipeline drives it via pipeline.Config.TTS = tts.Config{Mode: tts.ModeReal,
+#   PythonBin: "./venv/bin/python", Script: "scripts/cosyvoice_render.py", ...}
+# The script reads a JSON job (tokens + sentence indices) and emits {audio_path, duration_ms,
+# timings[]} on stdout; timings must satisfy the AlignToken contract (tts.ValidateTimings).
+```
+
+### Voice / model provenance (record before the real stage ships — blockers.md B-5)
+| field | value |
+|-------|-------|
+| render tool | CosyVoice 3.0 (local, Apple Silicon MPS) |
+| model id | _(owner to record)_ |
+| voice id | _(owner to record)_ |
+| sample rate / bitrate | 24000 Hz mono / 24 kbps Opus |
+| voice-model license | _(owner to verify: rendered audio redistributable in a paid App Store app, parallel to B-1's HSK sign-off)_ |
+
+### Size figures (NFR-3/NFR-4, `zhuwenctl budget`)
+Sizes are **asserted, not assumed** (I4): `pack.MeasureBudget` computes the download (NFR-3
+≤ 90 MB) and on-disk (NFR-4 ≤ 250 MB) figures from the real file set, and `Build` fails on a
+breach. 24 kbps mono Opus ≈ 180 KB/min, so a ~3-minute story ≈ 540 KB of audio. Run
+`./bin/zhuwenctl budget` for the current fixture-pack figures.
+

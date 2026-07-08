@@ -76,3 +76,29 @@ linked Commons page before approving (CC-BY/SA attribution is a legal obligation
 
 The full launch inventory (~570 images, §8A.1) is the same workflow at scale (owner runs the TUI /
 review sheet per batch). CI never takes the network path (Commons is anonymous, no secret; I2).
+
+### CP-09c status: scaling to ~570 (the schedule long pole)
+F0 (11 words) is reviewed; `f0-image-decisions.json` is committed. CP-09c Part D
+(`plans/cp-09c-plan.md`) drives the remaining inventory — the 81 canon covers + A1–A2 authored spine +
+B1 packs — batch-by-batch through the same `imagespike → decisions → images curate` loop, tracked in
+`plans/cp-09c-image-inventory.md`. The **per-image license sign-off is now machine-recorded**:
+`images.Provenance{SignedOff,SignedBy,SignedAt}` + `images.DecisionsToImagesSignedOff` reject an
+unsigned cover, so a story cannot graduate off its fixture stand-in without a human having verified
+the license on the Commons page (I4/FR-11.2). The ~570-image batching plan and per-batch status
+ladder are in `plans/cp-09c-image-inventory.md`; F0 batches are marked signed-off (curated in
+CP-08a). **A canon entry / pack ships only when its cover is signed off** (`pack.validateI6` blocks
+imageless/AI/unprovenanced covers). This blocker must be **closed for the launch pack set** before
+CP-10 submission (`plans/cp-10-plan.md` Part 0 precondition).
+
+---
+
+## B-5 — CosyVoice tooling + voice-model licensing — ⏳ OWNER TO RECORD (CP-09c)
+
+The real TTS render (CP-09c Part A, `internal/tts`) runs **CosyVoice 3.0 locally on Apple
+Silicon (MPS), build-time only, $0** — not linked into the app (I2/I3), CI uses a deterministic
+stub encoder. The render stage is **shipped behind `tts.ModeReal`** (wired into
+`pipeline.Config.TTS`); the deterministic stub is the default and keeps CI/dev hermetic. Before
+the real stage produces shipped audio, the owner records the **render tool version + voice-model
+license** (confirming rendered audio may be redistributed in a paid App Store app, FR-11/§8A
+parallel to B-1's HSK sign-off) in `factory/data/README.md` (the provenance table is stubbed
+there awaiting the owner's entries).
