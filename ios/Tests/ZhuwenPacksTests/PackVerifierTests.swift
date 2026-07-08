@@ -52,7 +52,7 @@ final class PackVerifierTests: XCTestCase {
     func testStoreQueriesReturnContent() throws {
         let store = try Fixtures.store()
         let stories = try store.stories()
-        XCTAssertEqual(stories.count, 10)
+        XCTAssertEqual(stories.count, 81)
         XCTAssertTrue(stories.allSatisfy { !$0.coverImageID.isEmpty })
         XCTAssertTrue(stories.allSatisfy { !$0.body.isEmpty })
 
