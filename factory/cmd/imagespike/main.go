@@ -47,7 +47,8 @@ var f0Seeds = []Seed{
 
 type Seed struct {
 	Simp, Pinyin, En, WD, Set string
-	Abstract                  bool // hard-to-photograph term: fetch more candidates for review
+	Abstract                  bool   // hard-to-photograph term: fetch more candidates for review
+	Desc                      string // human-readable context (story title + plot) shown in the sheet
 }
 
 type Candidate struct {
@@ -237,9 +238,11 @@ func loadDecided(paths []string) (map[string]bool, error) {
 	return done, nil
 }
 
-// loadInventory reads a TSV: simp<TAB>pinyin<TAB>en<TAB>set[<TAB>abstract]. '#' lines
-// ignored. The optional 5th column marks a hard-to-photograph word (1/true/abstract/y) so
-// more candidates are fetched for it.
+// loadInventory reads a TSV: simp<TAB>pinyin<TAB>en<TAB>set[<TAB>abstract[<TAB>desc]].
+// '#' lines ignored. The optional 5th column marks a hard-to-photograph word
+// (1/true/abstract/y) so more candidates are fetched; the optional 6th column is a
+// human-readable description (e.g. story title + plot) shown in the review sheet so the
+// reviewer knows what the image is *for*.
 func loadInventory(path string) ([]Seed, error) {
 	b, err := os.ReadFile(path)
 	if err != nil {
@@ -264,6 +267,9 @@ func loadInventory(path string) ([]Seed, error) {
 			case "1", "true", "abstract", "y", "yes":
 				s.Abstract = true
 			}
+		}
+		if len(f) > 5 {
+			s.Desc = strings.TrimSpace(f[5])
 		}
 		seeds = append(seeds, s)
 	}
