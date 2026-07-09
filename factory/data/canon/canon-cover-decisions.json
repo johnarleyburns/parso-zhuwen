@@ -14,6 +14,39 @@
     "custom": true
   },
   {
+    "word": "嫦娥奔月",
+    "decision": "https://commons.wikimedia.org/wiki/File:Chang%27e_flees_to_the_moon_by_Tsukioka_Yoshitoshi.jpg",
+    "custom": true
+  },
+  {
+    "word": "后羿射日",
+    "decision": "File:Стрельба из лука на фестивале бурятской культуры «Алтаргана-2012».jpg"
+  },
+  {
+    "word": "司马光砸缸",
+    "decision": "https://commons.wikimedia.org/wiki/File:Unidentified_swimming_pool_-_DPLA_-_a4ea746ba30626a94609be4770dc01ab.jpg",
+    "custom": true
+  },
+  {
+    "word": "曹冲称象",
+    "decision": "https://commons.wikimedia.org/wiki/File:Elephant_swimming,_Botswana.jpg",
+    "custom": true
+  },
+  {
+    "word": "龟兔赛跑",
+    "decision": "File:The Tortoise and the Hare - Project Gutenberg etext 19993.jpg"
+  },
+  {
+    "word": "狼来了",
+    "decision": "https://commons.wikimedia.org/wiki/File:Wolf_attack!_(10492219086).jpg",
+    "custom": true
+  },
+  {
+    "word": "北风与太阳",
+    "decision": "https://commons.wikimedia.org/wiki/File:Ice_%26_sun_on_Gosaikunda_lake.jpg",
+    "custom": true
+  },
+  {
     "word": "掩耳盗铃",
     "decision": "File:Bellagio - campana in bronzo - 202109262220.jpg"
   },
@@ -92,15 +125,6 @@
     "custom": true
   },
   {
-    "word": "嫦娥奔月",
-    "decision": "https://commons.wikimedia.org/wiki/File:Chang%27e_flees_to_the_moon_by_Tsukioka_Yoshitoshi.jpg",
-    "custom": true
-  },
-  {
-    "word": "后羿射日",
-    "decision": "File:Стрельба из лука на фестивале бурятской культуры «Алтаргана-2012».jpg"
-  },
-  {
     "word": "牛郎织女",
     "decision": "File:035 Vertical panorama of the Milky Way during Perseids seen from Oeschinensee Photo by Giles Laurent.jpg"
   },
@@ -117,5 +141,139 @@
   {
     "word": "夸父逐日",
     "decision": "File:Sunset 2007-1.jpg"
+  },
+  {
+    "word": "大禹治水",
+    "decision": "File:Flooded building and tree trunk in the muddy water of the Mekong in Si Phan Don, Laos, September 2019.jpg"
+  },
+  {
+    "word": "梁山伯与祝英台",
+    "decision": "File:Two Butterflies Interacting (24228252502).jpg"
+  },
+  {
+    "word": "孟姜女哭长城",
+    "decision": "File:Badaling China Great-Wall-of-China-06.jpg"
+  },
+  {
+    "word": "八仙过海",
+    "decision": "File:八仙过海.jpg"
+  },
+  {
+    "word": "哪吒闹海",
+    "decision": "https://commons.wikimedia.org/wiki/File:%E4%B8%89%E5%A4%AA%E5%AD%90_Third_Prince_Nezhas_-_panoramio.jpg",
+    "custom": true
+  },
+  {
+    "word": "白蛇传",
+    "decision": "File:白蛇传201224.jpg"
+  },
+  {
+    "word": "精卫填海",
+    "decision": "https://commons.wikimedia.org/wiki/File:Crow_Pebble_Mahabalipuram_Sep24_A7CR_03101.jpg",
+    "custom": true
+  },
+  {
+    "word": "钟馗捉鬼",
+    "decision": "https://commons.wikimedia.org/wiki/File:%27Shoki,_the_Demon_Queller%27_by_Oishi_Yoshio.JPG",
+    "custom": true
+  },
+  {
+    "word": "负荆请罪",
+    "decision": "File:Thorns on a blackberry branch in Norrkila.jpg"
+  },
+  {
+    "word": "完璧归赵",
+    "decision": "File:Warring States Jade Bi Disc 01.jpg"
+  },
+  {
+    "word": "指鹿为马",
+    "decision": "File:Red deer stag in Margam Park - geograph.org.uk - 3793419.jpg"
+  },
+  {
+    "word": "纸上谈兵",
+    "decision": "https://commons.wikimedia.org/wiki/File:NPS_wargame_2018.jpg",
+    "custom": true
+  },
+  {
+    "word": "卧薪尝胆",
+    "decision": "https://commons.wikimedia.org/wiki/File:Woman_Carrying_Bundle_of_Wood,_Ethiopia.jpg",
+    "custom": true
+  },
+  {
+    "word": "三顾茅庐",
+    "decision": "File:Cantonese Assembly Hall of Hoi An (2024) - img 15.jpg"
+  },
+  {
+    "word": "望梅止渴",
+    "decision": "https://commons.wikimedia.org/wiki/File:Flowering-tree-plum-purple-smell_-_West_Virginia_-_ForestWander.jpg",
+    "custom": true
+  },
+  {
+    "word": "破釜沉舟",
+    "decision": "https://commons.wikimedia.org/wiki/File:Port_Bannatyne_Pier_and_sinking_boat_-_geograph.org.uk_-_705014.jpg",
+    "custom": true
+  },
+  {
+    "word": "四面楚歌",
+    "decision": "https://commons.wikimedia.org/wiki/File:Receiving_the_surrender_of_the_Yili.jpg",
+    "custom": true
+  },
+  {
+    "word": "孔融让梨",
+    "decision": "File:2017-04-20 Shouguang Vegetable SciTech Fair 3.004 anagoria.jpg"
+  },
+  {
+    "word": "一鸣惊人",
+    "decision": "File:Dickcissel Singing Out Across Karl E Mundt National Wildlife Refuge in South Dakota (52389965732).jpg"
+  },
+  {
+    "word": "悬梁刺股",
+    "decision": "https://commons.wikimedia.org/wiki/File:Hall_of_Quiet_Study_MET_DP807499.jpg",
+    "custom": true
+  },
+  {
+    "word": "狐狸和葡萄",
+    "decision": "https://commons.wikimedia.org/wiki/File:Stamp-russia2017-literature-heritage-of-russia-fables-block_(cropped_4).png",
+    "custom": true
+  },
+  {
+    "word": "乌鸦喝水",
+    "decision": "File:Wenceslas Hollar - The crow and the pitcher (State 2).jpg"
+  },
+  {
+    "word": "蚂蚁和蚱蜢",
+    "decision": "File:Unidentified grasshopper and unidentified ant, Taman Sari, Yogyakarta 01.jpg"
+  },
+  {
+    "word": "狮子和老鼠",
+    "decision": "File:Wenceslas Hollar - Lion and mouse (State 2).jpg"
+  },
+  {
+    "word": "狐狸和乌鸦",
+    "decision": "File:Fox and crow in a group MET DP-247-010.jpg"
+  },
+  {
+    "word": "披着羊皮的狼",
+    "decision": "File:A sheep bleating at an exhausted, hunted wolf. Etching by W- Wellcome V0021602.jpg"
+  },
+  {
+    "word": "下金蛋的鹅",
+    "decision": "https://commons.wikimedia.org/wiki/File:Golden_Goose_at_the_V%26A.jpg",
+    "custom": true
+  },
+  {
+    "word": "农夫与蛇",
+    "decision": "https://commons.wikimedia.org/wiki/File:Snake_charmer_in_Ouarzazate,_Morocco_by_Brahim_FARAJI.jpg",
+    "custom": true
+  },
+  {
+    "word": "老鼠开会",
+    "decision": "https://commons.wikimedia.org/wiki/File:Mice_in_council4.jpg",
+    "custom": true
+  },
+  {
+    "word": "狗和影子",
+    "decision": "https://commons.wikimedia.org/wiki/File:Page_39_illustration_to_Three_hundred_Aesop%27s_fables_(Townsend).png",
+    "custom": true
   }
 ]
