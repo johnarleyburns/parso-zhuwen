@@ -26,7 +26,7 @@ go run ./cmd/zhuwenctl images curate --decisions <batch>-image-decisions.json \
 | Segment | Source | Images | Notes |
 |---------|--------|--------|-------|
 | Foundations F0 | `data/foundations/f0-inventory.tsv` (217 concrete words) | ~217 | word covers; F0 reviewed batch committed (`f0-image-decisions.json`, 219 decisions) |
-| Canon covers | `internal/assets/canon.seed.json` (81 entries) | 81 | one cover per canon story (C1–C7 tiers) |
+| Canon covers | `internal/assets/canon.seed.json` (81 entries, **fully Chinese canon** — Aesop/Andersen/Grimm replaced by Chinese legend/myth/history/religion, keeping the 6 school-naturalized fables) | 81 | one cover per canon story (C1–C7 tiers) |
 | A1–A2 authored spine | `data/authored/a1-spine.json` | ~40 | one cover per authored story |
 | B1 packs | generated (rerank, CP-09b) | ~230 | one cover per generated story across B1 topics |
 | **Total** | | **~568** | tracked below |
@@ -62,15 +62,15 @@ Reviewed via `imagespike` against `data/canon/canon-cover-inventory.tsv`; decisi
 | CAN-C2 | C2 | 14 | 14/14 | reviewed |
 | CAN-C3 | C3 | 5 | 0/5 | todo |
 | CAN-C4 | C4 | 14 | 14/14 | reviewed |
-| CAN-C5 | C5 | 13 | 13/13 | reviewed |
+| CAN-C5 | C5 | 13 | 6/13 | in progress (6 kept fables done; 7 new Chinese stories to review) |
 | CAN-C6 | C6 | 10 | 0/10 | todo |
 | CAN-C7 | C7 | 5 | 0/5 | todo |
 
-> 61/81 canon covers reviewed (C1, C2, C4, C5 done). Remaining 20 = C3 (5) + C6 (10) +
-> C7 (5), resuming at 愚公移山. Continue with
-> `--decided data/canon/canon-cover-decisions.json`. Chinese-title search (added CP-09c)
-> surfaces on-concept legend imagery filed under the Chinese name. Next: license sign-off +
-> `zhuwenctl images curate`.
+> **Canon is now fully Chinese** — 12 non-Chinese stories (7 pure Aesop + 5 Andersen/Grimm)
+> replaced with Chinese legend/myth/history/religion tales at the same tier; the 6 fables
+> naturalized into Chinese schooling (龟兔赛跑, 狼来了, 北风与太阳, 乌鸦喝水, 狐狸和乌鸦, 农夫与蛇)
+> were kept. 54/81 covers reviewed; **27 remaining** = C3 (5) + 7 new C5 + C6 (10) + C7 (5),
+> resuming at 愚公移山. Continue with `--decided data/canon/canon-cover-decisions.json`.
 
 ### Authored spine + B1 packs
 | Batch | Scope | Count | Status |

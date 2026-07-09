@@ -232,48 +232,16 @@
     "custom": true
   },
   {
-    "word": "狐狸和葡萄",
-    "decision": "https://commons.wikimedia.org/wiki/File:Stamp-russia2017-literature-heritage-of-russia-fables-block_(cropped_4).png",
-    "custom": true
-  },
-  {
     "word": "乌鸦喝水",
     "decision": "File:Wenceslas Hollar - The crow and the pitcher (State 2).jpg"
-  },
-  {
-    "word": "蚂蚁和蚱蜢",
-    "decision": "File:Unidentified grasshopper and unidentified ant, Taman Sari, Yogyakarta 01.jpg"
-  },
-  {
-    "word": "狮子和老鼠",
-    "decision": "File:Wenceslas Hollar - Lion and mouse (State 2).jpg"
   },
   {
     "word": "狐狸和乌鸦",
     "decision": "File:Fox and crow in a group MET DP-247-010.jpg"
   },
   {
-    "word": "披着羊皮的狼",
-    "decision": "File:A sheep bleating at an exhausted, hunted wolf. Etching by W- Wellcome V0021602.jpg"
-  },
-  {
-    "word": "下金蛋的鹅",
-    "decision": "https://commons.wikimedia.org/wiki/File:Golden_Goose_at_the_V%26A.jpg",
-    "custom": true
-  },
-  {
     "word": "农夫与蛇",
     "decision": "https://commons.wikimedia.org/wiki/File:Snake_charmer_in_Ouarzazate,_Morocco_by_Brahim_FARAJI.jpg",
-    "custom": true
-  },
-  {
-    "word": "老鼠开会",
-    "decision": "https://commons.wikimedia.org/wiki/File:Mice_in_council4.jpg",
-    "custom": true
-  },
-  {
-    "word": "狗和影子",
-    "decision": "https://commons.wikimedia.org/wiki/File:Page_39_illustration_to_Three_hundred_Aesop%27s_fables_(Townsend).png",
     "custom": true
   }
 ]

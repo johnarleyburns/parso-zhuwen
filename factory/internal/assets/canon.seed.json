@@ -1610,30 +1610,31 @@
     "chengyu": "悬梁刺股"
   },
   {
-    "canon_id": "C5-huliheputao",
+    "canon_id": "C5-houzilaoyue",
     "tier": "C5",
-    "title_zh": "狐狸和葡萄",
-    "title_en": "The Fox and the Grapes",
+    "title_zh": "猴子捞月",
+    "title_en": "The Monkeys Scoop the Moon",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/狐狸和葡萄"
+      "https://zh.wikipedia.org/wiki/猴子捞月"
     ],
-    "pd_rationale": "Aesop's fable (Perry Index 15), antiquity; public-domain plot and PD translations only.",
+    "pd_rationale": "Buddhist parable recorded in the Mahāsāṃghika Vinaya (《摩诃僧祇律》, 5th c. translation); classical text in the public domain.",
     "beats": [
-      "A hungry fox spots a bunch of ripe grapes hanging from a vine.",
-      "He jumps repeatedly but cannot reach the grapes.",
-      "Exhausted and frustrated, he gives up.",
-      "He walks away saying the grapes are probably sour anyway."
+      "A group of monkeys sees the moon's reflection in a well and thinks the moon has fallen in.",
+      "They fear the world will be dark and decide to rescue it.",
+      "They form a chain hanging from a tree branch down to the water.",
+      "The branch breaks and they tumble into the water; looking up, they see the moon still in the sky."
     ],
     "characters": [
       {
-        "name_zh": "狐狸",
-        "gloss": "fox"
+        "name_zh": "猴子",
+        "gloss": "monkeys"
       }
     ],
     "cultural_notes": [
-      "Moral: people often disparage what they cannot obtain; origin of the phrase 'sour grapes.'"
+      "Idiom 猴子捞月 warns against wasted effort chasing an illusion."
     ],
-    "origin": "canon"
+    "origin": "canon",
+    "chengyu": "猴子捞月"
   },
   {
     "canon_id": "C5-wuyaheshui",
@@ -1662,62 +1663,54 @@
     "origin": "canon"
   },
   {
-    "canon_id": "C5-mayihezhame",
+    "canon_id": "C5-shuxiannvjia",
     "tier": "C5",
-    "title_zh": "蚂蚁和蚱蜢",
-    "title_en": "The Ant and the Grasshopper",
+    "title_zh": "老鼠嫁女",
+    "title_en": "The Mouse Marries His Daughter",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/蚂蚁和蚱蜢"
+      "https://zh.wikipedia.org/wiki/老鼠嫁女"
     ],
-    "pd_rationale": "Aesop's fable (Perry Index 373), antiquity; public-domain plot and PD translations only.",
+    "pd_rationale": "Traditional Chinese folk tale and New Year woodblock-print subject; long in the public domain.",
     "beats": [
-      "An ant works hard all summer storing food for winter.",
-      "A grasshopper sings and plays in the sun, mocking the ant for working.",
-      "When winter arrives, the grasshopper has no food and is starving.",
-      "The ant survives comfortably on its stored provisions."
+      "A mouse father wants the most powerful husband in the world for his daughter.",
+      "He asks the sun, but the cloud can block the sun; he asks the cloud, but the wind blows it away.",
+      "He asks the wind, but a wall stops it; he asks the wall, but a mouse can gnaw through it.",
+      "He realizes a mouse is best and marries his daughter to a fine young mouse."
     ],
     "characters": [
       {
-        "name_zh": "蚂蚁",
-        "gloss": "ant"
-      },
-      {
-        "name_zh": "蚱蜢",
-        "gloss": "grasshopper"
+        "name_zh": "老鼠爸爸",
+        "gloss": "the father mouse"
       }
     ],
     "cultural_notes": [
-      "Moral: hard work and planning prepare one for hard times."
+      "A New Year folk tale; the circular search shows everyone has a place."
     ],
     "origin": "canon"
   },
   {
-    "canon_id": "C5-shizihelaoshu",
+    "canon_id": "C5-yingwujiuhuo",
     "tier": "C5",
-    "title_zh": "狮子和老鼠",
-    "title_en": "The Lion and the Mouse",
+    "title_zh": "鹦鹉救火",
+    "title_en": "The Parrot Tries to Put Out the Fire",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/狮子和老鼠"
+      "https://zh.wikipedia.org/wiki/鹦鹉救火"
     ],
-    "pd_rationale": "Aesop's fable (Perry Index 150), antiquity; public-domain plot and PD translations only.",
+    "pd_rationale": "Buddhist fable from the Liu Song-era 《宣验记》; classical text in the public domain.",
     "beats": [
-      "A lion catches a mouse but spares its life when the mouse begs for mercy.",
-      "The mouse promises to repay the lion one day; the lion laughs.",
-      "Later, hunters trap the lion in a net.",
-      "The mouse gnaws through the ropes and frees the lion."
+      "A parrot lives happily on a mountain full of birds and beasts.",
+      "The parrot flies away, but later sees the mountain caught in a great fire.",
+      "It dips its wings in water and sprinkles drops on the flames, again and again.",
+      "A heavenly god, moved by its sincerity though the effort is tiny, sends rain to put out the fire."
     ],
     "characters": [
       {
-        "name_zh": "狮子",
-        "gloss": "lion"
-      },
-      {
-        "name_zh": "老鼠",
-        "gloss": "mouse"
+        "name_zh": "鹦鹉",
+        "gloss": "parrot"
       }
     ],
     "cultural_notes": [
-      "Moral: even the small and weak can help the strong; kindness is never wasted."
+      "Celebrates sincere effort and loyalty to one's home, however small the deed."
     ],
     "origin": "canon"
   },
@@ -1752,58 +1745,59 @@
     "origin": "canon"
   },
   {
-    "canon_id": "C5-pizheyangpidelang",
+    "canon_id": "C5-tanglangbuchan",
     "tier": "C5",
-    "title_zh": "披着羊皮的狼",
-    "title_en": "The Wolf in Sheep's Clothing",
+    "title_zh": "螳螂捕蝉",
+    "title_en": "The Mantis Stalks the Cicada",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/披着羊皮的狼"
+      "https://zh.wikipedia.org/wiki/螳螂捕蝉"
     ],
-    "pd_rationale": "Aesop's fable (Perry Index 451), antiquity; public-domain plot and PD translations only.",
+    "pd_rationale": "From the Han-dynasty 《说苑》 by Liu Xiang; classical text in the public domain.",
     "beats": [
-      "A wolf finds a discarded sheepskin and puts it on.",
-      "Disguised as a sheep, it infiltrates the flock unnoticed.",
-      "The wolf kills and eats several sheep before the shepherd discovers it.",
-      "The shepherd hangs the wolf as a warning to all deceivers."
+      "A cicada drinks dew high on a tree, unaware of danger.",
+      "A mantis behind it raises its arms to catch the cicada, unaware of danger.",
+      "A sparrow behind the mantis stretches to eat it, unaware of the boy with a slingshot below.",
+      "Each pursues its gain blind to the peril at its own back."
     ],
     "characters": [
       {
-        "name_zh": "狼",
-        "gloss": "wolf"
-      }
-    ],
-    "cultural_notes": [
-      "Moral: appearances can be deceiving; evil often wears a mask of innocence."
-    ],
-    "origin": "canon"
-  },
-  {
-    "canon_id": "C5-xiajindandee",
-    "tier": "C5",
-    "title_zh": "下金蛋的鹅",
-    "title_en": "The Goose That Laid the Golden Eggs",
-    "source_urls": [
-      "https://zh.wikipedia.org/wiki/下金蛋的鹅"
-    ],
-    "pd_rationale": "Aesop's fable (Perry Index 87), antiquity; public-domain plot and PD translations only.",
-    "beats": [
-      "A farmer discovers his goose lays a solid golden egg each day.",
-      "He grows rich but becomes impatient waiting for one egg at a time.",
-      "He kills the goose hoping to extract all the gold inside at once.",
-      "He finds nothing inside and loses his daily golden egg forever."
-    ],
-    "characters": [
-      {
-        "name_zh": "农夫",
-        "gloss": "farmer"
+        "name_zh": "螳螂",
+        "gloss": "mantis"
       },
       {
-        "name_zh": "鹅",
-        "gloss": "goose"
+        "name_zh": "蝉",
+        "gloss": "cicada"
       }
     ],
     "cultural_notes": [
-      "Moral: greed can destroy a steady source of prosperity."
+      "Idiom 螳螂捕蝉，黄雀在后 warns against greed that ignores hidden danger."
+    ],
+    "origin": "canon",
+    "chengyu": "螳螂捕蝉"
+  },
+  {
+    "canon_id": "C5-zengzishazhu",
+    "tier": "C5",
+    "title_zh": "曾子杀猪",
+    "title_en": "Zengzi Kills the Pig",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/曾子杀猪"
+    ],
+    "pd_rationale": "From the pre-Qin 《韩非子》; classical text in the public domain.",
+    "beats": [
+      "Zengzi's wife, going to market, tells her crying son she will kill a pig for him if he stays.",
+      "When she returns, she finds Zengzi about to slaughter the family pig.",
+      "She protests that she was only joking to quiet the child.",
+      "Zengzi kills the pig, saying parents must never deceive children, for they learn by example."
+    ],
+    "characters": [
+      {
+        "name_zh": "曾子",
+        "gloss": "Zengzi, a disciple of Confucius"
+      }
+    ],
+    "cultural_notes": [
+      "A classic lesson on honesty and keeping promises to children."
     ],
     "origin": "canon"
   },
@@ -1838,56 +1832,61 @@
     "origin": "canon"
   },
   {
-    "canon_id": "C5-laoshukaihui",
+    "canon_id": "C5-dongguoxiansheng",
     "tier": "C5",
-    "title_zh": "老鼠开会",
-    "title_en": "Belling the Cat",
+    "title_zh": "东郭先生",
+    "title_en": "Mr. Dongguo and the Wolf",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/老鼠开会"
+      "https://zh.wikipedia.org/wiki/中山狼传"
     ],
-    "pd_rationale": "Aesop's fable (Perry Index 613), antiquity; public-domain plot and PD translations only.",
+    "pd_rationale": "From the Ming-dynasty tale 《中山狼传》; classical text in the public domain.",
     "beats": [
-      "A colony of mice holds a meeting to solve the cat problem.",
-      "A young mouse suggests tying a bell around the cat's neck as a warning.",
-      "All the mice cheer at the brilliant plan.",
-      "An old mouse asks who will bell the cat; no one volunteers."
+      "A hunted wolf begs the scholar Mr. Dongguo to hide it in his book bag.",
+      "Mr. Dongguo pities the wolf and conceals it, misleading the hunter.",
+      "Once safe, the ungrateful wolf wants to eat its rescuer.",
+      "A passing farmer tricks the wolf back into the bag and kills it, saving the foolish scholar."
     ],
     "characters": [
       {
-        "name_zh": "老鼠",
-        "gloss": "mice"
+        "name_zh": "东郭先生",
+        "gloss": "Mr. Dongguo, a scholar"
+      },
+      {
+        "name_zh": "狼",
+        "gloss": "the wolf"
       }
     ],
     "cultural_notes": [
-      "Moral: it is easier to propose a dangerous plan than to execute it."
+      "Idiom 东郭先生 mocks misplaced pity toward the wicked."
     ],
     "origin": "canon"
   },
   {
-    "canon_id": "C5-gouheyingzi",
+    "canon_id": "C5-qutuxixin",
     "tier": "C5",
-    "title_zh": "狗和影子",
-    "title_en": "The Dog and Its Reflection",
+    "title_zh": "曲突徙薪",
+    "title_en": "Bend the Chimney, Move the Firewood",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/狗和影子"
+      "https://zh.wikipedia.org/wiki/曲突徙薪"
     ],
-    "pd_rationale": "Aesop's fable (Perry Index 133), antiquity; public-domain plot and PD translations only.",
+    "pd_rationale": "From the Han-dynasty 《汉书·霍光传》; classical text in the public domain.",
     "beats": [
-      "A dog with a bone in its mouth crosses a bridge over a stream.",
-      "It sees its own reflection in the water below.",
-      "Mistaking the reflection for another dog with a bigger bone, it barks.",
-      "The bone falls from its mouth into the stream and is lost."
+      "A guest sees a straight chimney beside a stack of firewood and warns the host of fire.",
+      "He advises bending the chimney and moving the firewood away; the host ignores him.",
+      "A fire breaks out, and neighbors who help fight it are thanked and feasted.",
+      "Someone notes the guest whose warning would have prevented it all was never even invited."
     ],
     "characters": [
       {
-        "name_zh": "狗",
-        "gloss": "dog"
+        "name_zh": "客人",
+        "gloss": "the guest"
       }
     ],
     "cultural_notes": [
-      "Moral: greed can cause one to lose what one already has."
+      "Idiom 曲突徙薪 praises prevention over praising those who clean up disasters."
     ],
-    "origin": "canon"
+    "origin": "canon",
+    "chengyu": "曲突徙薪"
   },
   {
     "canon_id": "C6-shenbimaliang",
@@ -2175,148 +2174,141 @@
     "origin": "canon"
   },
   {
-    "canon_id": "C7-chouxiaoya",
+    "canon_id": "C7-huamulan",
     "tier": "C7",
-    "title_zh": "丑小鸭",
-    "title_en": "The Ugly Duckling",
+    "title_zh": "花木兰",
+    "title_en": "Hua Mulan Joins the Army",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/丑小鸭"
+      "https://zh.wikipedia.org/wiki/木兰辞"
     ],
-    "pd_rationale": "Fairy tale by Hans Christian Andersen (1843); author died 1875, work in the public domain worldwide.",
+    "pd_rationale": "Based on the anonymous Northern-dynasties 《木兰辞》(Ballad of Mulan); classical text in the public domain.",
     "beats": [
-      "A duckling is mocked and rejected for its ugly appearance.",
-      "It wanders alone, enduring harsh treatment and a brutal winter.",
-      "In spring, it sees its reflection in the water.",
-      "It has transformed into a beautiful swan."
+      "The army conscripts one man from every family, but Mulan's father is old and her brother small.",
+      "Mulan buys a horse and armor and rides to war disguised as a man in her father's place.",
+      "She fights bravely for many years and earns great honor on the battlefield.",
+      "Offered high office, she asks only to return home, where her comrades learn she is a woman."
     ],
     "characters": [
       {
-        "name_zh": "丑小鸭",
-        "gloss": "the ugly duckling"
+        "name_zh": "花木兰",
+        "gloss": "Hua Mulan, a girl who takes her father's place in the army"
       }
     ],
     "cultural_notes": [
-      "Moral: true beauty develops from within; endurance through hardship leads to transformation."
+      "A celebrated tale of filial devotion and courage."
     ],
     "origin": "canon"
   },
   {
-    "canon_id": "C7-huangdidexinzhuang",
+    "canon_id": "C7-danaotiangong",
     "tier": "C7",
-    "title_zh": "皇帝的新装",
-    "title_en": "The Emperor's New Clothes",
+    "title_zh": "大闹天宫",
+    "title_en": "Havoc in Heaven",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/皇帝的新装"
+      "https://zh.wikipedia.org/wiki/大闹天宫"
     ],
-    "pd_rationale": "Fairy tale by Hans Christian Andersen (1837); author died 1875, work in the public domain worldwide.",
+    "pd_rationale": "From Wu Cheng'en's Ming-dynasty novel 《西游记》(Journey to the West); classical text in the public domain.",
     "beats": [
-      "Two swindlers promise to weave clothes invisible to anyone unfit for their position.",
-      "The emperor and his ministers pretend to see the nonexistent fabric.",
-      "The emperor parades naked through the city.",
-      "A child shouts that the emperor has no clothes, exposing the truth."
+      "The Monkey King Sun Wukong gains great powers and is given a minor post in Heaven.",
+      "Insulted by the trick, he rebels and declares himself Great Sage Equal to Heaven.",
+      "He battles the heavenly armies, eats the immortal peaches, and defeats every general.",
+      "Only the Buddha finally subdues him, trapping him beneath a mountain."
     ],
     "characters": [
       {
-        "name_zh": "皇帝",
-        "gloss": "the emperor"
+        "name_zh": "孙悟空",
+        "gloss": "Sun Wukong, the Monkey King"
       }
     ],
     "cultural_notes": [
-      "Moral: vanity and fear of appearing inadequate can lead to self-deception; truth often comes from the innocent."
+      "One of the most beloved episodes of Chinese mythology."
     ],
     "origin": "canon"
   },
   {
-    "canon_id": "C7-maihuochaidexiaonvhai",
+    "canon_id": "C7-caochuanjiejian",
     "tier": "C7",
-    "title_zh": "卖火柴的小女孩",
-    "title_en": "The Little Match Girl",
+    "title_zh": "草船借箭",
+    "title_en": "Borrowing Arrows with Straw Boats",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/卖火柴的小女孩"
+      "https://zh.wikipedia.org/wiki/草船借箭"
     ],
-    "pd_rationale": "Fairy tale by Hans Christian Andersen (1845); author died 1875, work in the public domain worldwide.",
+    "pd_rationale": "From Luo Guanzhong's Ming-dynasty novel 《三国演义》(Romance of the Three Kingdoms); classical text in the public domain.",
     "beats": [
-      "A poor girl sells matches on a freezing New Year's Eve.",
-      "She lights matches one by one for warmth and sees visions of comfort.",
-      "In the final vision, her deceased grandmother appears and takes her.",
-      "She is found frozen the next morning with a peaceful smile."
+      "Zhou Yu, jealous of Zhuge Liang, orders him to produce 100,000 arrows in three days.",
+      "Zhuge Liang instead prepares twenty boats lined with straw bundles.",
+      "On a foggy night he sails them toward the enemy camp and beats war drums.",
+      "The enemy fires countless arrows into the straw; Zhuge Liang returns with more than enough."
     ],
     "characters": [
       {
-        "name_zh": "小女孩",
-        "gloss": "the little match girl"
+        "name_zh": "诸葛亮",
+        "gloss": "Zhuge Liang, a brilliant strategist"
+      },
+      {
+        "name_zh": "周瑜",
+        "gloss": "Zhou Yu, a rival general"
       }
     ],
     "cultural_notes": [
-      "Poignant tale about poverty, compassion, and the power of hope in desperate circumstances."
+      "Idiom 草船借箭 celebrates wit that turns an enemy's strength to one's own use."
+    ],
+    "origin": "canon",
+    "chengyu": "草船借箭"
+  },
+  {
+    "canon_id": "C7-wusongdahu",
+    "tier": "C7",
+    "title_zh": "武松打虎",
+    "title_en": "Wu Song Fights the Tiger",
+    "source_urls": [
+      "https://zh.wikipedia.org/wiki/武松打虎"
+    ],
+    "pd_rationale": "From Shi Nai'an's Ming-dynasty novel 《水浒传》(Water Margin); classical text in the public domain.",
+    "beats": [
+      "Wu Song drinks heavily at an inn and ignores warnings of a man-eating tiger on the ridge.",
+      "Climbing the hill at dusk, he suddenly meets the great tiger.",
+      "He dodges its lunges, and his wooden staff shatters against a tree.",
+      "With his bare hands he pins the tiger's head and beats it to death, saving the district."
+    ],
+    "characters": [
+      {
+        "name_zh": "武松",
+        "gloss": "Wu Song, a mighty hero"
+      }
+    ],
+    "cultural_notes": [
+      "A famous display of courage and strength from the Water Margin."
     ],
     "origin": "canon"
   },
   {
-    "canon_id": "C7-baixuegongzhu",
+    "canon_id": "C7-yuemucizi",
     "tier": "C7",
-    "title_zh": "白雪公主",
-    "title_en": "Snow White",
+    "title_zh": "岳母刺字",
+    "title_en": "Yue Fei's Mother Tattoos His Back",
     "source_urls": [
-      "https://zh.wikipedia.org/wiki/白雪公主"
+      "https://zh.wikipedia.org/wiki/岳母刺字"
     ],
-    "pd_rationale": "Fairy tale collected by the Brothers Grimm (1812); both authors died before 1865, work in the public domain worldwide.",
+    "pd_rationale": "Traditional legend of the Song-dynasty general Yue Fei; long in the public domain.",
     "beats": [
-      "A jealous queen orders Snow White killed because of her beauty.",
-      "Seven dwarfs take her in and protect her in the forest.",
-      "The queen poisons Snow White with a cursed apple.",
-      "A prince's kiss awakens her and they live happily ever after."
+      "Young Yue Fei wishes to serve his country as invaders threaten the Song.",
+      "His mother, to strengthen his resolve, tattoos four characters on his back.",
+      "The words read 尽忠报国 — 'serve the country with utter loyalty.'",
+      "Yue Fei grows into a great general, carrying his mother's charge all his life."
     ],
     "characters": [
       {
-        "name_zh": "白雪公主",
-        "gloss": "Snow White"
+        "name_zh": "岳飞",
+        "gloss": "Yue Fei, a patriotic general"
       },
       {
-        "name_zh": "皇后",
-        "gloss": "the Queen"
-      },
-      {
-        "name_zh": "小矮人",
-        "gloss": "the seven dwarfs"
+        "name_zh": "岳母",
+        "gloss": "Yue Fei's mother"
       }
     ],
     "cultural_notes": [
-      "Classic fairy tale about jealousy, kindness, and true love."
-    ],
-    "origin": "canon"
-  },
-  {
-    "canon_id": "C7-xiaohongmao",
-    "tier": "C7",
-    "title_zh": "小红帽",
-    "title_en": "Little Red Riding Hood",
-    "source_urls": [
-      "https://zh.wikipedia.org/wiki/小红帽"
-    ],
-    "pd_rationale": "Fairy tale collected by the Brothers Grimm (1812); both authors died before 1865, work in the public domain worldwide.",
-    "beats": [
-      "A girl in a red hood visits her grandmother through the forest.",
-      "A wolf learns her destination and arrives at the grandmother's house first.",
-      "The wolf swallows the grandmother and impersonates her.",
-      "A huntsman cuts open the wolf and rescues both."
-    ],
-    "characters": [
-      {
-        "name_zh": "小红帽",
-        "gloss": "Little Red Riding Hood"
-      },
-      {
-        "name_zh": "大灰狼",
-        "gloss": "the big bad wolf"
-      },
-      {
-        "name_zh": "猎人",
-        "gloss": "the huntsman"
-      }
-    ],
-    "cultural_notes": [
-      "Classic cautionary tale about the dangers of talking to strangers."
+      "A revered emblem of patriotism and a mother's teaching."
     ],
     "origin": "canon"
   }
