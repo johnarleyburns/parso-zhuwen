@@ -151,7 +151,7 @@ jobs:
             CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
             archive 2>&1 | tee archive.log
 
-      - name: Export .ipa
+      - name: Export & upload to TestFlight
         working-directory: ${{ env.APP_DIR }}
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
@@ -180,18 +180,6 @@ jobs:
             -authenticationKeyPath "$RUNNER_TEMP/private_keys/AuthKey_${APPSTORE_API_KEY_ID}.p8" \
             -authenticationKeyID "$APPSTORE_API_KEY_ID" \
             -authenticationKeyIssuerID "$APPSTORE_ISSUER_ID"
-
-      - name: Upload to TestFlight
-        env:
-          APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-          APPSTORE_API_ISSUER_ID: ${{ secrets.APPSTORE_API_ISSUER_ID }}
-        run: |
-          set -euo pipefail
-          xcrun altool --upload-app \
-            --type ios \
-            --file "$RUNNER_TEMP/export/$SCHEME.ipa" \
-            --apiKey "$APPSTORE_API_KEY_ID" \
-            --apiIssuer "$APPSTORE_API_ISSUER_ID"
 
       - name: Summary
         run: |
