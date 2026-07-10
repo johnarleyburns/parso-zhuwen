@@ -178,6 +178,28 @@
     "custom": true
   },
   {
+    "word": "愚公移山",
+    "decision": "File:2017-04-20 Shouguang Vegetable SciTech Fair 3.031 anagoria.jpg"
+  },
+  {
+    "word": "盲人摸象",
+    "decision": "https://commons.wikimedia.org/wiki/File:Yunnan_China_Farmer-in-his-grainfield-01.jpg",
+    "custom": true
+  },
+  {
+    "word": "老马识途",
+    "decision": "https://commons.wikimedia.org/wiki/File:Grazing_horse_-_geograph.org.uk_-_6328627.jpg",
+    "custom": true
+  },
+  {
+    "word": "螳臂当车",
+    "decision": "File:Praying mantis india.jpg"
+  },
+  {
+    "word": "黔驴技穷",
+    "decision": "File:Jielbeaumadier ane des pyrenees vda 2010.jpeg"
+  },
+  {
     "word": "负荆请罪",
     "decision": "File:Thorns on a blackberry branch in Norrkila.jpg"
   },
@@ -232,16 +254,118 @@
     "custom": true
   },
   {
+    "word": "猴子捞月",
+    "decision": "https://commons.wikimedia.org/wiki/File:Monkeys_jump_around_in_the_water_during_a_heatwave_in_Hong_Kong.jpg",
+    "custom": true
+  },
+  {
     "word": "乌鸦喝水",
     "decision": "File:Wenceslas Hollar - The crow and the pitcher (State 2).jpg"
+  },
+  {
+    "word": "老鼠嫁女",
+    "decision": "https://commons.wikimedia.org/wiki/File:Buddha%27s_crystal_and_other_fairy_stories_(1908)_(14598367340).jpg",
+    "custom": true
+  },
+  {
+    "word": "鹦鹉救火",
+    "decision": "https://commons.wikimedia.org/wiki/File:Vernal_Hanging-Parrot_in_Saswad_August_2025_by_Tisha_Mukherjee_09.jpg",
+    "custom": true
   },
   {
     "word": "狐狸和乌鸦",
     "decision": "File:Fox and crow in a group MET DP-247-010.jpg"
   },
   {
+    "word": "螳螂捕蝉",
+    "decision": "https://commons.wikimedia.org/wiki/File:An_Afghan_boy_demonstrates_his_slingshot_skills_near_an_overwatch_position_where_Afghan_National_Army_special_forces_soldiers_help_Afghan_Local_Police_(ALP)_members_build_a_checkpoint_April_3,_2013,_in_Helmand_130403-M-BO337-194.jpg",
+    "custom": true
+  },
+  {
+    "word": "曾子杀猪",
+    "decision": "https://commons.wikimedia.org/wiki/File:Moganshan_Chinese_zodiac_pig_20090912_4855.jpg",
+    "custom": true
+  },
+  {
     "word": "农夫与蛇",
     "decision": "https://commons.wikimedia.org/wiki/File:Snake_charmer_in_Ouarzazate,_Morocco_by_Brahim_FARAJI.jpg",
     "custom": true
+  },
+  {
+    "word": "东郭先生",
+    "decision": "https://commons.wikimedia.org/wiki/File:%E7%8B%BC%E7%B4%8B%E9%9D%92%E9%8A%85%E5%B8%B6%E9%A3%BE-Belt_Plaque_in_the_Shape_of_a_Standing_Wolf_MET_DT5398.jpg",
+    "custom": true
+  },
+  {
+    "word": "曲突徙薪",
+    "decision": "https://commons.wikimedia.org/wiki/File:Flames_from_Ballantrae_Primary_School_-_geograph.org.uk_-_5798091.jpg",
+    "custom": true
+  },
+  {
+    "word": "神笔马良",
+    "decision": "File:Chinese Brush for Writing Calligraphy.jpg"
+  },
+  {
+    "word": "田螺姑娘",
+    "decision": "https://commons.wikimedia.org/wiki/File:Snail_next_to_wine_bottle.jpg",
+    "custom": true
+  },
+  {
+    "word": "阿凡提的故事",
+    "decision": "https://commons.wikimedia.org/wiki/File:%E4%B8%89%E5%8C%B9%E9%A9%A2%E5%AD%90_Three_Donkeys_-_panoramio.jpg",
+    "custom": true
+  },
+  {
+    "word": "猎人海力布",
+    "decision": "https://commons.wikimedia.org/wiki/File:2017_Ningxiang_Huangcai_floods,_picture7.jpg",
+    "custom": true
+  },
+  {
+    "word": "十二生肖",
+    "decision": "https://commons.wikimedia.org/wiki/File:Stone_Statue_of_Earthly_Branches_01.jpg",
+    "custom": true
+  },
+  {
+    "word": "宝莲灯",
+    "decision": "File:Lotus Lantern Festival (Seoul) 09.jpg"
+  },
+  {
+    "word": "济公",
+    "decision": "File:Buddhist monk in Sarnath.jpg"
+  },
+  {
+    "word": "孟母三迁",
+    "decision": "https://commons.wikimedia.org/wiki/File:Biblioth%C3%A8que_humaniste_de_S%C3%A9lestat_21_janvier_2014-97.jpg",
+    "custom": true
+  },
+  {
+    "word": "年的传说",
+    "decision": "File:Seattle - Chinese New Year 2011 - 25.jpg"
+  },
+  {
+    "word": "老虎拜师",
+    "decision": "File:Panthera tigris altaica 13 - Buffalo Zoo.jpg"
+  },
+  {
+    "word": "花木兰",
+    "decision": "https://commons.wikimedia.org/wiki/File:DSC07682_(30723853208).jpg",
+    "custom": true
+  },
+  {
+    "word": "大闹天宫",
+    "decision": "File:Havoc in Heaven Peking Opera 8.jpg"
+  },
+  {
+    "word": "草船借箭",
+    "decision": "File:Long Corridor-草船借箭.JPG"
+  },
+  {
+    "word": "武松打虎",
+    "decision": "https://commons.wikimedia.org/wiki/File:Hoysala_empire_emblem,_Sala_killing_the_tiger,_at_the_entrance_to_Chennakeshava_temple_at_Belur.jpg",
+    "custom": true
+  },
+  {
+    "word": "岳母刺字",
+    "decision": "File:Long Corridor-岳母刺字.jpg"
   }
 ]

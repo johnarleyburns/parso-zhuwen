@@ -60,17 +60,16 @@ Reviewed via `imagespike` against `data/canon/canon-cover-inventory.tsv`; decisi
 |-------|------|-------|----------|--------|
 | CAN-C1 | C1 | 20 | 20/20 | reviewed |
 | CAN-C2 | C2 | 14 | 14/14 | reviewed |
-| CAN-C3 | C3 | 5 | 0/5 | todo |
+| CAN-C3 | C3 | 5 | 5/5 | reviewed |
 | CAN-C4 | C4 | 14 | 14/14 | reviewed |
-| CAN-C5 | C5 | 13 | 6/13 | in progress (6 kept fables done; 7 new Chinese stories to review) |
-| CAN-C6 | C6 | 10 | 0/10 | todo |
-| CAN-C7 | C7 | 5 | 0/5 | todo |
+| CAN-C5 | C5 | 13 | 13/13 | reviewed |
+| CAN-C6 | C6 | 10 | 10/10 | reviewed |
+| CAN-C7 | C7 | 5 | 5/5 | reviewed |
 
-> **Canon is now fully Chinese** — 12 non-Chinese stories (7 pure Aesop + 5 Andersen/Grimm)
-> replaced with Chinese legend/myth/history/religion tales at the same tier; the 6 fables
-> naturalized into Chinese schooling (龟兔赛跑, 狼来了, 北风与太阳, 乌鸦喝水, 狐狸和乌鸦, 农夫与蛇)
-> were kept. 54/81 covers reviewed; **27 remaining** = C3 (5) + 7 new C5 + C6 (10) + C7 (5),
-> resuming at 愚公移山. Continue with `--decided data/canon/canon-cover-decisions.json`.
+> **All 81 canon covers reviewed** (`canon-cover-decisions.json`: 45 custom picks + 36 auto).
+> Canon is fully Chinese (12 non-Chinese stories replaced; 6 school-naturalized fables kept).
+> **Next: per-image license sign-off + provenance fetch, then `zhuwenctl images curate` (canon
+> path) to lock covers + provenance into the packs.**
 
 ### Authored spine + B1 packs
 | Batch | Scope | Count | Status |
