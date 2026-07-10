@@ -68,8 +68,10 @@ Reviewed via `imagespike` against `data/canon/canon-cover-inventory.tsv`; decisi
 
 > **All 81 canon covers reviewed** (`canon-cover-decisions.json`: 45 custom picks + 36 auto).
 > Canon is fully Chinese (12 non-Chinese stories replaced; 6 school-naturalized fables kept).
-> **Next: per-image license sign-off + provenance fetch, then `zhuwenctl images curate` (canon
-> path) to lock covers + provenance into the packs.**
+> **License sign-off done** (owner-verified on each Commons page). Provenance fetched + covers
+> curated to `canon-covers-curated.json` (81 records, all complete + gate-passing) via
+> `zhuwenctl images curate-canon --live --signed-off`. Next: encode HEIC bytes + wire into the
+> pipeline join so the packs ship real covers instead of stubs.
 
 ### Authored spine + B1 packs
 | Batch | Scope | Count | Status |

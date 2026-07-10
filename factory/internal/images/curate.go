@@ -3,6 +3,7 @@ package images
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"os"
 	"path"
 	"sort"
@@ -63,13 +64,18 @@ func (d ImageDecision) IsCommons() bool {
 }
 
 // CommonsTitle extracts the File: name from the decision. For "File:Foo.jpg" it
-// returns "File:Foo.jpg"; for a full URL it extracts the last path component.
+// returns "File:Foo.jpg"; for a full URL it extracts the last path component and
+// URL-decodes it (Commons file-page URLs percent-encode non-ASCII, e.g. %E2%80%99).
 func (d ImageDecision) CommonsTitle() string {
 	if strings.HasPrefix(d.Decision, "File:") {
 		return d.Decision
 	}
 	if strings.Contains(d.Decision, "/wiki/File:") {
-		return path.Base(d.Decision)
+		base := path.Base(d.Decision)
+		if dec, err := url.PathUnescape(base); err == nil {
+			return dec
+		}
+		return base
 	}
 	return d.Decision
 }
@@ -148,6 +154,48 @@ func decisionsToImages(decisions []ImageDecision, prov ProvenanceStore, wordIDMa
 			ID:          fmt.Sprintf("img-foundations-%s", d.WordKey()),
 			WordID:      &wid,
 			File:        fmt.Sprintf("images/%s@480.heic", fmt.Sprintf("img-foundations-%s", d.WordKey())),
+			W:           p.W,
+			H:           p.H,
+			License:     p.License,
+			LicenseURL:  p.LicenseURL,
+			Author:      p.Author,
+			SourceURL:   p.SourceURL,
+			RetrievedAt: p.RetrievedAt,
+		})
+	}
+	return imgs, nil
+}
+
+// CanonDecisionsToImages converts canon story-cover decisions (keyed by title_zh via
+// canonIDMap: title_zh → canon_id) + provenances into pack.Image records with CanonID set
+// (for the join stage's story-cover replacement — not WordID). requireSignOff gates on a
+// recorded per-image license sign-off (CP-09c Part D ship-readiness, I4/FR-11.2).
+func CanonDecisionsToImages(decisions []ImageDecision, prov ProvenanceStore, canonIDMap map[string]string, requireSignOff bool) ([]pack.Image, error) {
+	var imgs []pack.Image
+	for _, d := range decisions {
+		if d.Decision == "" || d.Decision == "__reject__" {
+			continue
+		}
+		title := d.CommonsTitle()
+		p := prov.Lookup(title)
+		if p == nil {
+			return nil, fmt.Errorf("image: provenance not found for decision %q (story %s)", title, d.WordKey())
+		}
+		if requireSignOff && !p.SignedOff {
+			return nil, fmt.Errorf("image: %q (story %s) has no recorded license sign-off (FR-11.2/I4)", title, d.WordKey())
+		}
+		if p.License == "" || p.LicenseURL == "" || p.Author == "" || p.SourceURL == "" || p.RetrievedAt == "" {
+			return nil, fmt.Errorf("image: %q (story %s) has an incomplete provenance record (I6)", title, d.WordKey())
+		}
+		canonID, ok := canonIDMap[d.WordKey()]
+		if !ok || canonID == "" {
+			return nil, fmt.Errorf("image: story %q not in canon inventory", d.WordKey())
+		}
+		id := "img-" + canonID
+		imgs = append(imgs, pack.Image{
+			ID:          id,
+			CanonID:     canonID,
+			File:        fmt.Sprintf("images/%s@480.heic", id),
 			W:           p.W,
 			H:           p.H,
 			License:     p.License,
