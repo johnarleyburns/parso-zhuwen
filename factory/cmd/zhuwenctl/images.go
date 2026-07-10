@@ -4,17 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/parso/zhuwen-factory/internal/images"
 	"github.com/parso/zhuwen-factory/internal/lexicon"
+	"github.com/parso/zhuwen-factory/internal/pack"
 )
 
 // cmdImages implements `zhuwenctl images ...` — the §8A Commons image pipeline:
-// fetch (network, --live gated) → gate (hermetic) → curate (human decisions).
+// fetch (network, --live gated) → gate (hermetic) → curate (human decisions) →
+// process (HEIC encode, external), followed by join into the pack build.
 func cmdImages(args []string) error {
 	if len(args) == 0 {
-		return fmt.Errorf("images: expected subcommand: fetch | gate | curate")
+		return fmt.Errorf("images: expected subcommand: fetch | gate | curate | curate-canon | process")
 	}
 	switch args[0] {
 	case "fetch":
@@ -25,8 +28,10 @@ func cmdImages(args []string) error {
 		return cmdImagesCurate(args[1:])
 	case "curate-canon":
 		return cmdImagesCurateCanon(args[1:])
+	case "process":
+		return cmdImagesProcess(args[1:])
 	default:
-		return fmt.Errorf("images: unknown subcommand %q (expected: fetch | gate | curate | curate-canon)", args[0])
+		return fmt.Errorf("images: unknown subcommand %q (expected: fetch | gate | curate | curate-canon | process)", args[0])
 	}
 }
 
@@ -292,6 +297,74 @@ func loadCanonIDMap(path string) (map[string]string, error) {
 		m[f[0]] = f[1]
 	}
 	return m, nil
+}
+
+// cmdImagesProcess implements `zhuwenctl images process` — the §8A HEIC encode stage
+// (handoff §1 external-build-time-stage pattern, like tts.ModeReal). In stub mode
+// (default, no --live) it emits deterministic marker bytes suitable for CI. In real mode
+// (--live) it shells out to a Python image-processing script that downloads each Commons
+// file, resizes to the target size, and HEIC-encodes it, populating pack.Image.Data.
+func cmdImagesProcess(args []string) error {
+	in := flagValue(args, "--in")
+	out := flagValue(args, "--out")
+	live := hasFlag(args, "--live")
+	targetPX := 480
+	if v := flagValue(args, "--target-px"); v != "" {
+		fmt.Sscanf(v, "%d", &targetPX)
+	}
+	if in == "" || out == "" {
+		return fmt.Errorf("images process: --in <json> and --out <json> required")
+	}
+
+	var imgs []pack.Image
+	if err := readJSON(in, &imgs); err != nil {
+		return fmt.Errorf("images process: read input: %w", err)
+	}
+
+	var cfg images.EncodeConfig
+	if live {
+		pythonBin := flagValue(args, "--python")
+		script := flagValue(args, "--script")
+		if pythonBin == "" || script == "" {
+			return fmt.Errorf("images process: --live requires --python <bin> and --script <path>")
+		}
+		cfg = images.EncodeConfig{
+			Mode:      images.EncodeModeReal,
+			TargetPX:  targetPX,
+			PythonBin: pythonBin,
+			Script:    script,
+			WorkDir:   flagValue(args, "--work-dir"),
+		}
+	} else {
+		cfg = images.DefaultEncodeConfig()
+		cfg.TargetPX = targetPX
+	}
+	cfg.RepresentativeStub = hasFlag(args, "--representative-stub")
+
+	encoded, err := images.EncodePackImages(imgs, cfg)
+	if err != nil {
+		return fmt.Errorf("images process: %w", err)
+	}
+
+	// Null out Data for the JSON output; the encode writes a sidecar raw blob so
+	// the JSON stays readable. In copy-only mode the tool writes a sidecar dir.
+	if hasFlag(args, "--sidecar") {
+		sidecar := out + ".d"
+		os.MkdirAll(sidecar, 0o755)
+		for i, im := range encoded {
+			heicPath := sidecar + "/" + im.File
+			os.MkdirAll(filepath.Dir(heicPath), 0o755)
+			if im.Data != nil {
+				os.WriteFile(heicPath, im.Data, 0o644)
+			}
+			encoded[i].Data = nil
+		}
+		fmt.Printf("encoded %d images, sidecar HEIC blobs → %s/\n", len(encoded), sidecar)
+	}
+
+	writeJSON(out, encoded)
+	fmt.Printf("wrote %d encoded images → %s (mode=%s, target=%dpx)\n", len(encoded), out, cfg.Mode, targetPX)
+	return nil
 }
 
 func writeJSON(path string, v any) {

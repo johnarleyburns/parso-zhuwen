@@ -100,6 +100,9 @@ usage:
     --decisions <json> --lexicon <sqlite> --out <json>
   zhuwenctl images curate-canon     canon story covers → provenanced pack images (CP-09c)
     --decisions <json> --inventory <tsv> --out <json> --live [--signed-off]
+  zhuwenctl images process          HEIC-encode curated images (handoff §1 external stage)
+    --in <json> --out <json> [--live --python <bin> --script <path>]
+    [--target-px <px>] [--sidecar] [--representative-stub]
   zhuwenctl authored check --file <json> [--lexicon <sqlite>] [--band <name>]
                                     gate hand-authored stories through I1 (CP-09b)
     [--known-max <lvl>] [--frontier-level <lvl>] [--verbose]

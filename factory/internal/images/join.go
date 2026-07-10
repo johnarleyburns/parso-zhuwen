@@ -84,3 +84,19 @@ func JoinResult(result pack.Pack, curatedImages []pack.Image, foundationsImages 
 
 	return result, nil
 }
+
+// JoinResultEncoded merges curated images, then HEIC-encodes any images that still have a nil
+// Data field (either by shelling out to the external script in real mode, or emitting
+// deterministic stub bytes in CI). This is the single call needed between pipeline run and
+// pack.Build to finish canon covers into shippable packs (B-4).
+func JoinResultEncoded(result pack.Pack, curatedImages []pack.Image, foundationsImages []pack.Image, encodeCfg EncodeConfig) (pack.Pack, error) {
+	p, err := JoinResult(result, curatedImages, foundationsImages)
+	if err != nil {
+		return p, err
+	}
+	p.Images, err = EncodePackImages(p.Images, encodeCfg)
+	if err != nil {
+		return p, err
+	}
+	return p, nil
+}
