@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/parso/zhuwen-factory/internal/images"
 	"github.com/parso/zhuwen-factory/internal/lexicon"
@@ -22,8 +23,10 @@ func cmdImages(args []string) error {
 		return cmdImagesGate(args[1:])
 	case "curate":
 		return cmdImagesCurate(args[1:])
+	case "curate-canon":
+		return cmdImagesCurateCanon(args[1:])
 	default:
-		return fmt.Errorf("images: unknown subcommand %q (expected: fetch | gate | curate)", args[0])
+		return fmt.Errorf("images: unknown subcommand %q (expected: fetch | gate | curate | curate-canon)", args[0])
 	}
 }
 
@@ -198,6 +201,97 @@ func cmdImagesCurate(args []string) error {
 	writeJSON(out, curated)
 	fmt.Printf("curated %d images → %s\n", len(curated), out)
 	return nil
+}
+
+// cmdImagesCurateCanon curates canon story covers (CP-09c Part D). Unlike `curate` (keyed by
+// lexicon word_id for Foundations), this keys decisions by title_zh → canon_id via the cover
+// inventory TSV, fetches each chosen file's provenance from Commons (--live), and emits
+// signed-off pack.Image records (CanonID set) ready for the pipeline join stage.
+//
+// The reviewer's manual per-image license verification (FR-11.2/I4) is recorded via
+// --signed-off: the flag asserts the owner has verified every chosen file's license on its
+// Commons page. Without it, the ship-readiness sign-off gate is not satisfied.
+func cmdImagesCurateCanon(args []string) error {
+	decisionsPath := flagValue(args, "--decisions")
+	inventoryPath := flagValue(args, "--inventory")
+	out := flagValue(args, "--out")
+	live := hasFlag(args, "--live")
+	signedOff := hasFlag(args, "--signed-off")
+	if decisionsPath == "" || inventoryPath == "" || out == "" {
+		return fmt.Errorf("images curate-canon: --decisions <json> --inventory <tsv> --out <json> required")
+	}
+
+	decisions, err := images.LoadDecisions(decisionsPath)
+	if err != nil {
+		return fmt.Errorf("load decisions: %w", err)
+	}
+
+	canonIDMap, err := loadCanonIDMap(inventoryPath)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("loaded %d decisions, %d canon inventory rows\n", len(decisions), len(canonIDMap))
+
+	var titles []string
+	seen := map[string]bool{}
+	for _, d := range decisions {
+		if d.Decision == "" || d.Decision == "__reject__" {
+			continue
+		}
+		t := d.CommonsTitle()
+		if !seen[t] {
+			seen[t] = true
+			titles = append(titles, t)
+		}
+	}
+
+	if !live {
+		return fmt.Errorf("images curate-canon: --live required to fetch provenance from Commons (anonymous GET, no secret; gated for hermetic CI, I2)")
+	}
+	fc := &images.FetchClient{}
+	fmt.Printf("fetching provenance for %d Commons files…\n", len(titles))
+	prov, err := fc.FetchProvenanceByTitles(titles)
+	if err != nil {
+		return fmt.Errorf("fetch provenance: %w", err)
+	}
+
+	if signedOff {
+		for k, p := range prov {
+			p.SignedOff = true
+			p.SignedBy = "owner"
+			p.SignedAt = time.Now().UTC().Format("2006-01-02")
+			prov[k] = p
+		}
+	}
+
+	imgs, err := images.CanonDecisionsToImages(decisions, prov, canonIDMap, signedOff)
+	if err != nil {
+		return err
+	}
+
+	writeJSON(out, imgs)
+	fmt.Printf("curated %d canon covers → %s (signed-off=%v)\n", len(imgs), out, signedOff)
+	return nil
+}
+
+// loadCanonIDMap reads the cover inventory TSV and returns title_zh → canon_id.
+func loadCanonIDMap(path string) (map[string]string, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("inventory: %w", err)
+	}
+	m := map[string]string{}
+	for _, line := range splitLines(string(b)) {
+		if line == "" || line[0] == '#' {
+			continue
+		}
+		f := splitTabs(line)
+		if len(f) < 2 {
+			continue
+		}
+		m[f[0]] = f[1]
+	}
+	return m, nil
 }
 
 func writeJSON(path string, v any) {

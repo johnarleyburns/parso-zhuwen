@@ -55,6 +55,125 @@ func (fc *FetchClient) FetchCandidate(term string, n int) ([]Candidate, error) {
 	return fc.parsePages(commonsURL + "?" + q.Encode())
 }
 
+// FetchProvenanceByTitles queries Commons for a batch of specific File: titles (up to 50
+// per API call) and returns their provenance (license/author/dimensions/source URL). This
+// is the CP-09c curate path: given the reviewer's chosen files, fetch the attribution
+// record that ships in the pack. Network; behind --live at the command layer (I2).
+func (fc *FetchClient) FetchProvenanceByTitles(titles []string) (ProvenanceStore, error) {
+	store := ProvenanceStore{}
+	const batch = 50
+	for start := 0; start < len(titles); start += batch {
+		end := start + batch
+		if end > len(titles) {
+			end = len(titles)
+		}
+		chunk := titles[start:end]
+		q := url.Values{
+			"action": {"query"},
+			"format": {"json"},
+			"titles": {strings.Join(chunk, "|")},
+			"prop":   {"imageinfo"},
+			"iiprop": {"extmetadata|url|size"},
+		}
+		req, err := http.NewRequest("GET", commonsURL+"?"+q.Encode(), nil)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("User-Agent", fc.ua())
+		resp, err := fc.client().Do(req)
+		if err != nil {
+			return nil, err
+		}
+		b, err := io.ReadAll(resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			return nil, err
+		}
+		provs, err := parseProvenanceJSON(b)
+		if err != nil {
+			return nil, err
+		}
+		for title, p := range provs {
+			store[title] = p
+		}
+		if end < len(titles) {
+			time.Sleep(120 * time.Millisecond)
+		}
+	}
+	return store, nil
+}
+
+// parseProvenanceJSON parses a titles=…&prop=imageinfo response into a ProvenanceStore
+// keyed by the normalized File: title. Commons may "normalize" titles (spaces/underscores);
+// the normalization map is applied so lookups by the requested title still resolve.
+func parseProvenanceJSON(b []byte) (ProvenanceStore, error) {
+	var r struct {
+		Query struct {
+			Normalized []struct {
+				From string `json:"from"`
+				To   string `json:"to"`
+			} `json:"normalized"`
+			Pages map[string]struct {
+				Title     string `json:"title"`
+				Missing   *bool  `json:"missing"`
+				ImageInfo []struct {
+					DescURL     string             `json:"descriptionurl"`
+					Width       int                `json:"width"`
+					Height      int                `json:"height"`
+					ExtMetadata map[string]extMeta `json:"extmetadata"`
+				} `json:"imageinfo"`
+			} `json:"pages"`
+		} `json:"query"`
+	}
+	if err := json.Unmarshal(b, &r); err != nil {
+		return nil, fmt.Errorf("parse Commons provenance: %w", err)
+	}
+	store := ProvenanceStore{}
+	for _, p := range r.Query.Pages {
+		if p.Missing != nil || len(p.ImageInfo) == 0 {
+			continue
+		}
+		ii := p.ImageInfo[0]
+		licURL := ii.ExtMetadata["LicenseUrl"].String()
+		if licURL == "" {
+			licURL = commonsFileURL(p.Title)
+		}
+		src := ii.DescURL
+		if src == "" {
+			src = commonsFileURL(p.Title)
+		}
+		author := clean(ii.ExtMetadata["Artist"].String())
+		license := clean(ii.ExtMetadata["LicenseShortName"].String())
+		if author == "" {
+			// PD/CC0 works (e.g. museum scans) often carry no Artist; attribution is not
+			// legally required, but I6 requires a non-empty author field. Use the credit
+			// line if present, else a defensible public-domain author sentinel.
+			if credit := clean(ii.ExtMetadata["Credit"].String()); credit != "" {
+				author = credit
+			} else if isPublicDomainLicense(license) {
+				author = "Unknown (public domain)"
+			}
+		}
+		store[p.Title] = Provenance{
+			File:        p.Title,
+			License:     license,
+			LicenseURL:  clean(licURL),
+			Author:      author,
+			SourceURL:   src,
+			RetrievedAt: time.Now().UTC().Format("2006-01-02"),
+			W:           ii.Width,
+			H:           ii.Height,
+		}
+	}
+	// Map requested (pre-normalization) titles to their normalized provenance too.
+	for _, n := range r.Query.Normalized {
+		if p, ok := store[n.To]; ok {
+			store[n.From] = p
+		}
+	}
+	return store, nil
+}
+
 // FetchCandidates queries Commons using both English and Chinese terms for a word,
 // gathering candidates. English results are preferred; if fewer than minEn results
 // come from the English query, the Chinese term is also searched.
@@ -202,6 +321,14 @@ func categoryTitles(cats []struct {
 
 func commonsFileURL(title string) string {
 	return "https://commons.wikimedia.org/wiki/" + strings.ReplaceAll(title, " ", "_")
+}
+
+// isPublicDomainLicense reports whether a license short-name denotes public-domain / CC0,
+// where author attribution is not legally required (so a PD sentinel author is acceptable).
+func isPublicDomainLicense(lic string) bool {
+	l := strings.ToLower(lic)
+	return strings.Contains(l, "public domain") || strings.Contains(l, "cc0") ||
+		strings.Contains(l, "pd") || strings.Contains(l, "zero")
 }
 
 // extMeta handles the extmetadata field which is sometimes a number value.
