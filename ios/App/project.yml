@@ -36,9 +36,6 @@ targets:
     sources:
       - path: Sources
       - path: Assets.xcassets
-      - path: ../Fixtures/zhuwen-a2-v0.zpack
-        buildPhase: resources
-        optional: true
       - path: ../Fixtures/fixture-a2-v0.zpack
         buildPhase: resources
       - path: ../Fixtures/zhuwen-dev.pub
