@@ -20,6 +20,7 @@ import (
 	"github.com/parso/zhuwen-factory/internal/gate"
 	"github.com/parso/zhuwen-factory/internal/gatevec"
 	"github.com/parso/zhuwen-factory/internal/gen"
+	"github.com/parso/zhuwen-factory/internal/images"
 	"github.com/parso/zhuwen-factory/internal/lexicon"
 	"github.com/parso/zhuwen-factory/internal/minisign"
 	"github.com/parso/zhuwen-factory/internal/pack"
@@ -72,6 +73,17 @@ func BuildFixturePack() (*pack.Pack, int, error) {
 		Images:         res.Images,
 	}
 	p.FoundationsCards = fixtureFoundationsCards(lex, res.Images)
+
+	// Populate stub image Data with valid PNG bytes so on-device decoders
+	// (UIImage/NSImage) can render them. The hermetic CI pipeline never shells
+	// out to real HEIC encoding; this produces deterministic, distinct, decodable
+	// thumbnails for every image ID.
+	encoded, err := images.EncodePackImages(p.Images, images.DefaultEncodeConfig())
+	if err != nil {
+		return nil, 0, err
+	}
+	p.Images = encoded
+
 	return p, len(res.Rejected), nil
 }
 

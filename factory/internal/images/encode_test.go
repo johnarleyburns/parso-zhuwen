@@ -18,7 +18,7 @@ func TestEncodeStubDeterministic(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !bytes.Equal(a, b) {
-		t.Fatal("stub HEIC bytes not deterministic for same image ID")
+		t.Fatal("stub image bytes not deterministic for same image ID")
 	}
 }
 
@@ -40,9 +40,10 @@ func TestEncodeStubCompact(t *testing.T) {
 	if len(data) >= RepresentativeHeicByteLen {
 		t.Fatalf("default stub (%d B) should be smaller than representative (%d B)", len(data), RepresentativeHeicByteLen)
 	}
-	// The stub marker prefix must be present.
-	if !bytes.HasPrefix(data, []byte("HeicZhuwenStub\x00")) {
-		t.Fatal("stub must contain the marker prefix")
+	// Must be a valid PNG (starts with PNG signature).
+	pngSig := []byte{0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A}
+	if !bytes.HasPrefix(data, pngSig) {
+		t.Fatal("stub must be valid PNG data")
 	}
 }
 
@@ -55,6 +56,11 @@ func TestEncodeStubRepresentative(t *testing.T) {
 	}
 	if len(data) != RepresentativeHeicByteLen {
 		t.Fatalf("representative stub = %d B, want %d B", len(data), RepresentativeHeicByteLen)
+	}
+	// Must still be a valid PNG.
+	pngSig := []byte{0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A}
+	if !bytes.HasPrefix(data, pngSig) {
+		t.Fatal("representative stub must be valid PNG data")
 	}
 }
 

@@ -7,12 +7,16 @@ package pack
 
 import (
 	"archive/zip"
+	"bytes"
 	"crypto/sha256"
 	"database/sql"
 	_ "embed"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"image"
+	"image/color"
+	"image/png"
 	"os"
 	"sort"
 
@@ -224,7 +228,7 @@ func (p *Pack) assembleFiles() (map[string][]byte, error) {
 	for _, im := range p.Images {
 		data := im.Data
 		if data == nil {
-			data = []byte("ZHUWEN-FIXTURE-IMAGE:" + im.ID)
+			data = stubPNG(im.ID)
 		}
 		files[im.File] = data
 	}
@@ -434,4 +438,16 @@ func (p *Pack) insertRows(db *sql.DB) error {
 		}
 	}
 	return tx.Commit()
+}
+
+// stubPNG generates a tiny valid 1×1 PNG whose pixel color is seeded from the given id,
+// so every missing-image fallback is distinct and decodable on-device (UIImage supports
+// PNG regardless of the .heic extension in the zip filename).
+func stubPNG(id string) []byte {
+	h := sha256.Sum256([]byte(id))
+	img := image.NewRGBA(image.Rect(0, 0, 1, 1))
+	img.Set(0, 0, color.RGBA{R: h[0], G: h[1], B: h[2], A: 255})
+	var buf bytes.Buffer
+	_ = png.Encode(&buf, img) // nil error for in-memory 1x1
+	return buf.Bytes()
 }
