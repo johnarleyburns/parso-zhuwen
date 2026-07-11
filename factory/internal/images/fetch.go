@@ -192,7 +192,7 @@ func (fc *FetchClient) FetchThumbs(titles []string, px int) (map[string]ThumbRes
 		px = 480
 	}
 	results := map[string]ThumbResult{}
-	const batch = 50
+	const batch = 10
 	for start := 0; start < len(titles); start += batch {
 		end := start + batch
 		if end > len(titles) {
