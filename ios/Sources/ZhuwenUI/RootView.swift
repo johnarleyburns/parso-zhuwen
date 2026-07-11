@@ -168,6 +168,7 @@ struct LibraryView: View {
     }
 }
 
+@MainActor
 struct StoryRow: View {
     let story: StoryRecord
     var model: AppModel? = nil

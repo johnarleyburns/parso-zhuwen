@@ -176,9 +176,9 @@ func parseProvenanceJSON(b []byte) (ProvenanceStore, error) {
 
 // ThumbResult is a fetched Commons thumbnail with JPEG bytes.
 type ThumbResult struct {
-	Data   []byte
-	W, H   int
-	File   string
+	Data []byte
+	W, H int
+	File string
 }
 
 // FetchThumbs queries Commons imageinfo for the given titles with iiurlwidth=480,
@@ -198,11 +198,11 @@ func (fc *FetchClient) FetchThumbs(titles []string, px int) (map[string]ThumbRes
 		}
 		chunk := titles[start:end]
 		q := url.Values{
-			"action": {"query"},
-			"format": {"json"},
-			"titles": {strings.Join(chunk, "|")},
-			"prop":   {"imageinfo"},
-			"iiprop": {"url|size"},
+			"action":     {"query"},
+			"format":     {"json"},
+			"titles":     {strings.Join(chunk, "|")},
+			"prop":       {"imageinfo"},
+			"iiprop":     {"url|size"},
 			"iiurlwidth": {fmt.Sprint(px)},
 		}
 		req, err := http.NewRequest("GET", commonsURL+"?"+q.Encode(), nil)
@@ -245,7 +245,7 @@ func (fc *FetchClient) FetchThumbs(titles []string, px int) (map[string]ThumbRes
 
 // thumbInfo is a parsed thumbnail URL + dimensions from a Commons imageinfo response.
 type thumbInfo struct {
-	URL string
+	URL  string
 	W, H int
 }
 
@@ -261,9 +261,9 @@ func parseThumbJSON(b []byte) (map[string]thumbInfo, error) {
 				Title     string `json:"title"`
 				Missing   *bool  `json:"missing"`
 				ImageInfo []struct {
-					ThumbURL string `json:"thumburl"`
-					ThumbWidth  int `json:"thumbwidth"`
-					ThumbHeight int `json:"thumbheight"`
+					ThumbURL    string `json:"thumburl"`
+					ThumbWidth  int    `json:"thumbwidth"`
+					ThumbHeight int    `json:"thumbheight"`
 				} `json:"imageinfo"`
 			} `json:"pages"`
 		} `json:"query"`
