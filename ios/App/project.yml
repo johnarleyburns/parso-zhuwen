@@ -77,6 +77,19 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: guru.parso.zhuwen
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "1,2"
+      configs:
+        # Release archives (TestFlight) use MANUAL signing scoped to THIS target only, so the
+        # SPM library targets (ZhuwenCore/UI/…) stay unsigned — they don't support profiles.
+        # Passing these on the xcodebuild CLI would apply them to every target and fail the
+        # archive. The profile ("Zhuwen App Store Profile") + Apple Distribution cert are
+        # pre-made; nothing is minted at build time.
+        Release:
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: "Apple Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: "Zhuwen App Store Profile"
+          CODE_SIGNING_ALLOWED: "YES"
+          CODE_SIGNING_REQUIRED: "YES"
+          DEVELOPMENT_TEAM: "3264Y8YUGV"
 
   ZhuwenAppUITests:
     type: bundle.ui-testing
