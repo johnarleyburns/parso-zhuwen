@@ -2,6 +2,7 @@ package images
 
 import (
 	"fmt"
+	"net/url"
 	"strings"
 	"time"
 
@@ -75,6 +76,11 @@ func EmbedThumbnails(images []pack.Image, fc *FetchClient, px int) ([]pack.Image
 }
 
 // CommonsTitleFromSource extracts a File: title from a Commons source URL.
+// The path component is percent-encoded on Commons file-page URLs (CJK, accents,
+// apostrophes, etc.), so it is URL-decoded to the API title form — matching
+// ImageDecision.CommonsTitle. Without the decode, titles with non-ASCII / reserved
+// characters are sent to the API still-encoded and silently resolve to no thumbnail
+// (falling back to a stub), which stranded 21 canon covers + 8 foundations words.
 func CommonsTitleFromSource(sourceURL string) string {
 	if !strings.Contains(sourceURL, "commons.wikimedia.org/wiki/File:") {
 		return ""
@@ -87,6 +93,9 @@ func CommonsTitleFromSource(sourceURL string) string {
 	// Remove query params and fragments.
 	if qi := strings.IndexAny(title, "?#"); qi >= 0 {
 		title = title[:qi]
+	}
+	if dec, err := url.PathUnescape(title); err == nil {
+		title = dec
 	}
 	return title
 }

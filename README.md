@@ -125,7 +125,40 @@ make ci           # fmt + vet + test
 make fixtures     # regenerate ios/Fixtures (DEV-signed, reproducible)
 ```
 
-Command reference: `zhuwenctl {lexicon | lexicon ingest | segment eval | spike | run | build | verify | budget | keygen | authored check | audit}` —
+### Building the real app pack (`zhuwen-a2-v0.zpack`)
+
+`build` emits a signed **fixture** pack (embedded 10-story canon, stub images) for CI/tests.
+The full **real-content** pack (81 canon stories, 219 Foundations cards, 300 real Commons
+JPEG covers) is built with `app-pack` from the curated, git-tracked decision files:
+
+```sh
+cd factory
+make build
+./bin/zhuwenctl app-pack \
+    --out /tmp/zhuwen-a2-v0.zpack \
+    --lexicon data/lexicon.sqlite \
+    --foundations-decisions data/foundations/f0-image-decisions.json \
+    --canon-covers data/canon/canon-covers-curated.json \
+    --images-live
+./bin/zhuwenctl verify /tmp/zhuwen-a2-v0.zpack --pub /tmp/zhuwen-a2-v0.zpack.pub
+```
+
+Expected: `thumbnails: 300/300 images have real JPEG data`. Any count below 300 means some
+covers fell back to stubs — check the Commons title resolution (titles are URL-decoded in
+`images.CommonsTitleFromSource`; percent-encoded CJK/accents must decode to the API form).
+
+**Curation inputs** (the owner-in-the-loop image decisions — safe in git, never regenerated
+from scratch; edit these to re-curate, then rebuild):
+- `data/canon/canon-cover-decisions.json` — 81 canon-cover picks (`word` → Commons `File:`/URL)
+- `data/canon/canon-covers-curated.json` — 81 provenanced `pack.Image` records (curate-canon output)
+- `data/foundations/f0-image-decisions.json` — 219 Foundations word-cover picks
+
+Flags: `--live` (LLM story generation, needs `ZHUWEN_LLM_API_KEY`) implies `--images-live`
+(fetch/embed real Commons thumbnails); `--images-live` alone keeps the deterministic fixture
+story provider but still embeds real covers. Without either, images are stub bytes. The canon
+cover set is re-curated via `images curate-canon --live --signed-off` (see `plans/cp-09c-image-inventory.md`).
+
+Command reference: `zhuwenctl {lexicon | lexicon ingest | segment eval | spike | run | build | verify | budget | keygen | authored check | audit | app-pack | images}` —
 run `zhuwenctl` with no args for usage. The real **HSK-3.0 lexicon** ships in-repo under
 `factory/data/hsk3.0/` (12,283 forms, exact per-level mapping; redistribution authorized —
 see `factory/data/README.md`) and is built with `zhuwenctl lexicon ingest --src data/hsk3.0
