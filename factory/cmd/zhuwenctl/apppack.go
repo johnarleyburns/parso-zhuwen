@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"sort"
@@ -127,15 +128,22 @@ func cmdAppPack(args []string) error {
 			if len(titles) > 0 {
 				fProv, err = fc.FetchProvenanceByTitles(titles)
 				if err != nil {
-					return fmt.Errorf("app-pack: foundations provenance: %w", err)
+					fmt.Printf("WARNING: foundations provenance: %v (using stubs)\n", err)
+					fProv = nil
+				} else {
+					fmt.Printf("foundations provenance: %d fetched\n", len(fProv))
 				}
-				fmt.Printf("foundations provenance: %d fetched\n", len(fProv))
 			}
 		}
 
-		fImages, err := images.FoundationsDecisionImages(decisions, fProv, wordIDMap)
-		if err != nil {
-			return fmt.Errorf("app-pack: foundations images: %w", err)
+		var fImages []pack.Image
+		if fProv != nil && len(fProv) > 0 {
+			fImages, err = images.FoundationsDecisionImages(decisions, fProv, wordIDMap)
+			if err != nil {
+				return fmt.Errorf("app-pack: foundations images: %w", err)
+			}
+		} else {
+			fImages = images.FoundationsDecisionImagesOffline(decisions, wordIDMap)
 		}
 		allImages = append(allImages, fImages...)
 		fmt.Printf("foundations images: %d resolved\n", len(fImages))
@@ -145,32 +153,14 @@ func cmdAppPack(args []string) error {
 		fmt.Printf("foundations cards: %d built\n", len(foundationsCards))
 	}
 
-	// Canon cover decisions → images.
+	// Canon cover images — load curated pack.Image records directly.
 	if canonCovers != "" {
-		coverDecisions, err := images.LoadDecisions(canonCovers)
+		cImages, err := loadCuratedCoverImages(canonCovers)
 		if err != nil {
 			return fmt.Errorf("app-pack: canon covers: %w", err)
 		}
-		fmt.Printf("canon cover decisions: %d entries\n", len(coverDecisions))
-
-		var cProv images.ProvenanceStore
-		if live {
-			titles := collectCommonsTitles(coverDecisions)
-			if len(titles) > 0 {
-				cProv, err = fc.FetchProvenanceByTitles(titles)
-				if err != nil {
-					return fmt.Errorf("app-pack: cover provenance: %w", err)
-				}
-				fmt.Printf("cover provenance: %d fetched\n", len(cProv))
-			}
-		}
-
-		cImages, err := images.CanonDecisionsToImages(coverDecisions, cProv, canonIDMap, false)
-		if err != nil {
-			return fmt.Errorf("app-pack: cover images: %w", err)
-		}
 		allImages = append(allImages, cImages...)
-		fmt.Printf("cover images: %d resolved\n", len(cImages))
+		fmt.Printf("cover images: %d loaded\n", len(cImages))
 	}
 
 	// --- 5. Embed real thumbnails (--live) ---
@@ -249,7 +239,25 @@ func patchStubImageData(p *pack.Pack) error {
 	return nil
 }
 
-// loadLexicon loads the HSK lexicon from a SQLite file or falls back to the fixture.
+// loadCuratedCoverImages loads canon cover images from a curated JSON file that is
+// already in pack.Image format (ID, CanonID, File, W, H, License, ...). This is the
+// output of the curate-canon pipeline, signed off and ready to embed.
+func loadCuratedCoverImages(path string) ([]pack.Image, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var imgs []pack.Image
+	if err := json.Unmarshal(data, &imgs); err != nil {
+		return nil, fmt.Errorf("parse curated cover images: %w", err)
+	}
+	// Override file extensions to .jpg (thumbnails are JPEG).
+	for i := range imgs {
+		imgs[i].Data = nil // clear data — thumbnails are fetched separately
+		imgs[i].File = strings.Replace(imgs[i].File, "@480.heic", "@480.jpg", 1)
+	}
+	return imgs, nil
+}
 func loadLexicon(lexPath string) (*lexicon.Lexicon, error) {
 	if lexPath != "" {
 		return lexicon.ReadSQLite(lexPath)
