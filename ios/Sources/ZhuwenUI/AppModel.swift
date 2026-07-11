@@ -126,6 +126,12 @@ public final class AppModel: ObservableObject {
             startAt: seed)
     }
 
+    /// The image record + bytes for a story's cover, or nil if no cover is available.
+    public func coverImage(for story: StoryRecord) -> (record: ImageRecord?, data: Data?) {
+        let rec = images.first { $0.id == story.coverImageID }
+        return (rec, rec.flatMap { packStore?.imageData(for: $0) })
+    }
+
     /// Persist a completed placement (FR-1.2/1.4), re-seed the model (FR-1.5 merge), and route the
     /// learner: absolute/partial beginners → Foundations; otherwise the regular loop.
     public func completePlacement(_ result: PlacementResult) {

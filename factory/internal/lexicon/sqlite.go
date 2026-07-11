@@ -23,6 +23,7 @@ CREATE TABLE lexicon (
   pinyin     TEXT NOT NULL,
   hsk3_level INTEGER NOT NULL,
   freq_rank  INTEGER NOT NULL,
+  en         TEXT NOT NULL DEFAULT '',
   char_ids   TEXT NOT NULL
 );
 `
@@ -50,7 +51,7 @@ func WriteSQLite(l *Lexicon, path string) error {
 		tx.Rollback()
 		return err
 	}
-	stmt, err := tx.Prepare(`INSERT INTO lexicon(word_id,simp,pinyin,hsk3_level,freq_rank,char_ids) VALUES(?,?,?,?,?,?)`)
+	stmt, err := tx.Prepare(`INSERT INTO lexicon(word_id,simp,pinyin,hsk3_level,freq_rank,en,char_ids) VALUES(?,?,?,?,?,?,?)`)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -66,7 +67,7 @@ func WriteSQLite(l *Lexicon, path string) error {
 			tx.Rollback()
 			return err
 		}
-		if _, err := stmt.Exec(w.ID, w.Simp, w.Pinyin, w.HSK, w.FreqRank, string(cj)); err != nil {
+		if _, err := stmt.Exec(w.ID, w.Simp, w.Pinyin, w.HSK, w.FreqRank, w.En, string(cj)); err != nil {
 			tx.Rollback()
 			return fmt.Errorf("lexicon insert id %d: %w", w.ID, err)
 		}
@@ -87,7 +88,7 @@ func ReadSQLite(path string) (*Lexicon, error) {
 	if err := db.QueryRow(`SELECT value FROM meta WHERE key='lexicon_version'`).Scan(&version); err != nil {
 		return nil, fmt.Errorf("lexicon.sqlite: reading lexicon_version: %w", err)
 	}
-	rows, err := db.Query(`SELECT word_id,simp,pinyin,hsk3_level,freq_rank,char_ids FROM lexicon ORDER BY word_id`)
+	rows, err := db.Query(`SELECT word_id,simp,pinyin,hsk3_level,freq_rank,en,char_ids FROM lexicon ORDER BY word_id`)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func ReadSQLite(path string) (*Lexicon, error) {
 	for rows.Next() {
 		var w Word
 		var cj string
-		if err := rows.Scan(&w.ID, &w.Simp, &w.Pinyin, &w.HSK, &w.FreqRank, &cj); err != nil {
+		if err := rows.Scan(&w.ID, &w.Simp, &w.Pinyin, &w.HSK, &w.FreqRank, &w.En, &cj); err != nil {
 			return nil, err
 		}
 		if cj != "" && cj != "[]" {

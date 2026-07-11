@@ -49,7 +49,7 @@ public struct LearnerProgressView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(RoundedRectangle(cornerRadius: 14).fill(Color.secondary.opacity(0.08)))
+        .glassSurface(cornerRadius: 14)
     }
 
     private func hskCard(_ r: ProgressReport) -> some View {
@@ -63,7 +63,7 @@ public struct LearnerProgressView: View {
             Image(systemName: "chevron.right").foregroundColor(.secondary)
         }
         .padding(16)
-        .background(RoundedRectangle(cornerRadius: 14).fill(Color.secondary.opacity(0.08)))
+        .glassSurface(cornerRadius: 14)
     }
 
     private func canDoCard(_ r: ProgressReport) -> some View {
@@ -75,7 +75,7 @@ public struct LearnerProgressView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(RoundedRectangle(cornerRadius: 14).fill(Color.secondary.opacity(0.08)))
+        .glassSurface(cornerRadius: 14)
     }
 }
 
@@ -99,7 +99,7 @@ private struct BandCard: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
-        .background(RoundedRectangle(cornerRadius: 14).fill(Color.secondary.opacity(0.08)))
+        .glassSurface(cornerRadius: 14)
     }
 }
 

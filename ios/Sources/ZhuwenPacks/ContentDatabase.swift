@@ -96,16 +96,29 @@ public final class ContentDatabase {
     }
 
     public func lexicon() throws -> [WordRecord] {
+        let hasEn = hasColumn(table: "lexicon", column: "en")
+        let sql = hasEn
+            ? "SELECT word_id,simp,pinyin,hsk3_level,freq_rank,en FROM lexicon ORDER BY word_id"
+            : "SELECT word_id,simp,pinyin,hsk3_level,freq_rank FROM lexicon ORDER BY word_id"
         var out: [WordRecord] = []
-        try run("SELECT word_id,simp,pinyin,hsk3_level,freq_rank FROM lexicon ORDER BY word_id") { stmt in
-            out.append(WordRecord(
-                id: Int(sqlite3_column_int64(stmt, 0)),
-                simp: column(stmt, 1) ?? "",
-                pinyin: column(stmt, 2) ?? "",
-                hsk3Level: Int(sqlite3_column_int64(stmt, 3)),
-                freqRank: Int(sqlite3_column_int64(stmt, 4))))
+        try run(sql) { stmt in
+            let id = Int(sqlite3_column_int64(stmt, 0))
+            let simp = column(stmt, 1) ?? ""
+            let pinyin = column(stmt, 2) ?? ""
+            let hsk = Int(sqlite3_column_int64(stmt, 3))
+            let freq = Int(sqlite3_column_int64(stmt, 4))
+            let en = hasEn ? (column(stmt, 5) ?? "") : ""
+            out.append(WordRecord(id: id, simp: simp, pinyin: pinyin, hsk3Level: hsk, freqRank: freq, en: en))
         }
         return out
+    }
+
+    private func hasColumn(table: String, column name: String) -> Bool {
+        var exists = false
+        try? run("PRAGMA table_info(\(table))") { stmt in
+            if column(stmt, 1) == name { exists = true }
+        }
+        return exists
     }
 
     /// Every image row with its §8A provenance (FR-11.2 attribution / Credits screen).

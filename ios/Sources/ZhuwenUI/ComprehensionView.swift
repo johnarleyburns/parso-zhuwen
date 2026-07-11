@@ -35,6 +35,7 @@ public struct ComprehensionView: View {
             }
         }
         .padding(20)
+        .adaptiveGlass(cornerRadius: 20)
         .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.6), value: session.isComplete)
     }
 

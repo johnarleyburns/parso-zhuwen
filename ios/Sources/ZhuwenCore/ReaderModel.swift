@@ -8,6 +8,7 @@ public struct Gloss: Equatable, Identifiable {
     public let wordID: Int
     public let simp: String
     public let pinyin: String
+    public let en: String
     public let hsk3Level: Int
     public let freqRank: Int
     public var id: Int { wordID }
@@ -61,7 +62,7 @@ public final class ReaderModel {
     /// Resolve a tapped word to its gloss (nil for literals / proper nouns / unknown IDs).
     public func gloss(for wordID: Int) -> Gloss? {
         guard let w = byID[wordID] else { return nil }
-        return Gloss(wordID: w.id, simp: w.simp, pinyin: w.pinyin, hsk3Level: w.hsk3Level, freqRank: w.freqRank)
+        return Gloss(wordID: w.id, simp: w.simp, pinyin: w.pinyin, en: w.en, hsk3Level: w.hsk3Level, freqRank: w.freqRank)
     }
 
     /// Number of sentences in the story body.

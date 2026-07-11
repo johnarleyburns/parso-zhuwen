@@ -115,7 +115,7 @@ public struct FoundationsView: View {
             }
         }
         .frame(height: 220)
-        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .glassSurface(cornerRadius: 18)
         .accessibilityLabel(Text("Photo for \(card.simp)"))
         .accessibilityIdentifier("foundationsPhoto")
     }
@@ -183,11 +183,11 @@ public struct FoundationsView: View {
                     Image(systemName: "photo").foregroundColor(.secondary)
                 }
             }
-            .frame(height: 90).clipShape(RoundedRectangle(cornerRadius: 12))
+            .frame(height: 90).glassSurface(cornerRadius: 12)
         } else {
             Text(card.simp).font(.custom("Songti SC", size: 28))
                 .frame(maxWidth: .infinity).frame(height: 64)
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color.secondary.opacity(0.1)))
+                .glassSurface(cornerRadius: 12)
         }
     }
 
@@ -288,6 +288,8 @@ struct AttributionSheet: View {
                     Link("Source on Wikimedia Commons", destination: url)
                 }
             }
+            .scrollContentBackground(.hidden)
+            .adaptiveGlass(cornerRadius: 20)
             .navigationTitle("Image credit")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }

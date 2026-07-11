@@ -9,7 +9,7 @@ import (
 // frozenSchemaSHA256 pins the CP-02 content.sqlite DDL. If this test fails you changed
 // schema.sql — that is a pack-format change: bump SchemaVersion, update this hash, and
 // note it in the format doc (handoff §3: packs are immutable; the schema is frozen).
-const frozenSchemaSHA256 = "927ab5f9370f64bf1e0c6384cc09403bcebd6ddff0c98fd94f2fde5131ff4557"
+const frozenSchemaSHA256 = "40f1f7522222a9cf7ed83ebcffc5bec775319e4ac132e6b2126f8c6bf9e2bf21"
 
 func TestSchemaFrozen(t *testing.T) {
 	sum := sha256.Sum256([]byte(schemaSQL))

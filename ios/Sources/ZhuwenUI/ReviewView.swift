@@ -49,7 +49,7 @@ public struct ReviewView: View {
             }
             .frame(maxWidth: .infinity)
             .padding(22)
-            .background(RoundedRectangle(cornerRadius: 14).fill(Color.secondary.opacity(0.08)))
+            .glassSurface(cornerRadius: 14)
 
             Spacer()
 

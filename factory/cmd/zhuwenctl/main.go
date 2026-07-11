@@ -52,6 +52,8 @@ func main() {
 		err = cmdAuthored(os.Args[2:])
 	case "audit":
 		err = cmdAudit(os.Args[2:])
+	case "app-pack":
+		err = cmdAppPack(os.Args[2:])
 	default:
 		usage()
 		os.Exit(2)
@@ -111,6 +113,10 @@ usage:
                                     compute pack audit_pass_rate (CP-09b)
     [--decisions <json>]            fixture decisions file for CI (headless mode)
     [--sample-size <N>]             stories to sample (default 20)
+  zhuwenctl app-pack --out <pack> [--live] [--lexicon <sqlite>]
+                                    build the real zhuwen-a2-v0.zpack with live content
+    [--foundations-decisions <json>] [--canon-covers <json>]
+                                    --live fetches images + generates with LLM
 `)
 }
 

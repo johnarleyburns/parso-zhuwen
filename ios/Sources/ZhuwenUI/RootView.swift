@@ -1,73 +1,93 @@
 import SwiftUI
 import ZhuwenCore
 import ZhuwenPacks
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// RootView is the app's tab shell (00 §10): Today · Library · Review · Progress. On first run it
 /// auto-presents placement (FR-1.4); complete/partial beginners are routed into Foundations
 /// (FR-11.6) until the F3 handoff fires (FR-11.5), when the regular loop activates.
 public struct RootView: View {
     @ObservedObject private var model: AppModel
+    @State private var selectedTab: AppTab = .today
 
     public init(model: AppModel) {
         self.model = model
     }
 
     public var body: some View {
-        switch model.onboardingRoute {
-        case .needsPlacement:
-            PlacementView(model: model.makePlacementFlow()) { result in
-                if let result { model.completePlacement(result) }
+        ZStack {
+            Palette.backgroundGradient.ignoresSafeArea()
+
+            switch model.onboardingRoute {
+            case .needsPlacement:
+                PlacementView(model: model.makePlacementFlow()) { result in
+                    if let result { model.completePlacement(result) }
+                }
+                .accessibilityIdentifier("onboardingPlacement")
+            case .foundations:
+                FoundationsView(model: model.makeFoundationsModel()) { model.finishHandoff() }
+                    .accessibilityIdentifier("foundationsCourse")
+            case .loop:
+                loop
             }
-            .accessibilityIdentifier("onboardingPlacement")
-        case .foundations:
-            FoundationsView(model: model.makeFoundationsModel()) { model.finishHandoff() }
-                .accessibilityIdentifier("foundationsCourse")
-        case .loop:
-            loop
         }
     }
 
     private var loop: some View {
-        TabView {
-            TodayView(model: model)
-                .tabItem { Label("Today", systemImage: "book") }
-            LibraryView(model: model)
-                .tabItem { Label("Library", systemImage: "square.grid.2x2") }
-            ReviewView(learner: model.learner)
-                .tabItem { Label("Review", systemImage: "rectangle.stack") }
-            LearnerProgressView(learner: model.learner)
-                .tabItem { Label("Progress", systemImage: "chart.bar") }
+        VStack(spacing: 0) {
+            ZStack {
+                switch selectedTab {
+                case .today:     TodayView(model: model)
+                case .library:   LibraryView(model: model)
+                case .review:    ReviewView(learner: model.learner)
+                case .progress:  LearnerProgressView(learner: model.learner)
+                }
+            }
+            .frame(maxHeight: .infinity)
+
+            GlassTabBar(selection: $selectedTab)
         }
-        .tint(.cinnabar)
     }
 }
 
-/// Today: the engine-selected story (CP-04 will do real selection; CP-03 shows the first).
+/// Today: the engine-selected story with a hero cover card (M4/M11).
 struct TodayView: View {
     @ObservedObject var model: AppModel
+    @State private var showAttribution = false
 
     var body: some View {
         NavigationStack {
             Group {
                 if let story = model.stories.first {
-                    List {
-                        Section("Today") {
-                            NavigationLink {
-                                ReaderView(model: model.readerModel(for: story),
-                                           listen: { model.makeListeningModel(for: story) },
-                                           comprehension: { model.makeComprehensionView(for: story) },
-                                           tapWord: { model.learner.lookup($0, storyID: story.id) })
-                            } label: {
-                                StoryRow(story: story)
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            heroCover(story)
+                            List {
+                                Section("Today") {
+                                    NavigationLink {
+                                        ReaderView(model: model.readerModel(for: story),
+                                                   listen: { model.makeListeningModel(for: story) },
+                                                   comprehension: { model.makeComprehensionView(for: story) },
+                                                   tapWord: { model.learner.lookup($0, storyID: story.id) })
+                                    } label: {
+                                        StoryRow(story: story, model: model)
+                                    }
+                                    .accessibilityIdentifier("todayStory")
+                                }
+                                if let m = model.manifest {
+                                    Section("Pack") {
+                                        LabeledContent("id", value: m.id)
+                                        LabeledContent("lexicon", value: m.lexiconVersion)
+                                        LabeledContent("stories", value: "\(model.stories.count)")
+                                    }
+                                }
                             }
-                            .accessibilityIdentifier("todayStory")
-                        }
-                        if let m = model.manifest {
-                            Section("Pack") {
-                                LabeledContent("id", value: m.id)
-                                LabeledContent("lexicon", value: m.lexiconVersion)
-                                LabeledContent("stories", value: "\(model.stories.count)")
-                            }
+                            .listStyle(.plain)
+                            .frame(height: 300)
                         }
                     }
                 } else {
@@ -82,11 +102,50 @@ struct TodayView: View {
                     }
                 }
             }
+            .sheet(isPresented: $showAttribution) {
+                if let story = model.stories.first,
+                   let rec = model.coverImage(for: story).record {
+                    AttributionSheet(image: rec)
+                }
+            }
         }
+    }
+
+    @ViewBuilder
+    private func heroCover(_ story: StoryRecord) -> some View {
+        let cover = model.coverImage(for: story)
+        ZStack {
+            RoundedRectangle(cornerRadius: 22).fill(Color.secondary.opacity(0.08))
+            if let data = cover.data, let image = Self.platformImage(data) {
+                image.resizable().scaledToFill()
+            } else {
+                VStack(spacing: 8) {
+                    Image(systemName: "book.closed").font(.system(size: 36)).foregroundColor(.secondary)
+                    Text(story.titleZH).font(.custom("Songti SC", size: 28))
+                        .foregroundColor(.primary)
+                }
+            }
+        }
+        .frame(height: 200)
+        .clipShape(RoundedRectangle(cornerRadius: 22))
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .glassSurface(cornerRadius: 22)
+        .onLongPressGesture { showAttribution = true }
+        .accessibilityLabel("Cover for \(story.titleZH)")
+    }
+
+    static func platformImage(_ data: Data) -> Image? {
+        #if canImport(UIKit)
+        if let ui = UIImage(data: data) { return Image(uiImage: ui) }
+        #elseif canImport(AppKit)
+        if let ns = NSImage(data: data) { return Image(nsImage: ns) }
+        #endif
+        return nil
     }
 }
 
-/// Library: browse every story with a per-story new-word badge (FR-3.3, partial).
+/// Library: browse every story with cover thumbnail + per-story new-word badge (FR-3.3).
 struct LibraryView: View {
     @ObservedObject var model: AppModel
 
@@ -99,9 +158,11 @@ struct LibraryView: View {
                                comprehension: { model.makeComprehensionView(for: story) },
                                tapWord: { model.learner.lookup($0, storyID: story.id) })
                 } label: {
-                    StoryRow(story: story)
+                    StoryRow(story: story, model: model)
                 }
+                .listRowBackground(Color.clear)
             }
+            .scrollContentBackground(.hidden)
             .navigationTitle("Library")
         }
     }
@@ -109,19 +170,67 @@ struct LibraryView: View {
 
 struct StoryRow: View {
     let story: StoryRecord
+    var model: AppModel? = nil
+    @State private var showAttribution = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(story.titleZH).font(.headline)
-            HStack(spacing: 8) {
-                Text(story.band)
-                Text("· \(story.newTypeIDs.count) new")
-                    .foregroundColor(.cinnabar)
-                Text("· \(story.tokenCount) tokens")
+        HStack(spacing: 12) {
+            coverThumbnail
+            VStack(alignment: .leading, spacing: 4) {
+                Text(story.titleZH).font(.headline).foregroundColor(Palette.ink)
+                HStack(spacing: 8) {
+                    Text(story.band)
+                    Text("· \(story.newTypeIDs.count) new")
+                        .foregroundColor(Palette.cinnabar)
+                    Text("· \(story.tokenCount) tokens")
+                }
+                .font(.caption)
+                .foregroundColor(Palette.ink3)
             }
-            .font(.caption)
-            .foregroundColor(.secondary)
         }
+        .padding(.vertical, 4)
+        .sheet(isPresented: $showAttribution) {
+            if let model = model, let rec = model.coverImage(for: story).record {
+                AttributionSheet(image: rec)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var coverThumbnail: some View {
+        Group {
+            if let model = model {
+                let cover = model.coverImage(for: story)
+                if let data = cover.data, let image = Self.platformImage(data) {
+                    image.resizable().scaledToFill()
+                } else {
+                    coverPlaceholder
+                }
+            } else {
+                coverPlaceholder
+            }
+        }
+        .frame(width: 52, height: 52)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .onLongPressGesture { showAttribution = true }
+    }
+
+    private var coverPlaceholder: some View {
+        ZStack {
+            Color.secondary.opacity(0.12)
+            Text(String(story.titleZH.prefix(1)))
+                .font(.custom("Songti SC", size: 18))
+                .foregroundColor(Palette.ink3)
+        }
+    }
+
+    static func platformImage(_ data: Data) -> Image? {
+        #if canImport(UIKit)
+        if let ui = UIImage(data: data) { return Image(uiImage: ui) }
+        #elseif canImport(AppKit)
+        if let ns = NSImage(data: data) { return Image(nsImage: ns) }
+        #endif
+        return nil
     }
 }
 

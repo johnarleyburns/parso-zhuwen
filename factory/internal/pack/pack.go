@@ -369,8 +369,8 @@ func (p *Pack) insertRows(db *sql.DB) error {
 			if len(w.CharIDs) == 0 {
 				charIDs = []byte("[]")
 			}
-			if _, err := tx.Exec(`INSERT INTO lexicon(word_id,simp,pinyin,hsk3_level,freq_rank,char_ids) VALUES(?,?,?,?,?,?)`,
-				w.ID, w.Simp, w.Pinyin, w.HSK, w.FreqRank, string(charIDs)); err != nil {
+			if _, err := tx.Exec(`INSERT INTO lexicon(word_id,simp,pinyin,hsk3_level,freq_rank,en,char_ids) VALUES(?,?,?,?,?,?,?)`,
+				w.ID, w.Simp, w.Pinyin, w.HSK, w.FreqRank, w.En, string(charIDs)); err != nil {
 				return fmt.Errorf("insert lexicon %d: %w", w.ID, err)
 			}
 		}

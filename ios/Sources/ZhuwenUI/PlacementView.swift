@@ -184,7 +184,7 @@ private struct ResultScreen: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)
-            .background(RoundedRectangle(cornerRadius: 14).fill(Color.secondary.opacity(0.08)))
+            .glassSurface(cornerRadius: 14)
 
             if result.route == .foundations {
                 Text("We'll start you in Foundations to build a base before stories.")

@@ -174,6 +174,141 @@ func parseProvenanceJSON(b []byte) (ProvenanceStore, error) {
 	return store, nil
 }
 
+// ThumbResult is a fetched Commons thumbnail with JPEG bytes.
+type ThumbResult struct {
+	Data   []byte
+	W, H   int
+	File   string
+}
+
+// FetchThumbs queries Commons imageinfo for the given titles with iiurlwidth=480,
+// downloads the JPEG thumbnails, and returns them keyed by title. Batches up to 50
+// titles per API call. This replaces the HEIC/Python encode stage — the app decodes
+// JPEG natively via UIImage(data:). Network; behind --live (I2).
+func (fc *FetchClient) FetchThumbs(titles []string, px int) (map[string]ThumbResult, error) {
+	if px == 0 {
+		px = 480
+	}
+	results := map[string]ThumbResult{}
+	const batch = 50
+	for start := 0; start < len(titles); start += batch {
+		end := start + batch
+		if end > len(titles) {
+			end = len(titles)
+		}
+		chunk := titles[start:end]
+		q := url.Values{
+			"action": {"query"},
+			"format": {"json"},
+			"titles": {strings.Join(chunk, "|")},
+			"prop":   {"imageinfo"},
+			"iiprop": {"url|size"},
+			"iiurlwidth": {fmt.Sprint(px)},
+		}
+		req, err := http.NewRequest("GET", commonsURL+"?"+q.Encode(), nil)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("User-Agent", fc.ua())
+		resp, err := fc.client().Do(req)
+		if err != nil {
+			return nil, err
+		}
+		b, err := io.ReadAll(resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			return nil, err
+		}
+		thumbs, err := parseThumbJSON(b)
+		if err != nil {
+			return nil, err
+		}
+		dlClient := fc.client()
+		for title, ti := range thumbs {
+			data, err := fc.downloadThumb(dlClient, ti.URL)
+			if err != nil {
+				return nil, fmt.Errorf("download %s: %w", title, err)
+			}
+			results[title] = ThumbResult{
+				Data: data,
+				W:    ti.W,
+				H:    ti.H,
+				File: fmt.Sprintf("@%d.jpg", px),
+			}
+		}
+		if end < len(titles) {
+			time.Sleep(120 * time.Millisecond)
+		}
+	}
+	return results, nil
+}
+
+// thumbInfo is a parsed thumbnail URL + dimensions from a Commons imageinfo response.
+type thumbInfo struct {
+	URL string
+	W, H int
+}
+
+// parseThumbJSON parses a titles=&prop=imageinfo&iiprop=url|size&iiurlwidth=N response.
+func parseThumbJSON(b []byte) (map[string]thumbInfo, error) {
+	var r struct {
+		Query struct {
+			Normalized []struct {
+				From string `json:"from"`
+				To   string `json:"to"`
+			} `json:"normalized"`
+			Pages map[string]struct {
+				Title     string `json:"title"`
+				Missing   *bool  `json:"missing"`
+				ImageInfo []struct {
+					ThumbURL string `json:"thumburl"`
+					ThumbWidth  int `json:"thumbwidth"`
+					ThumbHeight int `json:"thumbheight"`
+				} `json:"imageinfo"`
+			} `json:"pages"`
+		} `json:"query"`
+	}
+	if err := json.Unmarshal(b, &r); err != nil {
+		return nil, fmt.Errorf("parse Commons thumb response: %w", err)
+	}
+	out := map[string]thumbInfo{}
+	for _, p := range r.Query.Pages {
+		if p.Missing != nil || len(p.ImageInfo) == 0 {
+			continue
+		}
+		ii := p.ImageInfo[0]
+		if ii.ThumbURL == "" {
+			continue
+		}
+		out[p.Title] = thumbInfo{URL: ii.ThumbURL, W: ii.ThumbWidth, H: ii.ThumbHeight}
+	}
+	// Map normalized titles to their canonical form.
+	for _, n := range r.Query.Normalized {
+		if ti, ok := out[n.To]; ok {
+			out[n.From] = ti
+		}
+	}
+	return out, nil
+}
+
+// downloadThumb fetches the raw JPEG bytes from a Commons thumbnail URL.
+func (fc *FetchClient) downloadThumb(client *http.Client, url string) ([]byte, error) {
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("User-Agent", fc.ua())
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("thumb download status %d", resp.StatusCode)
+	}
+	return io.ReadAll(resp.Body)
+}
+
 // FetchCandidates queries Commons using both English and Chinese terms for a word,
 // gathering candidates. English results are preferred; if fewer than minEn results
 // come from the English query, the Chinese term is also searched.

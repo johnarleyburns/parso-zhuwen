@@ -13,6 +13,7 @@ CREATE TABLE lexicon (
   pinyin     TEXT NOT NULL,
   hsk3_level INTEGER NOT NULL,
   freq_rank  INTEGER NOT NULL,
+  en         TEXT NOT NULL DEFAULT '',
   char_ids   TEXT NOT NULL DEFAULT '[]'
 );
 

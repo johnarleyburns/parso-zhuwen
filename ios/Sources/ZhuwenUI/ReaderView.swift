@@ -90,27 +90,31 @@ public struct ReaderView: View {
     }
 }
 
-/// The gloss sheet shown on word tap (FR-4.1 subset: form, tone pinyin, HSK level).
+/// The gloss sheet shown on word tap (FR-4.1: form, tone pinyin, English meaning, HSK level).
 struct GlossSheet: View {
     let gloss: Gloss
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(gloss.simp).font(.custom("Songti SC", size: 40))
-            Text(gloss.pinyin).font(.title3).foregroundColor(.cinnabar)
-            Divider()
+            Text(gloss.simp).font(.custom("Songti SC", size: 40)).foregroundColor(Palette.ink)
+            Text(gloss.pinyin).font(.title3).foregroundColor(Palette.cinnabar)
+            if !gloss.en.isEmpty {
+                Text(gloss.en).font(.title3).foregroundColor(Palette.ink2)
+            }
+            Divider().background(Palette.hairline)
             HStack {
                 Label("HSK \(gloss.hsk3Level)", systemImage: "graduationcap")
                 Spacer()
                 Label("rank \(gloss.freqRank)", systemImage: "number")
             }
             .font(.footnote)
-            .foregroundColor(.secondary)
+            .foregroundColor(Palette.ink3)
             Spacer()
         }
         .padding()
+        .adaptiveGlass(cornerRadius: 20)
         #if os(iOS)
-        .presentationDetents([.height(220)])
+        .presentationDetents([.height(240)])
         #endif
     }
 }

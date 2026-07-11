@@ -104,10 +104,11 @@ public struct WordRecord: Equatable {
     public let pinyin: String
     public let hsk3Level: Int
     public let freqRank: Int
+    public let en: String
 
-    public init(id: Int, simp: String, pinyin: String, hsk3Level: Int, freqRank: Int) {
+    public init(id: Int, simp: String, pinyin: String, hsk3Level: Int, freqRank: Int, en: String = "") {
         self.id = id; self.simp = simp; self.pinyin = pinyin
-        self.hsk3Level = hsk3Level; self.freqRank = freqRank
+        self.hsk3Level = hsk3Level; self.freqRank = freqRank; self.en = en
     }
 }
 

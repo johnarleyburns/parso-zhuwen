@@ -36,12 +36,24 @@ struct ZhuwenApp: App {
 
     private static func bootstrap(resetStore: Bool, skipOnboarding: Bool) -> (AppModel, PersistentEventLog?) {
         let (log, placement) = openStores(resetStore: resetStore)
-        guard let packURL = Bundle.main.url(forResource: "fixture-a2-v0", withExtension: "zpack"),
-              let pubURL = Bundle.main.url(forResource: "zhuwen-dev", withExtension: "pub"),
-              let pub = try? Minisign.PublicKey(file: String(contentsOf: pubURL, encoding: .utf8)),
+        guard let pubURL = Bundle.main.url(forResource: "zhuwen-dev", withExtension: "pub"),
+              let pub = try? Minisign.PublicKey(file: String(contentsOf: pubURL, encoding: .utf8))
+        else {
+            fatalError("ZhuwenApp requires bundled zhuwen-dev.pub")
+        }
+        // Try zhuwen-a2-v0 first (real content), fall back to fixture-a2-v0 (CI/test fixture).
+        let packName: String
+        if Bundle.main.url(forResource: "zhuwen-a2-v0", withExtension: "zpack") != nil {
+            packName = "zhuwen-a2-v0"
+        } else if Bundle.main.url(forResource: "fixture-a2-v0", withExtension: "zpack") != nil {
+            packName = "fixture-a2-v0"
+        } else {
+            fatalError("ZhuwenApp requires bundled zhuwen-a2-v0.zpack or fixture-a2-v0.zpack")
+        }
+        guard let packURL = Bundle.main.url(forResource: packName, withExtension: "zpack"),
               let store = try? PackStore(url: packURL, publicKey: pub)
         else {
-            fatalError("ZhuwenApp requires bundled fixture-a2-v0.zpack + zhuwen-dev.pub")
+            fatalError("ZhuwenApp could not load \(packName).zpack")
         }
         let model = AppModel(store: store, events: log?.events ?? [], eventSink: log,
                              placementStore: placement,

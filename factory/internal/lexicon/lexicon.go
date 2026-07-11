@@ -20,6 +20,7 @@ type Word struct {
 	Pinyin   string
 	HSK      int
 	FreqRank int
+	En       string
 	CharIDs  []int
 }
 
@@ -68,7 +69,7 @@ func IngestFile(path, version string) (*Lexicon, error) {
 
 // Ingest parses a tab-separated lexicon.
 //
-// Columns: id, simp, pinyin, hsk, freq_rank, char_ids(optional, comma-separated).
+// Columns: id, simp, pinyin, hsk, freq_rank, en (optional), char_ids (optional, comma-separated).
 // Lines beginning with '#' and blank lines are ignored. Word IDs must be unique and
 // positive; simplified forms must be unique.
 func Ingest(r io.Reader, version string) (*Lexicon, error) {
@@ -108,14 +109,36 @@ func Ingest(r io.Reader, version string) (*Lexicon, error) {
 		if err != nil {
 			return nil, fmt.Errorf("lexicon line %d: invalid freq_rank %q", line, cols[4])
 		}
+		var en string
 		var charIDs []int
-		if len(cols) >= 6 && strings.TrimSpace(cols[5]) != "" {
-			for _, p := range strings.Split(cols[5], ",") {
-				c, err := strconv.Atoi(strings.TrimSpace(p))
-				if err != nil {
-					return nil, fmt.Errorf("lexicon line %d: invalid char_id %q", line, p)
+		if len(cols) >= 6 {
+			// Check if the 6th field looks like char_ids (comma-separated ints) or en (text).
+			f6 := strings.TrimSpace(cols[5])
+			if f6 != "" {
+				if _, isInt := strconv.Atoi(strings.Split(f6, ",")[0]); isInt == nil && !strings.Contains(f6, " ") {
+					// Looks like char_ids (starts with ints or empty)
+					for _, p := range strings.Split(f6, ",") {
+						c, err := strconv.Atoi(strings.TrimSpace(p))
+						if err != nil {
+							// Not ints — treat as en text.
+							en = f6
+							break
+						}
+						charIDs = append(charIDs, c)
+					}
+				} else {
+					en = f6
 				}
-				charIDs = append(charIDs, c)
+			}
+			// 7th column: char_ids when en is in column 6
+			if len(cols) >= 7 && strings.TrimSpace(cols[6]) != "" {
+				for _, p := range strings.Split(cols[6], ",") {
+					c, err := strconv.Atoi(strings.TrimSpace(p))
+					if err != nil {
+						return nil, fmt.Errorf("lexicon line %d: invalid char_id %q", line, p)
+					}
+					charIDs = append(charIDs, c)
+				}
 			}
 		}
 		if seenID[id] {
@@ -126,7 +149,7 @@ func Ingest(r io.Reader, version string) (*Lexicon, error) {
 		}
 		seenID[id] = true
 		seenSimp[simp] = true
-		w := Word{ID: id, Simp: simp, Pinyin: strings.TrimSpace(cols[2]), HSK: hsk, FreqRank: freq, CharIDs: charIDs}
+		w := Word{ID: id, Simp: simp, Pinyin: strings.TrimSpace(cols[2]), HSK: hsk, FreqRank: freq, En: en, CharIDs: charIDs}
 		l.words = append(l.words, w)
 		if id > l.maxID {
 			l.maxID = id
