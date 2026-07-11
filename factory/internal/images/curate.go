@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/url"
 	"os"
-	"path"
 	"sort"
 	"strings"
 
@@ -60,22 +59,41 @@ func (d ImageDecision) WordKey() string { return d.key() }
 
 // IsCommons returns true if the decision is a Commons File: reference.
 func (d ImageDecision) IsCommons() bool {
-	return d.Status == "commons" || strings.HasPrefix(d.Decision, "File:")
+	if d.Status == "commons" || strings.HasPrefix(d.Decision, "File:") {
+		return true
+	}
+	// Some decisions use "custom" status but still point to Commons/Wikipedia URLs.
+	if strings.Contains(d.Decision, "File:") &&
+		(strings.Contains(d.Decision, "wikimedia.org") || strings.Contains(d.Decision, "wikipedia.org")) {
+		return true
+	}
+	return false
 }
 
 // CommonsTitle extracts the File: name from the decision. For "File:Foo.jpg" it
-// returns "File:Foo.jpg"; for a full URL it extracts the last path component and
-// URL-decodes it (Commons file-page URLs percent-encode non-ASCII, e.g. %E2%80%99).
+// returns "File:Foo.jpg"; for a full URL it extracts the File: path component,
+// URL-decodes it, and ensures a "File:" prefix so it matches the Commons API format.
 func (d ImageDecision) CommonsTitle() string {
 	if strings.HasPrefix(d.Decision, "File:") {
 		return d.Decision
 	}
-	if strings.Contains(d.Decision, "/wiki/File:") {
-		base := path.Base(d.Decision)
-		if dec, err := url.PathUnescape(base); err == nil {
-			return dec
+	// Handle Wikipedia/Commons URLs: extract the File: title.
+	for _, prefix := range []string{"/wiki/File:", "/media/File:"} {
+		if idx := strings.Index(d.Decision, prefix); idx >= 0 {
+			base := d.Decision[idx+len(prefix):]
+			// Strip fragment and query.
+			if qi := strings.IndexAny(base, "?#"); qi >= 0 {
+				base = base[:qi]
+			}
+			if dec, err := url.PathUnescape(base); err == nil {
+				base = dec
+			}
+			base = strings.TrimSpace(base)
+			if strings.HasPrefix(base, "File:") {
+				return base
+			}
+			return "File:" + base
 		}
-		return base
 	}
 	return d.Decision
 }

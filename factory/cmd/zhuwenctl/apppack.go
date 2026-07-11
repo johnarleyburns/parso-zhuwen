@@ -34,6 +34,11 @@ func cmdAppPack(args []string) error {
 	foundationsDecisions := flagValue(args, "--foundations-decisions")
 	canonCovers := flagValue(args, "--canon-covers")
 	live := hasFlag(args, "--live")
+	imagesLive := hasFlag(args, "--images-live")
+	// --live implies --images-live
+	if live {
+		imagesLive = true
+	}
 
 	// --- 1. Load lexicon ---
 	lex, err := loadLexicon(lexPath)
@@ -48,11 +53,13 @@ func cmdAppPack(args []string) error {
 		return fmt.Errorf("app-pack: %w", err)
 	}
 
-	// --- 3. Canon registry + story pipeline ---
+	// --- 3. Canon registry (always needed for cover image IDs) ---
 	reg, err := assets.Canon()
 	if err != nil {
 		return fmt.Errorf("app-pack: canon: %w", err)
 	}
+
+	// --- 3b. Story pipeline (always run; fixture when offline, LLM when --live) ---
 	spec := pipeline.BuildHSKBand(lex, "A2", 2, 3, 2)
 
 	var inner gen.Provider
@@ -75,13 +82,17 @@ func cmdAppPack(args []string) error {
 	}
 
 	// Constrained candidate-rerank (CP-09a).
+	oversample := 6
+	if v := flagValue(args, "--oversample"); v != "" {
+		fmt.Sscanf(v, "%d", &oversample)
+	}
 	provider := gen.NewConstrainedProvider(inner, gen.GateConstraint{
 		Dict:     lex.DictEntries(),
 		Band:     gate.Band{Known: spec.Known, Frontier: spec.Frontier, Grammar: spec.Grammar},
 		Detector: grammar.MarkerDetector{},
 		MaxID:    lex.MaxID(),
 		Cfg:      gate.DefaultConfig(),
-	}, 6, 80000)
+	}, oversample, 80000)
 
 	fmt.Printf("generating %d canon stories...\n", len(reg.All()))
 	res, err := pipeline.Run(pipeline.Config{
@@ -121,9 +132,9 @@ func cmdAppPack(args []string) error {
 		}
 		fmt.Printf("foundations decisions: %d entries\n", len(decisions))
 
-		// Fetch provenance if live.
+		// Fetch provenance if images-live.
 		var fProv images.ProvenanceStore
-		if live {
+		if imagesLive {
 			titles := collectCommonsTitles(decisions)
 			if len(titles) > 0 {
 				fProv, err = fc.FetchProvenanceByTitles(titles)
@@ -164,7 +175,7 @@ func cmdAppPack(args []string) error {
 	}
 
 	// --- 5. Embed real thumbnails (--live) ---
-	if live && len(allImages) > 0 {
+	if imagesLive && len(allImages) > 0 {
 		embImages, err := images.EmbedThumbnails(allImages, fc, 480)
 		if err != nil {
 			fmt.Printf("WARNING: embed thumbnails: %v (continuing with stubs)\n", err)

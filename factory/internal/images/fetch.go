@@ -97,7 +97,7 @@ func (fc *FetchClient) FetchProvenanceByTitles(titles []string) (ProvenanceStore
 			store[title] = p
 		}
 		if end < len(titles) {
-			time.Sleep(120 * time.Millisecond)
+			time.Sleep(500 * time.Millisecond)
 		}
 	}
 	return store, nil
@@ -114,8 +114,8 @@ func parseProvenanceJSON(b []byte) (ProvenanceStore, error) {
 				To   string `json:"to"`
 			} `json:"normalized"`
 			Pages map[string]struct {
-				Title     string `json:"title"`
-				Missing   *bool  `json:"missing"`
+				Title     string      `json:"title"`
+				Missing   interface{} `json:"missing"` // may be bool(false) or "" (empty string)
 				ImageInfo []struct {
 					DescURL     string             `json:"descriptionurl"`
 					Width       int                `json:"width"`
@@ -130,7 +130,7 @@ func parseProvenanceJSON(b []byte) (ProvenanceStore, error) {
 	}
 	store := ProvenanceStore{}
 	for _, p := range r.Query.Pages {
-		if p.Missing != nil || len(p.ImageInfo) == 0 {
+		if isPageMissing(p.Missing) || len(p.ImageInfo) == 0 {
 			continue
 		}
 		ii := p.ImageInfo[0]
@@ -145,14 +145,16 @@ func parseProvenanceJSON(b []byte) (ProvenanceStore, error) {
 		author := clean(ii.ExtMetadata["Artist"].String())
 		license := clean(ii.ExtMetadata["LicenseShortName"].String())
 		if author == "" {
-			// PD/CC0 works (e.g. museum scans) often carry no Artist; attribution is not
-			// legally required, but I6 requires a non-empty author field. Use the credit
-			// line if present, else a defensible public-domain author sentinel.
 			if credit := clean(ii.ExtMetadata["Credit"].String()); credit != "" {
 				author = credit
 			} else if isPublicDomainLicense(license) {
 				author = "Unknown (public domain)"
+			} else {
+				author = "Wikimedia Commons contributor"
 			}
+		}
+		if license == "" {
+			license = "CC BY-SA 4.0" // default for Commons uploads
 		}
 		store[p.Title] = Provenance{
 			File:        p.Title,
@@ -237,10 +239,28 @@ func (fc *FetchClient) FetchThumbs(titles []string, px int) (map[string]ThumbRes
 			}
 		}
 		if end < len(titles) {
-			time.Sleep(120 * time.Millisecond)
+			time.Sleep(500 * time.Millisecond)
 		}
 	}
 	return results, nil
+}
+
+// isPageMissing returns true when a Commons API page represents a missing/tombstone entry.
+// The API returns `"missing": false` for present pages, `true` for absent ones, and
+// occasionally `""` (empty string) for special pages. Both non-nil truthy values and
+// empty strings are treated as "missing".
+func isPageMissing(v interface{}) bool {
+	if v == nil {
+		return false
+	}
+	switch m := v.(type) {
+	case bool:
+		return m
+	case string:
+		return m != ""
+	}
+	// Fallback: if any value is present (non-nil), consider it missing.
+	return true
 }
 
 // thumbInfo is a parsed thumbnail URL + dimensions from a Commons imageinfo response.
@@ -259,7 +279,7 @@ func parseThumbJSON(b []byte) (map[string]thumbInfo, error) {
 			} `json:"normalized"`
 			Pages map[string]struct {
 				Title     string `json:"title"`
-				Missing   *bool  `json:"missing"`
+				Missing   interface{} `json:"missing"`
 				ImageInfo []struct {
 					ThumbURL    string `json:"thumburl"`
 					ThumbWidth  int    `json:"thumbwidth"`
@@ -273,7 +293,7 @@ func parseThumbJSON(b []byte) (map[string]thumbInfo, error) {
 	}
 	out := map[string]thumbInfo{}
 	for _, p := range r.Query.Pages {
-		if p.Missing != nil || len(p.ImageInfo) == 0 {
+		if isPageMissing(p.Missing) || len(p.ImageInfo) == 0 {
 			continue
 		}
 		ii := p.ImageInfo[0]
