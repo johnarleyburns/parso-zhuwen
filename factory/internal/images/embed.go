@@ -3,6 +3,7 @@ package images
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/parso/zhuwen-factory/internal/pack"
 )
@@ -36,7 +37,11 @@ func EmbedThumbnails(images []pack.Image, fc *FetchClient, px int) ([]pack.Image
 		// If the batch fetch fails, try one-by-one to maximize coverage.
 		fmt.Printf("embed: batch thumb fetch failed (%v), trying individually...\n", err)
 		thumbs = map[string]ThumbResult{}
-		for _, title := range titles {
+		for i, title := range titles {
+			// 2 s between individual API calls to stay under Commons rate limits.
+			if i > 0 {
+				time.Sleep(2 * time.Second)
+			}
 			indiv, err := fc.FetchThumbs([]string{title}, px)
 			if err != nil {
 				fmt.Printf("embed: skip %s: %v\n", title, err)

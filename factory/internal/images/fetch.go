@@ -226,7 +226,13 @@ func (fc *FetchClient) FetchThumbs(titles []string, px int) (map[string]ThumbRes
 			return nil, err
 		}
 		dlClient := fc.client()
+		i := 0
 		for title, ti := range thumbs {
+			// 500 ms between thumbnail downloads to respect Commons rate limits.
+			if i > 0 {
+				time.Sleep(500 * time.Millisecond)
+			}
+			i++
 			data, err := fc.downloadThumb(dlClient, ti.URL)
 			if err != nil {
 				return nil, fmt.Errorf("download %s: %w", title, err)
@@ -278,7 +284,7 @@ func parseThumbJSON(b []byte) (map[string]thumbInfo, error) {
 				To   string `json:"to"`
 			} `json:"normalized"`
 			Pages map[string]struct {
-				Title     string `json:"title"`
+				Title     string      `json:"title"`
 				Missing   interface{} `json:"missing"`
 				ImageInfo []struct {
 					ThumbURL    string `json:"thumburl"`
